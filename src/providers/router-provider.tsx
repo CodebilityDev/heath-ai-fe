@@ -23,15 +23,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
+        element: <App />,
+      },
+      {
+        path: "/app",
         element: (
           <ProtectedPath>
             <Appv2 />
           </ProtectedPath>
         ),
-      },
-      {
-        path: "/app",
-        element: <App />,
       },
       {
         path: "/sign-in",
