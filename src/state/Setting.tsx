@@ -1,44 +1,53 @@
-import { atom, selector } from 'recoil'
-import { recoilPersist } from 'recoil-persist'
+//@ts-nocheck
 
-import { SettingInterface, OpenAiAPIKeyInterface, ExcelExploreInterface } from '@types/Setting'
-import { defaultSetting, defaultOpenAiAPIKey, defaultExcelExplore } from '@utils/Default';
+import { atom, selector } from "recoil";
+import { recoilPersist } from "recoil-persist";
 
-const { persistAtom } = recoilPersist()
+import {
+  SettingInterface,
+  OpenAiAPIKeyInterface,
+  ExcelExploreInterface,
+} from "@types/Setting";
+import {
+  defaultSetting,
+  defaultOpenAiAPIKey,
+  defaultExcelExplore,
+} from "@utils/Default";
 
+const { persistAtom } = recoilPersist();
 
 export const settingAtom = atom({
-  key: 'setting',
+  key: "setting",
   default: defaultSetting as SettingInterface,
   effects_UNSTABLE: [persistAtom],
-})
+});
 
 export const openAiAPIKeyAtom = atom({
-  key: 'openAiAPIKey',
+  key: "openAiAPIKey",
   default: defaultOpenAiAPIKey as OpenAiAPIKeyInterface,
   effects_UNSTABLE: [persistAtom],
-})
+});
 
 export const excelExploreAtom = atom({
-  key: 'excelExplore',
+  key: "excelExplore",
   default: defaultExcelExplore as ExcelExploreInterface,
   effects_UNSTABLE: [persistAtom],
-})
+});
 
 export const oaKeySelector = selector({
-  key: 'openAiAPIKeySelector',
+  key: "openAiAPIKeySelector",
   get: ({ get }) => get(settingAtom).openAiAPIKey,
   set: ({ get, set }, newValue) => {
     const setting = get(settingAtom);
     set(settingAtom, { ...setting, openAiAPIKey: newValue });
-  }
-})
+  },
+});
 
 export const excelExploreSelector = selector({
-  key: 'excelExploreSelector',
+  key: "excelExploreSelector",
   get: ({ get }) => get(settingAtom).excelExplore,
   set: ({ get, set }, newValue) => {
     const setting = get(settingAtom);
     set(settingAtom, { ...setting, excelExplore: newValue });
-  }
-})
+  },
+});

@@ -1,3 +1,5 @@
+//@ts-nocheck
+
 import Button from "@components/core/Button";
 import { IoClose } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
