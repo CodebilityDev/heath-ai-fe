@@ -8,6 +8,7 @@ import SignInPage from "@pages/SignIn";
 import MainLayout from "../../src/layout";
 import SignUpPage from "@pages/SignUp";
 import Test from "@pages/Test";
+import Main from "@/pages/Main";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/test",
         element: <Test />,
+      },
+      {
+        path: "/chatConfig",
+        element: <Main />,
       },
     ],
   },

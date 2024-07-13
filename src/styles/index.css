@@ -102,11 +102,11 @@
   /* sidebar */
 
   .sidebar-container {
-    @apply flex md:w-[325px] w-full;
+    @apply flex lg:w-[325px] w-full;
   }
 
   .sidebar-content {
-    @apply flex flex-col w-full px-6 shadow-lg;
+    @apply flex flex-col w-full lg:px-6 lg:shadow-lg;
   }
 
   .account-container {

@@ -234,7 +234,7 @@ const Content = () => {
     <div className="h-full">
       <div className="header-container justify-between px-8">
         <p className="header-title">
-          Federal<span className="text-2xl t>r>ext-primary">Plans</span>
+          Federal<span className="text-2xl text-primary">Plans</span>
         </p>
         <span className="block lg:hidden">
           <SheetDemo />
@@ -288,7 +288,7 @@ const Content = () => {
                         <CheckBox
                           checked={true}
                           label={carrier}
-                          readOnly={true}
+                          type="carrier"
                           handleChange={() => {}}
                           key={idx}
                         />

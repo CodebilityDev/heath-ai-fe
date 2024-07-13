@@ -155,7 +155,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="sidebar-content bg-white">
+    <div className="sidebar-content">
       <div className="sidebar-header">
         <p className="sidebar-title">Agency information</p>
       </div>

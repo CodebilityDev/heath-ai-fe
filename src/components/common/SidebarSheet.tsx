@@ -1,23 +1,22 @@
-import {
-  Sheet,
-  SheetClose,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 import Sidebar from "../pages/main/Sidebar";
+import { useState } from "react";
 
 export function SheetDemo() {
+  const [isOpen, setIsOpen] = useState(false);
+  console.log(isOpen);
   return (
-    <Sheet>
+    <Sheet onOpenChange={setIsOpen} open={isOpen}>
       <SheetTrigger asChild>
-        <GiHamburgerMenu size={20} className="cursor-pointer" />
+        {!isOpen ? (
+          <GiHamburgerMenu size={20} className="cursor-pointer" />
+        ) : (
+          <IoMdClose size={20} className="cursor-pointer" />
+        )}
       </SheetTrigger>
-      <SheetContent side="left">
+      <SheetContent className="overflow-y-auto" side="left">
         <Sidebar />
       </SheetContent>
     </Sheet>
