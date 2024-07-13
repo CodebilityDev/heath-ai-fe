@@ -23,66 +23,155 @@ import { apolloClient } from "./graphql/client";
 import CarrierModal from "./components/pages/main/modals/CarrierModal";
 import { SheetDemo } from "./components/common/SidebarSheet";
 import { twMerge } from "tailwind-merge";
+import { GetGHL } from "./graphql/declarations/ghs";
+import ApiKeyModal from "./components/pages/main/modals/ApiKeyModal";
 
 function Sidebar({ className }: { className?: string }) {
   const { data } = useQuery(GetMe);
+  const { data: GHLData } = useQuery(GetGHL);
+  const [apiKeyModal, setApiKeyModal] = useState(false);
 
   return (
-    <div
-      className={twMerge(
-        "h-screen overflow-y-auto no-scrollbar border border-gray-light shadow-lg",
-        className
-      )}
-    >
-      <div className="sidebar-header">
-        <p className="sidebar-title">My Account</p>
+    <>
+      <div
+        className={twMerge(
+          "h-screen overflow-y-auto no-scrollbar border border-gray-light shadow-lg",
+          className
+        )}
+      >
+        <div className="sidebar-header">
+          <p className="sidebar-title">My Account</p>
+        </div>
+        <div className="-mt-4">
+          <div className="p-2">
+            <p>{data?.authenticatedItem?.email}</p>
+          </div>
+          <button
+            className={"btn btn-primary"}
+            onClick={() => {
+              AUTHSTORE.clear();
+              window.location.href = "/";
+            }}
+          >
+            <p className={"btn-text"}>Sign Out</p>
+          </button>
+        </div>
+        <br />
+        <div className="sidebar-header">
+          <p className="sidebar-title">Agency information</p>
+        </div>
+        {data?.authenticatedItem?.ghlAccess && (
+          <div className="-mt-4">
+            <div className="p-2">
+              <p>
+                Name: <>{GHLData?.ghl_me?.name}</>
+              </p>
+              <p>
+                Email: <>{GHLData?.ghl_me?.email}</>
+              </p>
+              <p>
+                Phone: <>{GHLData?.ghl_me?.phone}</>
+              </p>
+              <p>
+                State: <>{GHLData?.ghl_me?.state}</>
+              </p>
+              <p>
+                Country: <>{GHLData?.ghl_me?.country}</>
+              </p>
+            </div>
+          </div>
+        )}
+        <div>
+          <button
+            className={"btn btn-primary"}
+            onClick={() => {
+              const baseURL = import.meta.env.VITE_GRAPHQL_URL.replace(
+                "/api/graphql",
+                ""
+              );
+              const redirect = `${baseURL}/api/ghapi/auth/signin?redirect=${window.location.href}&userID=${data?.authenticatedItem?.id}`;
+              fetch(redirect, {
+                method: "GET",
+                headers: {
+                  Authorization: `Bearer ${AUTHSTORE.get("token")}`,
+                },
+              }).then((res) => {
+                if (res.ok) {
+                  res.json().then((data) => {
+                    window.location.href = data.url;
+                  });
+                }
+              });
+            }}
+          >
+            <p className={"btn-text"}>
+              {
+                <span>
+                  {data?.authenticatedItem?.ghlAccess
+                    ? "Reconnect to GHL"
+                    : "Connect to GHL"}
+                </span>
+              }
+            </p>
+          </button>
+        </div>
+        <div className="sidebar-header">
+          <p className="sidebar-title">ChatGPT Settings</p>
+        </div>
+        <div className="-mt-4">
+          <div className="p-2">
+            <p>
+              API Key:{" "}
+              <>
+                {data?.authenticatedItem?.aiKey?.openapiKey
+                  ? "Connected"
+                  : "Not Connected"}
+              </>
+            </p>
+          </div>
+          <button
+            className={"btn btn-primary"}
+            onClick={() => {
+              setApiKeyModal(true);
+            }}
+          >
+            <p className={"btn-text"}>Add OpenAI API Key</p>
+          </button>
+        </div>
+        <div className="sidebar-header">
+          <p className="sidebar-title">Tools</p>
+        </div>
+        <div className="-mt-4">
+          <button className={"btn btn-primary"}>
+            <p className={"btn-text"}>Health sherpa excel exports</p>
+          </button>
+        </div>
+
+        <div className="mt-8">
+          <span>Formats</span>
+        </div>
+        <div className="divider-x"></div>
+        <div className="formats-buttons-container"></div>
+        <div className="flex mt-8">
+          <button className="inline">
+            <IconRotateLeft />
+          </button>
+          <span className="ml-2 font-medium">History</span>
+        </div>
+        <div className="divider-x"></div>
+        <div className="sidebar-history">
+          <p className="truncate ... py-1">
+            How should the chatbot summarize How should the chatbot summarize
+            How should the chatbot summarize
+          </p>
+        </div>
       </div>
-      <div>
-        <p>{data?.authenticatedItem?.email}</p>
-        <button
-          className={"btn btn-primary"}
-          onClick={() => {
-            AUTHSTORE.clear();
-            window.location.href = "/";
-          }}
-        >
-          <p className={"btn-text"}>Sign Out</p>
-        </button>
-      </div>
-      <br />
-      <div className="sidebar-header">
-        <p className="sidebar-title">Agency information</p>
-      </div>
-      <div>
-        <button className={"btn btn-primary"}>
-          <p className={"btn-text"}>Connect to GHL</p>
-        </button>
-        <button className={"btn btn-primary"}>
-          <p className={"btn-text"}>Add OpenAI API Key</p>
-        </button>
-        <button className={"btn btn-primary"}>
-          <p className={"btn-text"}>Health sherpa excel exports</p>
-        </button>
-      </div>
-      <div className="mt-8">
-        <span>Formats</span>
-      </div>
-      <div className="divider-x"></div>
-      <div className="formats-buttons-container"></div>
-      <div className="flex mt-8">
-        <button className="inline">
-          <IconRotateLeft />
-        </button>
-        <span className="ml-2 font-medium">History</span>
-      </div>
-      <div className="divider-x"></div>
-      <div className="sidebar-history">
-        <p className="truncate ... py-1">
-          How should the chatbot summarize How should the chatbot summarize How
-          should the chatbot summarize
-        </p>
-      </div>
-    </div>
+      <ApiKeyModal
+        open={apiKeyModal}
+        onClose={() => setApiKeyModal(false)}
+        onConnect={() => {}}
+      />
+    </>
   );
 }
 
@@ -206,7 +295,7 @@ function Content() {
 
   return (
     <div className="flex-1 h-screen overflow-y-auto no-scrollbar">
-      <div className="sticky top-0 justify-between flex px-8 left-0 z-50 w-full bg-white header-container">
+      <div className="sticky top-0 left-0 z-50 flex justify-between w-full px-8 bg-white header-container">
         <p className="text-2xl font-bold">
           Federal<span className="text-2xl text-primary">Plans</span>
         </p>
@@ -526,7 +615,7 @@ function Content() {
 const Main = () => {
   return (
     <div className="flex justify-end w-full">
-      <Sidebar className="w-[325px] hidden lg:block p-8" />
+      <Sidebar className="w-[350px] hidden lg:block p-8" />
       <Content />
     </div>
   );

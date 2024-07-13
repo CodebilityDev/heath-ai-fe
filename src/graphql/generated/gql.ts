@@ -22,7 +22,10 @@ const documents = {
     "\n  mutation CreateBotConfig($data: BotConfigCreateInput!) {\n    createBotConfig(data: $data) {\n      id\n    }\n  }\n": types.CreateBotConfigDocument,
     "\n  mutation UpdateBotConfig(\n    $where: BotConfigWhereUniqueInput!\n    $data: BotConfigUpdateInput!\n  ) {\n    updateBotConfig(where: $where, data: $data) {\n      id\n    }\n  }\n": types.UpdateBotConfigDocument,
     "\n  mutation DeleteBotConfig($where: BotConfigWhereUniqueInput!) {\n    deleteBotConfig(where: $where) {\n      id\n    }\n  }\n": types.DeleteBotConfigDocument,
-    "\n  query User {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        lastName\n        email\n        displayName\n        role\n      }\n    }\n  }\n": types.UserDocument,
+    "\n  query User {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        lastName\n        displayName\n        email\n        role\n        createdAt\n        ghlAccess {\n          id\n          refreshToken\n          scope\n        }\n        aiKey {\n          id\n          openapiKey\n        }\n      }\n    }\n  }\n": types.UserDocument,
+    "\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      id\n    }\n  }\n": types.UpdateUserDocument,
+    "\n  mutation UpdateAIKey(\n    $where: AIKeyWhereUniqueInput!\n    $data: AIKeyUpdateInput!\n  ) {\n    updateAIKey(where: $where, data: $data) {\n      id\n    }\n  }\n": types.UpdateAiKeyDocument,
+    "\n  query Ghl_me {\n    ghl_me {\n      name\n      email\n      firstName\n      lastName\n      phone\n      address\n      state\n      country\n      postalCode\n    }\n  }\n": types.Ghl_MeDocument,
 };
 
 /**
@@ -78,7 +81,19 @@ export function graphql(source: "\n  mutation DeleteBotConfig($where: BotConfigW
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function graphql(source: "\n  query User {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        lastName\n        email\n        displayName\n        role\n      }\n    }\n  }\n"): (typeof documents)["\n  query User {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        lastName\n        email\n        displayName\n        role\n      }\n    }\n  }\n"];
+export function graphql(source: "\n  query User {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        lastName\n        displayName\n        email\n        role\n        createdAt\n        ghlAccess {\n          id\n          refreshToken\n          scope\n        }\n        aiKey {\n          id\n          openapiKey\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query User {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        lastName\n        displayName\n        email\n        role\n        createdAt\n        ghlAccess {\n          id\n          refreshToken\n          scope\n        }\n        aiKey {\n          id\n          openapiKey\n        }\n      }\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {\n    updateUser(where: $where, data: $data) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateAIKey(\n    $where: AIKeyWhereUniqueInput!\n    $data: AIKeyUpdateInput!\n  ) {\n    updateAIKey(where: $where, data: $data) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateAIKey(\n    $where: AIKeyWhereUniqueInput!\n    $data: AIKeyUpdateInput!\n  ) {\n    updateAIKey(where: $where, data: $data) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Ghl_me {\n    ghl_me {\n      name\n      email\n      firstName\n      lastName\n      phone\n      address\n      state\n      country\n      postalCode\n    }\n  }\n"): (typeof documents)["\n  query Ghl_me {\n    ghl_me {\n      name\n      email\n      firstName\n      lastName\n      phone\n      address\n      state\n      country\n      postalCode\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
