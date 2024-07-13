@@ -1,10 +1,10 @@
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
-import Sidebar from "../pages/main/Sidebar";
+
 import { useState } from "react";
 
-export function SheetDemo() {
+export function SheetDemo({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   console.log(isOpen);
   return (
@@ -16,8 +16,8 @@ export function SheetDemo() {
           <IoMdClose size={20} className="cursor-pointer" />
         )}
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto" side="left">
-        <Sidebar />
+      <SheetContent className="overflow-y-auto px-12" side="left">
+        {children}
       </SheetContent>
     </Sheet>
   );

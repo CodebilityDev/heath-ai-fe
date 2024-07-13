@@ -21,12 +21,19 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { apolloClient } from "./graphql/client";
 import CarrierModal from "./components/pages/main/modals/CarrierModal";
+import { SheetDemo } from "./components/common/SidebarSheet";
+import { twMerge } from "tailwind-merge";
 
-function Sidebar() {
+function Sidebar({ className }: { className?: string }) {
   const { data } = useQuery(GetMe);
 
   return (
-    <div className="w-[325px] h-screen overflow-y-auto no-scrollbar border border-gray-light shadow-lg p-8 pt-8">
+    <div
+      className={twMerge(
+        "h-screen overflow-y-auto no-scrollbar border border-gray-light shadow-lg",
+        className
+      )}
+    >
       <div className="sidebar-header">
         <p className="sidebar-title">My Account</p>
       </div>
@@ -199,10 +206,15 @@ function Content() {
 
   return (
     <div className="flex-1 h-screen overflow-y-auto no-scrollbar">
-      <div className="sticky top-0 left-0 z-50 w-full bg-white header-container">
-        <p className="header-title">
+      <div className="sticky top-0 justify-between flex px-8 left-0 z-50 w-full bg-white header-container">
+        <p className="text-2xl font-bold">
           Federal<span className="text-2xl text-primary">Plans</span>
         </p>
+        <span className="block lg:hidden">
+          <SheetDemo>
+            <Sidebar className="border-none shadow-none" />
+          </SheetDemo>
+        </span>
       </div>
       <form className="mt-8 form-container" onSubmit={handleSubmit}>
         <div className="form-content">
@@ -514,8 +526,8 @@ function Content() {
 const Main = () => {
   return (
     <div className="flex justify-end w-full">
-      <Sidebar></Sidebar>
-      <Content></Content>
+      <Sidebar className="w-[325px] hidden lg:block p-8" />
+      <Content />
     </div>
   );
 };
