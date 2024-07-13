@@ -240,7 +240,7 @@
   }
 
   .search-input {
-    @apply w-full py-[17px] pl-[50px] border border-gray-light focus:outline-primary rounded-[50px];
+    @apply w-full py-[5px] pl-[5px] border border-gray-light focus:outline-primary rounded-[50px];
   }
 
   /* button style */
@@ -298,7 +298,7 @@
   }
 
   .modal-content {
-    @apply bg-white shadow  p-[30px] rounded-[20px];
+    @apply bg-white shadow  rounded-[20px] max-h-[80vh] overflow-auto;
   }
 
   .multi-select-menu-button {
@@ -539,7 +539,7 @@
   }
 
   .modal-content {
-    @apply bg-white shadow  p-[30px] rounded-[20px];
+    @apply bg-white shadow rounded-[20px];
   }
 
   .multi-select-menu-button {
