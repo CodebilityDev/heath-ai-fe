@@ -18,20 +18,8 @@ export const GetBotConfig = graphql(`
 `);
 
 export const ListBotConfig = graphql(`
-  query BotConfigs(
-    $where: BotConfigWhereInput!
-    $orderBy: [BotConfigOrderByInput!]!
-    $take: Int
-    $skip: Int!
-    $cursor: BotConfigWhereUniqueInput
-  ) {
-    botConfigs(
-      where: $where
-      orderBy: $orderBy
-      take: $take
-      skip: $skip
-      cursor: $cursor
-    ) {
+  query BotConfigs($where: BotConfigWhereInput!) {
+    botConfigs(where: $where) {
       id
       name
       companyStatement

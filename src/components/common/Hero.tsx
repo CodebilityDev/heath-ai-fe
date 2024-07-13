@@ -66,13 +66,18 @@ const Hero = () => {
               </div>
             </div>
           </div>
-          <div className="flex flex-col mt-8 sm:mt-0 sm:flex-row justify-center sm:justify-between items-center sm:gap-0 gap-2">
-            <p className="text-[#706571] text-center sm:text-start">
+          <div className="flex items-center justify-between">
+            <p className="text-[#706571]">
               Automate, simplify, and enhance your client interactions
               effortlessly
             </p>
-            <div className="flex gap-x-4 w-full sm:w-auto">
-              <Button className="flex w-full text-xs items-center bg-primary text-white sm:w-[183px] justify-center py-3">
+            <div className="flex gap-x-4">
+              <Button
+                className="flex items-center bg-primary text-white w-[183px] justify-center py-3"
+                onClick={() => {
+                  window.location.href = "/sign-in";
+                }}
+              >
                 Get Started
                 <ArrowRight className="ml-2" size={16} />
               </Button>
@@ -82,19 +87,14 @@ const Hero = () => {
               </Button>
             </div>
           </div>
-          <div className="flex gap-x-4 rounded-[25px] h-[30rem] overflow-hidden mt-8">
+          <div className="flex items-start mt-8 overflow-hidden gap-x-4 justif">
             <img
-              src="/images/hero1.png"
-              alt="heroPage"
-              className="rounded-[25px] flex-1 object-cover"
-            />
-            <img
-              src="/images/hero2.png"
-              alt="heroPage"
-              className="rounded-[25px] flex-1 object-cover"
+              src="/images/heroFinal.png"
+              alt=""
+              className="object-cover w-full"
             />
           </div>
-          <div className="flex flex-wrap bg-white gap-x-6 gap-y-2 shadow-lg rounded-2xl py-8 w-full mt-8 justify-center px-2">
+          <div className="flex justify-center w-full py-8 mt-8 bg-white shadow-lg gap-x-6 rounded-2xl">
             {company.map((item, index) => (
               <span
                 key={`key-company-${index}`}

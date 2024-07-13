@@ -4,10 +4,10 @@ import Container from "../core/Container";
 
 const Header = () => {
   return (
-    <div className="h-16 flex w-full">
-      <Container className=" flex items-center justify-between px-4">
+    <div className="flex w-full h-16">
+      <Container className="flex items-center justify-between px-4 ">
         <img src="/images/logo.png" alt="logo" width={150} className="" />
-        <div className="gap-x-8 hidden lg:flex">
+        <div className="hidden gap-x-8 lg:flex">
           {[
             { label: "Home", active: true },
             { label: "About" },
@@ -26,8 +26,13 @@ const Header = () => {
             </a>
           ))}
         </div>
-        <Button className="py-3 hidden lg:flex text-white w-auto bg-primary rounded-md px-6">
-          Book a cell
+        <Button
+          className="w-auto px-6 py-3 text-white rounded-md bg-primary"
+          onClick={() => {
+            window.location.href = "/sign-in";
+          }}
+        >
+          Go To Dashboard
         </Button>
       </Container>
     </div>
