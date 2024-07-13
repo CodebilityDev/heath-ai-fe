@@ -1,38 +1,39 @@
-import { graphql } from "../generated";
-import { gql } from "@apollo/client";
+import { graphql } from "@graphql/generated";
 
-export const AuthenticateUserWithPassword = gql(`
-  mutation AuthenticateUserWithPassword(
-    $email: String!
-    $adminPassword: String!
-  ) {
-    authenticateUserWithPassword(email: $email, adminPassword: $adminPassword) {
-      ... on UserAuthenticationWithPasswordSuccess {
+export const Login = graphql(`
+  mutation Login($email: String!, $password: String!) {
+    authclient_login(email: $email, password: $password) {
+      ... on ClientItemAuthenticationWithPasswordSuccess {
         sessionToken
-        item {
-          id
-          name
-          email
-          displayName
-        }
       }
     }
   }
 `);
 
-export const User = graphql(`
-  query User {
-    authenticatedItem {
-      ... on User {
-        id
-        name
-        lastName
-        displayName
-        email
-        role
-        createdAt
-        groupsCount
-      }
-    }
+export const Register = graphql(`
+  mutation Register(
+    $email: String!
+    $password: String!
+    $firstName: String
+    $lastName: String
+  ) {
+    authclient_register(
+      email: $email
+      password: $password
+      firstName: $firstName
+      lastName: $lastName
+    )
+  }
+`);
+
+export const RequestResetPassword = graphql(`
+  mutation RequestResetPassword($email: String!) {
+    authclient_requestPasswordReset(email: $email)
+  }
+`);
+
+export const ResetPassword = graphql(`
+  mutation ResetPassword($token: String!, $password: String!) {
+    authclient_resetPassword(token: $token, password: $password)
   }
 `);
