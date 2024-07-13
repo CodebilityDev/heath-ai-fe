@@ -43,7 +43,7 @@ const SignInPage = () => {
 
       AUTHSTORE.set(token);
 
-      navigate("/");
+      navigate("/app");
     } else {
       toast.error("Failed to signin");
     }

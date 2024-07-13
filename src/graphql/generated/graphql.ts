@@ -1,5 +1,4 @@
 /* eslint-disable */
-// @ts-nocheck
 import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/core";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
@@ -65,12 +64,6 @@ export type BotConfigCreateInput = {
   welcomeMessage?: InputMaybe<Scalars["String"]["input"]>;
 };
 
-export type BotConfigManyRelationFilter = {
-  every?: InputMaybe<BotConfigWhereInput>;
-  none?: InputMaybe<BotConfigWhereInput>;
-  some?: InputMaybe<BotConfigWhereInput>;
-};
-
 export type BotConfigOrderByInput = {
   companyStatement?: InputMaybe<OrderDirection>;
   healthInsuranceCarriers?: InputMaybe<OrderDirection>;
@@ -84,16 +77,15 @@ export type BotConfigOrderByInput = {
   welcomeMessage?: InputMaybe<OrderDirection>;
 };
 
-export type BotConfigRelateToManyForCreateInput = {
-  connect?: InputMaybe<Array<BotConfigWhereUniqueInput>>;
-  create?: InputMaybe<Array<BotConfigCreateInput>>;
+export type BotConfigRelateToOneForCreateInput = {
+  connect?: InputMaybe<BotConfigWhereUniqueInput>;
+  create?: InputMaybe<BotConfigCreateInput>;
 };
 
-export type BotConfigRelateToManyForUpdateInput = {
-  connect?: InputMaybe<Array<BotConfigWhereUniqueInput>>;
-  create?: InputMaybe<Array<BotConfigCreateInput>>;
-  disconnect?: InputMaybe<Array<BotConfigWhereUniqueInput>>;
-  set?: InputMaybe<Array<BotConfigWhereUniqueInput>>;
+export type BotConfigRelateToOneForUpdateInput = {
+  connect?: InputMaybe<BotConfigWhereUniqueInput>;
+  create?: InputMaybe<BotConfigCreateInput>;
+  disconnect?: InputMaybe<Scalars["Boolean"]["input"]>;
 };
 
 export type BotConfigUpdateArgs = {
@@ -998,8 +990,7 @@ export type User = {
   __typename?: "User";
   adminPassword?: Maybe<PasswordState>;
   avatar?: Maybe<ImageFieldOutput>;
-  botConfigs?: Maybe<Array<BotConfig>>;
-  botConfigsCount?: Maybe<Scalars["Int"]["output"]>;
+  botConfig?: Maybe<BotConfig>;
   createdAt?: Maybe<Scalars["DateTime"]["output"]>;
   displayName?: Maybe<Scalars["String"]["output"]>;
   email?: Maybe<Scalars["String"]["output"]>;
@@ -1009,18 +1000,6 @@ export type User = {
   lastName?: Maybe<Scalars["String"]["output"]>;
   name?: Maybe<Scalars["String"]["output"]>;
   role?: Maybe<UserRoleType>;
-};
-
-export type UserBotConfigsArgs = {
-  cursor?: InputMaybe<BotConfigWhereUniqueInput>;
-  orderBy?: Array<BotConfigOrderByInput>;
-  skip?: Scalars["Int"]["input"];
-  take?: InputMaybe<Scalars["Int"]["input"]>;
-  where?: BotConfigWhereInput;
-};
-
-export type UserBotConfigsCountArgs = {
-  where?: BotConfigWhereInput;
 };
 
 export type UserGroupsArgs = {
@@ -1053,7 +1032,7 @@ export type UserAuthenticationWithPasswordSuccess = {
 export type UserCreateInput = {
   adminPassword?: InputMaybe<Scalars["String"]["input"]>;
   avatar?: InputMaybe<ImageFieldInput>;
-  botConfigs?: InputMaybe<BotConfigRelateToManyForCreateInput>;
+  botConfig?: InputMaybe<BotConfigRelateToOneForCreateInput>;
   createdAt?: InputMaybe<Scalars["DateTime"]["input"]>;
   email?: InputMaybe<Scalars["String"]["input"]>;
   groups?: InputMaybe<GroupMemberRelateToManyForCreateInput>;
@@ -1110,7 +1089,7 @@ export type UserUpdateArgs = {
 export type UserUpdateInput = {
   adminPassword?: InputMaybe<Scalars["String"]["input"]>;
   avatar?: InputMaybe<ImageFieldInput>;
-  botConfigs?: InputMaybe<BotConfigRelateToManyForUpdateInput>;
+  botConfig?: InputMaybe<BotConfigRelateToOneForUpdateInput>;
   createdAt?: InputMaybe<Scalars["DateTime"]["input"]>;
   email?: InputMaybe<Scalars["String"]["input"]>;
   groups?: InputMaybe<GroupMemberRelateToManyForUpdateInput>;
@@ -1124,7 +1103,7 @@ export type UserWhereInput = {
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
   adminPassword?: InputMaybe<PasswordFilter>;
-  botConfigs?: InputMaybe<BotConfigManyRelationFilter>;
+  botConfig?: InputMaybe<BotConfigWhereInput>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
   groups?: InputMaybe<GroupMemberManyRelationFilter>;
@@ -1145,21 +1124,120 @@ export type LoginMutationVariables = Exact<{
   password: Scalars["String"]["input"];
 }>;
 
-export type AuthenticateUserWithPasswordMutation = {
+export type LoginMutation = {
   __typename?: "Mutation";
-  authenticateUserWithPassword?:
-    | { __typename?: "UserAuthenticationWithPasswordFailure" }
+  authclient_login?:
+    | { __typename?: "ClientItemAuthenticationWithPasswordFailure" }
     | {
-        __typename?: "UserAuthenticationWithPasswordSuccess";
+        __typename?: "ClientItemAuthenticationWithPasswordSuccess";
         sessionToken: string;
-        item: {
-          __typename?: "User";
-          id: string;
-          email?: string | null;
-          displayName?: string | null;
-        };
       }
     | null;
+};
+
+export type RegisterMutationVariables = Exact<{
+  email: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
+  firstName?: InputMaybe<Scalars["String"]["input"]>;
+  lastName?: InputMaybe<Scalars["String"]["input"]>;
+}>;
+
+export type RegisterMutation = {
+  __typename?: "Mutation";
+  authclient_register?: boolean | null;
+};
+
+export type RequestResetPasswordMutationVariables = Exact<{
+  email: Scalars["String"]["input"];
+}>;
+
+export type RequestResetPasswordMutation = {
+  __typename?: "Mutation";
+  authclient_requestPasswordReset?: boolean | null;
+};
+
+export type ResetPasswordMutationVariables = Exact<{
+  token: Scalars["String"]["input"];
+  password: Scalars["String"]["input"];
+}>;
+
+export type ResetPasswordMutation = {
+  __typename?: "Mutation";
+  authclient_resetPassword?: boolean | null;
+};
+
+export type BotConfigQueryVariables = Exact<{
+  where: BotConfigWhereUniqueInput;
+}>;
+
+export type BotConfigQuery = {
+  __typename?: "Query";
+  botConfig?: {
+    __typename?: "BotConfig";
+    id: string;
+    name?: string | null;
+    companyStatement?: string | null;
+    tonestyle?: string | null;
+    priorityPlan?: string | null;
+    healthInsuranceCarriers?: string | null;
+    presentationStrategy?: string | null;
+    specificQuestions?: string | null;
+    summaryPrompt?: string | null;
+    welcomeMessage?: string | null;
+  } | null;
+};
+
+export type BotConfigsQueryVariables = Exact<{
+  where: BotConfigWhereInput;
+  orderBy: Array<BotConfigOrderByInput> | BotConfigOrderByInput;
+  take?: InputMaybe<Scalars["Int"]["input"]>;
+  skip: Scalars["Int"]["input"];
+  cursor?: InputMaybe<BotConfigWhereUniqueInput>;
+}>;
+
+export type BotConfigsQuery = {
+  __typename?: "Query";
+  botConfigs?: Array<{
+    __typename?: "BotConfig";
+    id: string;
+    name?: string | null;
+    companyStatement?: string | null;
+    tonestyle?: string | null;
+    priorityPlan?: string | null;
+    healthInsuranceCarriers?: string | null;
+    presentationStrategy?: string | null;
+    specificQuestions?: string | null;
+    summaryPrompt?: string | null;
+    welcomeMessage?: string | null;
+  }> | null;
+};
+
+export type CreateBotConfigMutationVariables = Exact<{
+  data: BotConfigCreateInput;
+}>;
+
+export type CreateBotConfigMutation = {
+  __typename?: "Mutation";
+  createBotConfig?: { __typename?: "BotConfig"; id: string } | null;
+};
+
+export type UpdateBotConfigMutationVariables = Exact<{
+  where: BotConfigWhereUniqueInput;
+  data: BotConfigUpdateInput;
+}>;
+
+export type UpdateBotConfigMutation = {
+  __typename?: "Mutation";
+  updateBotConfig?: { __typename?: "BotConfig"; id: string } | null;
+};
+
+export type DeleteBotConfigMutationVariables = Exact<{
+  where: BotConfigWhereUniqueInput;
+}>;
+
+export type DeleteBotConfigMutation = {
+  __typename?: "Mutation";
+  deleteBotConfig?: { __typename?: "BotConfig"; id: string } | null;
 };
 
 export type UserQueryVariables = Exact<{ [key: string]: never }>;
@@ -1171,21 +1249,19 @@ export type UserQuery = {
     id: string;
     name?: string | null;
     lastName?: string | null;
-    displayName?: string | null;
     email?: string | null;
+    displayName?: string | null;
     role?: UserRoleType | null;
-    createdAt?: any | null;
-    groupsCount?: number | null;
   } | null;
 };
 
-export const AuthenticateUserWithPasswordDocument = {
+export const LoginDocument = {
   kind: "Document",
   definitions: [
     {
       kind: "OperationDefinition",
       operation: "mutation",
-      name: { kind: "Name", value: "AuthenticateUserWithPassword" },
+      name: { kind: "Name", value: "Login" },
       variableDefinitions: [
         {
           kind: "VariableDefinition",
@@ -1205,7 +1281,7 @@ export const AuthenticateUserWithPasswordDocument = {
           kind: "VariableDefinition",
           variable: {
             kind: "Variable",
-            name: { kind: "Name", value: "adminPassword" },
+            name: { kind: "Name", value: "password" },
           },
           type: {
             kind: "NonNullType",
@@ -1221,7 +1297,7 @@ export const AuthenticateUserWithPasswordDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "authenticateUserWithPassword" },
+            name: { kind: "Name", value: "authclient_login" },
             arguments: [
               {
                 kind: "Argument",
@@ -1233,10 +1309,10 @@ export const AuthenticateUserWithPasswordDocument = {
               },
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "adminPassword" },
+                name: { kind: "Name", value: "password" },
                 value: {
                   kind: "Variable",
-                  name: { kind: "Name", value: "adminPassword" },
+                  name: { kind: "Name", value: "password" },
                 },
               },
             ],
@@ -1249,7 +1325,7 @@ export const AuthenticateUserWithPasswordDocument = {
                     kind: "NamedType",
                     name: {
                       kind: "Name",
-                      value: "UserAuthenticationWithPasswordSuccess",
+                      value: "ClientItemAuthenticationWithPasswordSuccess",
                     },
                   },
                   selectionSet: {
@@ -1258,27 +1334,6 @@ export const AuthenticateUserWithPasswordDocument = {
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "sessionToken" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "item" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "id" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "email" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "displayName" },
-                            },
-                          ],
-                        },
                       },
                     ],
                   },
@@ -1290,9 +1345,639 @@ export const AuthenticateUserWithPasswordDocument = {
       },
     },
   ],
+} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
+export const RegisterDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "Register" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "email" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "password" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "firstName" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "lastName" },
+          },
+          type: { kind: "NamedType", name: { kind: "Name", value: "String" } },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "authclient_register" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "email" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "email" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "password" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "password" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "firstName" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "firstName" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "lastName" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "lastName" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
+export const RequestResetPasswordDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "RequestResetPassword" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "email" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "authclient_requestPasswordReset" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "email" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "email" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
 } as unknown as DocumentNode<
-  AuthenticateUserWithPasswordMutation,
-  AuthenticateUserWithPasswordMutationVariables
+  RequestResetPasswordMutation,
+  RequestResetPasswordMutationVariables
+>;
+export const ResetPasswordDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "ResetPassword" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "token" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "password" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "String" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "authclient_resetPassword" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "token" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "token" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "password" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "password" },
+                },
+              },
+            ],
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  ResetPasswordMutation,
+  ResetPasswordMutationVariables
+>;
+export const BotConfigDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "BotConfig" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "where" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "BotConfigWhereUniqueInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "botConfig" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "where" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "where" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "companyStatement" },
+                },
+                { kind: "Field", name: { kind: "Name", value: "tonestyle" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "priorityPlan" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "healthInsuranceCarriers" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "presentationStrategy" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "specificQuestions" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "summaryPrompt" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "welcomeMessage" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<BotConfigQuery, BotConfigQueryVariables>;
+export const BotConfigsDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "query",
+      name: { kind: "Name", value: "BotConfigs" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "where" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "BotConfigWhereInput" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "orderBy" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "ListType",
+              type: {
+                kind: "NonNullType",
+                type: {
+                  kind: "NamedType",
+                  name: { kind: "Name", value: "BotConfigOrderByInput" },
+                },
+              },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "take" } },
+          type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "skip" } },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "cursor" },
+          },
+          type: {
+            kind: "NamedType",
+            name: { kind: "Name", value: "BotConfigWhereUniqueInput" },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "botConfigs" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "where" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "where" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "orderBy" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "orderBy" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "take" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "take" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "skip" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "skip" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "cursor" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "cursor" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "companyStatement" },
+                },
+                { kind: "Field", name: { kind: "Name", value: "tonestyle" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "priorityPlan" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "healthInsuranceCarriers" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "presentationStrategy" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "specificQuestions" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "summaryPrompt" },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "welcomeMessage" },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<BotConfigsQuery, BotConfigsQueryVariables>;
+export const CreateBotConfigDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "CreateBotConfig" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "BotConfigCreateInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "createBotConfig" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "data" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  CreateBotConfigMutation,
+  CreateBotConfigMutationVariables
+>;
+export const UpdateBotConfigDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "UpdateBotConfig" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "where" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "BotConfigWhereUniqueInput" },
+            },
+          },
+        },
+        {
+          kind: "VariableDefinition",
+          variable: { kind: "Variable", name: { kind: "Name", value: "data" } },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "BotConfigUpdateInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "updateBotConfig" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "where" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "where" },
+                },
+              },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "data" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "data" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  UpdateBotConfigMutation,
+  UpdateBotConfigMutationVariables
+>;
+export const DeleteBotConfigDocument = {
+  kind: "Document",
+  definitions: [
+    {
+      kind: "OperationDefinition",
+      operation: "mutation",
+      name: { kind: "Name", value: "DeleteBotConfig" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "where" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: {
+              kind: "NamedType",
+              name: { kind: "Name", value: "BotConfigWhereUniqueInput" },
+            },
+          },
+        },
+      ],
+      selectionSet: {
+        kind: "SelectionSet",
+        selections: [
+          {
+            kind: "Field",
+            name: { kind: "Name", value: "deleteBotConfig" },
+            arguments: [
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "where" },
+                value: {
+                  kind: "Variable",
+                  name: { kind: "Name", value: "where" },
+                },
+              },
+            ],
+            selectionSet: {
+              kind: "SelectionSet",
+              selections: [
+                { kind: "Field", name: { kind: "Name", value: "id" } },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  ],
+} as unknown as DocumentNode<
+  DeleteBotConfigMutation,
+  DeleteBotConfigMutationVariables
 >;
 export const UserDocument = {
   kind: "Document",
@@ -1325,20 +2010,12 @@ export const UserDocument = {
                         kind: "Field",
                         name: { kind: "Name", value: "lastName" },
                       },
+                      { kind: "Field", name: { kind: "Name", value: "email" } },
                       {
                         kind: "Field",
                         name: { kind: "Name", value: "displayName" },
                       },
-                      { kind: "Field", name: { kind: "Name", value: "email" } },
                       { kind: "Field", name: { kind: "Name", value: "role" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "createdAt" },
-                      },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "groupsCount" },
-                      },
                     ],
                   },
                 },
