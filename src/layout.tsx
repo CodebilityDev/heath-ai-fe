@@ -2,16 +2,16 @@ import { Outlet } from "react-router-dom";
 
 const MainLayout = () => {
   return (
-    <main className="flex min-h-screen relative">
+    <main className="relative flex min-h-screen">
       <Outlet />
-      <span className="bg-black fixed font-semibold bottom-2 flex items-center justify-center text-white left-2 size-8 rounded-full">
-        <p className="block sm:hidden text-sm">xs</p>
-        <p className="hidden sm:block md:hidden text-sm">sm</p>
-        <p className="hidden md:block lg:hidden text-sm">md</p>
-        <p className="hidden lg:block xl:hidden text-sm">lg</p>
-        <p className="hidden xl:block 2xl:hidden text-sm">xl</p>
-        <p className="hidden 2xl:block text-sm">2xl</p>
-      </span>
+      {/* <span className="fixed flex items-center justify-center font-semibold text-white bg-black rounded-full bottom-2 left-2 size-8">
+        <p className="block text-sm sm:hidden">xs</p>
+        <p className="hidden text-sm sm:block md:hidden">sm</p>
+        <p className="hidden text-sm md:block lg:hidden">md</p>
+        <p className="hidden text-sm lg:block xl:hidden">lg</p>
+        <p className="hidden text-sm xl:block 2xl:hidden">xl</p>
+        <p className="hidden text-sm 2xl:block">2xl</p>
+      </span> */}
     </main>
   );
 };
