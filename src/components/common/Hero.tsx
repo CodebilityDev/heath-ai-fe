@@ -72,10 +72,12 @@ const Hero = () => {
               effortlessly
             </p>
             <div className="flex gap-x-4 w-full sm:w-auto">
-              <Button className="flex w-full text-xs items-center bg-primary text-white sm:w-[183px] justify-center py-3">
-                Get Started
-                <ArrowRight className="ml-2" size={16} />
-              </Button>
+              <a href="/sign-in">
+                <Button className="flex w-full text-xs items-center bg-primary text-white sm:w-[183px] justify-center py-3">
+                  Get Started
+                  <ArrowRight className="ml-2" size={16} />
+                </Button>
+              </a>
               <Button className="flex w-full text-xs items-center text-primary border border-primary sm:w-[183px] justify-center">
                 Learn More
                 <ArrowRight className="ml-2" size={16} />
