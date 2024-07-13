@@ -1,8 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { oaKeySelector } from "@state/Setting";
 import IconSave from "@svgs/IconSave";
 import { OpenAiAPIKeyInterface } from "@/types/AppState";
+import { useQuery } from "@apollo/client";
+import { GetMe, UpdateAIKey, UpdateUser } from "@/graphql/declarations/geMe";
+import { apolloClient } from "@/graphql/client";
+import { toast } from "react-toastify";
 
 const ApiKeyModal = ({
   open,
@@ -13,23 +17,61 @@ const ApiKeyModal = ({
   onClose: any;
   onConnect: any;
 }) => {
-  const [whiteLink, setWhiteLink] = useState(false);
-  const [oaKey, setOaKey] =
-    useRecoilState<OpenAiAPIKeyInterface>(oaKeySelector);
+  const { data: userData } = useQuery(GetMe);
 
-  const handleChange = (e: any) => {
-    // setOaKey({
-    //   oaKey,
-    //   apiKey: e.target.value
-    // })
+  const [apiKey, setApiKey] = useState("");
+
+  useEffect(() => {
+    if (userData?.authenticatedItem?.aiKey?.openapiKey) {
+      setApiKey(userData?.authenticatedItem?.aiKey?.openapiKey);
+    }
+  }, [userData]);
+
+  const update = async () => {
+    // if user already has an api key, update it
+    if (userData?.authenticatedItem?.aiKey?.id) {
+      await apolloClient.mutate({
+        mutation: UpdateAIKey,
+        variables: {
+          where: {
+            id: userData?.authenticatedItem?.aiKey?.id,
+          },
+          data: {
+            openapiKey: apiKey,
+          },
+        },
+      });
+    } else {
+      // if user doesn't have an api key, create one
+      await apolloClient.mutate({
+        mutation: UpdateUser,
+        variables: {
+          where: {
+            id: userData?.authenticatedItem?.id,
+          },
+          data: {
+            aiKey: {
+              create: {
+                openapiKey: apiKey,
+              },
+            },
+          },
+        },
+      });
+
+      toast.success("API Key added successfully");
+
+      onConnect();
+    }
   };
+
   return (
     <div
-      className={`modal-container ${
+      className={`modal-container z-[60] ${
         open ? "visible bg-black/20" : "invisible"
       }`}
     >
-      <div className="modal-content md:w-[60%] w-full">
+      <div className="modal-content md:w-[60%] w-full no-scrollbar">
         <div className="flex flex-col gap-[30px]">
           <div className="w-full">
             <p className="font-bold">Add OpenAI API Key</p>
@@ -38,61 +80,14 @@ const ApiKeyModal = ({
           <div className="flex flex-col gap-[20px]">
             <div className="inline-form-container">
               <div className="inline-form-element">
-                <p className="mb-2">Your API</p>
+                <p className="mb-2">OpenAI API Key</p>
                 <input
-                  type="text"
-                  onChange={handleChange}
+                  // type="password"
+                  value={apiKey}
+                  onChange={(e) => setApiKey(e.target.value)}
                   placeholder="API"
                   className="form-input"
                 />
-              </div>
-              <div className="inline-form-element">
-                <p className="mb-2">Secret Key</p>
-                <input
-                  type="text"
-                  placeholder="123456789"
-                  className="form-input"
-                />
-              </div>
-            </div>
-            <div
-              className="inline-flex items-center cursor-pointer"
-              onClick={() => setWhiteLink(!whiteLink)}
-            >
-              <span className="mr-4">White Link</span>
-              <input
-                checked={whiteLink}
-                type="checkbox"
-                value=""
-                className="sr-only peer"
-                onChange={() => {}}
-              />
-              <div className="relative w-11 h-6 bg-gray-light-100 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-white rounded-full pee peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:absolute after:top-[2px] after:start-[2px] after:bg-[#213A5C] peer-checked:after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
-            </div>
-            <div className="w-full inline-flex items-center">
-              <p className="mr-4">Upload Logo</p>
-              <div className="flex flex-col items-center justify-center">
-                <label
-                  htmlFor="dropzone-file"
-                  className="flex flex-col items-center justify-center bg-[#E6ECFF] border border-primary border-dashed rounded-full w-[100px] h-[100px] cursor-pointer"
-                >
-                  <IconSave />
-                  <input id="dropzone-file" type="file" className="hidden" />
-                </label>
-              </div>
-            </div>
-            <div className="inline-form-container">
-              <div className="inline-form-element">
-                <p className="mb-2">Go High-Level(GHL) Business IT</p>
-                <input
-                  type="text"
-                  placeholder="GHL Business IT"
-                  className="form-input"
-                />
-              </div>
-              <div className="inline-form-element">
-                <p className="mb-2">API</p>
-                <input type="text" placeholder="API" className="form-input" />
               </div>
             </div>
           </div>
@@ -104,7 +99,7 @@ const ApiKeyModal = ({
                 </button>
               </div>
               <div>
-                <button className="btn-submit" onClick={onConnect}>
+                <button className="btn-submit" onClick={update}>
                   Connect
                 </button>
               </div>
