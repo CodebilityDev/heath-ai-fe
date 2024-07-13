@@ -37,55 +37,64 @@ const Hero = () => {
     <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b to-[#624ff62d] from-[#FFFFFF]">
       <Container className="px-4">
         <div className="mt-8">
-          <div className="flex items-center">
-            <h1 className="text-4xl font-bold">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 items-center">
+            <h1 className="sm:text-4xl text-2xl font-bold text-center sm:text-start">
               Streamline Your Insurance Process with Our{" "}
-              <span className="text-4xl text-primary">AI-Powered</span> Chatbot
+              <span className="sm:text-4xl text-2xl text-primary">
+                AI-Powered
+              </span>{" "}
+              Chatbot
             </h1>
 
-            <div className="flex items-center gap-x-4 min-w-[326px]">
+            <div className="flex items-center gap-x-4 min-w-[326px] justify-center sm:justify-start">
               <div className="flex items-start">
                 {avatar.map((item, index) => (
                   <img
                     key={`key-img-${index}`}
-                    className={twMerge("-ml-3", index === 0 && "ml-0")}
-                    width={55}
-                    height={55}
+                    className={twMerge(
+                      "-ml-2 sm:-ml-3 w-[33px] h-[33px] sm:w-[55px] sm:h-[55px]",
+                      index === 0 && "ml-0"
+                    )}
                     src={item}
                     alt="item"
                   />
                 ))}
               </div>
               <div className="flex flex-col">
-                <h1 className="text-2xl font-extrabold">750k+</h1>
+                <h1 className="text-md sm:text-2xl font-extrabold">750k+</h1>
                 <p className="text-nowrap text-[#706571]">Happy customers</p>
               </div>
             </div>
           </div>
-          <div className="flex justify-between items-center">
-            <p className="text-[#706571]">
+          <div className="flex flex-col mt-8 sm:mt-0 sm:flex-row justify-center sm:justify-between items-center sm:gap-0 gap-2">
+            <p className="text-[#706571] text-center sm:text-start">
               Automate, simplify, and enhance your client interactions
               effortlessly
             </p>
-            <div className="flex gap-x-4">
-              <Button className="flex items-center bg-primary text-white w-[183px] justify-center py-3">
+            <div className="flex gap-x-4 w-full sm:w-auto">
+              <Button className="flex w-full text-xs items-center bg-primary text-white sm:w-[183px] justify-center py-3">
                 Get Started
                 <ArrowRight className="ml-2" size={16} />
               </Button>
-              <Button className="flex items-center text-primary border border-primary w-[183px] justify-center">
+              <Button className="flex w-full text-xs items-center text-primary border border-primary sm:w-[183px] justify-center">
                 Learn More
                 <ArrowRight className="ml-2" size={16} />
               </Button>
             </div>
           </div>
-          <div className="flex items-start gap-x-4 justif overflow-hidden mt-8">
+          <div className="flex gap-x-4 rounded-[25px] h-[30rem] overflow-hidden mt-8">
             <img
-              src="/images/heroFinal.png"
-              alt=""
-              className="w-full object-cover"
+              src="/images/hero1.png"
+              alt="heroPage"
+              className="rounded-[25px] flex-1 object-cover"
+            />
+            <img
+              src="/images/hero2.png"
+              alt="heroPage"
+              className="rounded-[25px] flex-1 object-cover"
             />
           </div>
-          <div className="flex bg-white gap-x-6 shadow-lg rounded-2xl py-8 w-full mt-8 justify-center">
+          <div className="flex flex-wrap bg-white gap-x-6 gap-y-2 shadow-lg rounded-2xl py-8 w-full mt-8 justify-center px-2">
             {company.map((item, index) => (
               <span
                 key={`key-company-${index}`}
@@ -93,8 +102,8 @@ const Hero = () => {
               >
                 <img
                   src={item.logo}
-                  width={32}
-                  height={32}
+                  width={20}
+                  height={index === 1 ? 10 : 32}
                   alt={`companylogo-${index}`}
                 />
                 <p className="font-bold">{item.name}</p>

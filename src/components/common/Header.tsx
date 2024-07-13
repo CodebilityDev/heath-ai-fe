@@ -7,7 +7,7 @@ const Header = () => {
     <div className="h-16 flex w-full">
       <Container className=" flex items-center justify-between px-4">
         <img src="/images/logo.png" alt="logo" width={150} className="" />
-        <div className="flex gap-x-8">
+        <div className="gap-x-8 hidden lg:flex">
           {[
             { label: "Home", active: true },
             { label: "About" },
@@ -26,7 +26,7 @@ const Header = () => {
             </a>
           ))}
         </div>
-        <Button className="py-3 text-white w-auto bg-primary rounded-md px-6">
+        <Button className="py-3 hidden lg:flex text-white w-auto bg-primary rounded-md px-6">
           Book a cell
         </Button>
       </Container>
