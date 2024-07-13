@@ -5,12 +5,22 @@ import langSnippet from "@utils/LangSnippet";
 import "react-toastify/dist/ReactToastify.css";
 import CheckButtons from "@components/core/CheckButtons";
 import CheckBox from "@components/core/CheckBox";
-import Datepicker from "react-tailwindcss-datepicker";
+import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 import Select from "react-tailwindcss-select";
 import IconMessage from "@svgs/IconMessage";
 import { useQuery } from "@apollo/client";
 import { GetMe } from "@graphql/declarations/geMe";
 import { AUTHSTORE } from "@graphql/authStorage";
+import {
+  CreateBotConfig,
+  GetBotConfig,
+  ListBotConfig,
+  UpdateBotConfig,
+} from "./graphql/declarations/botConfig";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { apolloClient } from "./graphql/client";
+import CarrierModal from "./components/pages/main/modals/CarrierModal";
 
 function Sidebar() {
   const { data } = useQuery(GetMe);
@@ -70,21 +80,152 @@ function Sidebar() {
 }
 
 function Content() {
+  const [carrierModal, setCarrierModal] = useState(false);
+
+  const { data: userData, loading: userLoading } = useQuery(GetMe);
+  const { data, loading } = useQuery(ListBotConfig, {
+    variables: {
+      where: {
+        user: {
+          id: {
+            equals: userData?.authenticatedItem?.id,
+          },
+        },
+      },
+    },
+    skip: !userData?.authenticatedItem?.id,
+  });
+  const [configSet, setConfig] = useState<
+    | {
+        companyStatement?: string | null;
+        tonestyle?: string | null;
+        priorityPlan?: string | null;
+        healthInsuranceCarriers?: string | null;
+        presentationStrategy?: string | null;
+        specificQuestions?: string | null;
+        summaryPrompt?: string | null;
+        welcomeMessage?: string | null;
+      }
+    | undefined
+  >();
+
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+    if (!data?.botConfigs?.[0]) {
+      return;
+    }
+    apolloClient
+      .mutate({
+        mutation: UpdateBotConfig,
+        variables: {
+          where: { id: data?.botConfigs[0].id },
+          data: {
+            companyStatement: configSet?.companyStatement,
+            tonestyle: configSet?.tonestyle,
+            priorityPlan: configSet?.priorityPlan,
+            healthInsuranceCarriers: configSet?.healthInsuranceCarriers,
+            presentationStrategy: configSet?.presentationStrategy,
+            specificQuestions: configSet?.specificQuestions,
+            summaryPrompt: configSet?.summaryPrompt,
+            welcomeMessage: configSet?.welcomeMessage,
+          },
+        },
+      })
+      .then((res) => {
+        if (res.data?.updateBotConfig) {
+          toast.success("Bot config updated successfully");
+        } else {
+          toast.error("Failed to update bot config");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+        toast.error("Failed to update bot config");
+      });
+  };
+
+  useEffect(() => {
+    if (data?.botConfigs) {
+      if (data.botConfigs.length === 0) {
+        if (!userData?.authenticatedItem?.id) {
+          return;
+        }
+        console.log("Creating bot config");
+        apolloClient
+          .mutate({
+            mutation: CreateBotConfig,
+            variables: {
+              data: {
+                name: userData?.authenticatedItem?.id,
+                user: {
+                  connect: {
+                    id: userData?.authenticatedItem?.id,
+                  },
+                },
+              },
+            },
+          })
+          .then((res) => {
+            toast.success("Bot config initialized");
+            apolloClient.resetStore();
+          });
+      } else {
+        setConfig(data.botConfigs[0]);
+      }
+    }
+  }, [data]);
+
+  const [testConfig, setTestConfig] = useState<{
+    firstName: string;
+    lastName: string;
+    dob: DateValueType;
+    income: string;
+    dependents: string;
+    postalCode: string;
+    message: string;
+  }>({
+    firstName: "",
+    lastName: "",
+    dob: null,
+    income: "",
+    dependents: "",
+    postalCode: "",
+    message: "",
+  });
+
+  const testWelcomeMessage = () => {
+    console.log(testConfig);
+  };
+
   return (
     <div className="flex-1 h-screen overflow-y-auto no-scrollbar">
-      <div className="sticky top-0 left-0 w-full bg-white header-container">
+      <div className="sticky top-0 left-0 z-50 w-full bg-white header-container">
         <p className="header-title">
           Federal<span className="text-2xl text-primary">Plans</span>
         </p>
       </div>
-      <div className="mt-8 form-container">
+      <form className="mt-8 form-container" onSubmit={handleSubmit}>
         <div className="form-content">
+          {userLoading || loading ? (
+            <p className="text-xl font-bold animate-pulse">Loading...</p>
+          ) : (
+            <p className="text-xl font-bold">
+              BOT ID:{" "}
+              <span className="font-mono bg-gray-light">
+                {data?.botConfigs?.[0]?.id}
+              </span>
+            </p>
+          )}
           <div className="w-full">
             <p className="form-label">{langSnippet.mission.label}</p>
             <textarea
               rows={6}
               placeholder={langSnippet.mission.placeholder}
               className="form-input"
+              onChange={(e) => {
+                setConfig({ ...configSet, companyStatement: e.target.value });
+              }}
+              value={configSet?.companyStatement ?? ""}
             ></textarea>
           </div>
           <div className="w-full">
@@ -93,20 +234,46 @@ function Content() {
               type="text"
               placeholder={langSnippet.tone.placeholder}
               className="form-input"
+              onChange={(e) => {
+                setConfig({ ...configSet, tonestyle: e.target.value });
+              }}
+              value={configSet?.tonestyle ?? ""}
             />
           </div>
           <div className="w-full">
             <p className="form-label">{langSnippet.plan.label}</p>
-            <CheckButtons options={langSnippet.plan.options} type="plan" />
+            <CheckButtons
+              options={langSnippet.plan.options}
+              type="plan"
+              handleChange={(e: any, value: string) => {
+                setConfig({ ...configSet, priorityPlan: value });
+              }}
+              value={configSet?.priorityPlan ?? ""}
+            />
           </div>
           <div className="w-full">
             <p className="form-label">{langSnippet.carrier.label}</p>
             <div className="form-carrier-container">
-              <div className={"checked-carriers-container"}></div>
+              <div className={"checked-carriers-container"}>
+                {configSet?.healthInsuranceCarriers
+                  ?.split(",")
+                  .map((carrier: string, idx: number) => {
+                    return (
+                      <CheckBox
+                        checked={true}
+                        label={carrier}
+                        type="carrier"
+                        handleChange={() => {}}
+                        key={idx}
+                      />
+                    );
+                  }) ?? []}
+              </div>
               <button
                 className="btn-primary-lg btn-outlined"
                 onClick={(e: any) => {
                   e.preventDefault();
+                  setCarrierModal(true);
                 }}
               >
                 + Add Carriers
@@ -118,6 +285,10 @@ function Content() {
             <CheckButtons
               options={langSnippet.recommendedPlan.options}
               type="recommendedPlan"
+              handleChange={(e: any, value: string) => {
+                setConfig({ ...configSet, presentationStrategy: value });
+              }}
+              value={configSet?.presentationStrategy ?? ""}
             />
           </div>
           <div className="w-full">
@@ -126,6 +297,10 @@ function Content() {
               type="text"
               placeholder={langSnippet.chatbotQuestion.placeholder}
               className="form-input"
+              onChange={(e) => {
+                setConfig({ ...configSet, specificQuestions: e.target.value });
+              }}
+              value={configSet?.specificQuestions ?? ""}
             />
           </div>
           <div className="w-full">
@@ -134,6 +309,10 @@ function Content() {
               type="text"
               placeholder={langSnippet.summary.placeholder}
               className="form-input"
+              onChange={(e) => {
+                setConfig({ ...configSet, summaryPrompt: e.target.value });
+              }}
+              value={configSet?.summaryPrompt ?? ""}
             />
           </div>
           <div className="w-full">
@@ -142,8 +321,32 @@ function Content() {
               rows={6}
               placeholder={langSnippet.exMessage.placeholder}
               className="form-input"
+              onChange={(e) => {
+                setConfig({ ...configSet, welcomeMessage: e.target.value });
+              }}
+              value={configSet?.welcomeMessage ?? ""}
             ></textarea>
           </div>
+          <button
+            type="submit"
+            className="sticky w-full bottom-6 btn-submit"
+            onClick={() => {}}
+          >
+            Save
+          </button>
+        </div>
+      </form>
+      <form
+        className="mt-8 form-container"
+        onSubmit={(e) => {
+          e.preventDefault();
+        }}
+      >
+        <div className="form-content">
+          <div className="w-full h-1 bg-gray-light-100"></div>
+          <p className="w-full p-2 pt-0 -mt-2 font-bold text-center">
+            Test Bot Sample
+          </p>
           <div className="inline-form-container">
             <div className="inline-form-element">
               <p className="mb-2">First name</p>
@@ -151,6 +354,10 @@ function Content() {
                 type="text"
                 placeholder="Ex: John"
                 className="form-input"
+                value={testConfig.firstName}
+                onChange={(e) =>
+                  setTestConfig({ ...testConfig, firstName: e.target.value })
+                }
               />
             </div>
             <div className="inline-form-element">
@@ -159,6 +366,10 @@ function Content() {
                 type="text"
                 placeholder="Ex: John"
                 className="form-input"
+                value={testConfig.lastName}
+                onChange={(e) =>
+                  setTestConfig({ ...testConfig, lastName: e.target.value })
+                }
               />
             </div>
           </div>
@@ -176,8 +387,11 @@ function Content() {
             <div className="inline-form-element">
               <p className="mb-2">income</p>
               <select
-                placeholder="0-10k/year"
                 className="form-input hci-select"
+                value={testConfig.income}
+                onChange={(e) =>
+                  setTestConfig({ ...testConfig, income: e.target.value })
+                }
               >
                 <option value={0}>0-10k/year</option>
                 <option value={1}>11-30k/year</option>
@@ -187,7 +401,13 @@ function Content() {
           <div className="inline-form-container">
             <div className="inline-form-element">
               <p className="mb-2">Number of Dependents</p>
-              <select placeholder="0" className="form-input hci-select">
+              <select
+                value={testConfig.dependents}
+                onChange={(e) =>
+                  setTestConfig({ ...testConfig, dependents: e.target.value })
+                }
+                className="form-input hci-select"
+              >
                 <option value={0}>0</option>
                 <option value={1}>1</option>
                 <option value={2}>2</option>
@@ -202,6 +422,10 @@ function Content() {
                 type="text"
                 placeholder="123456"
                 className="form-input"
+                value={testConfig.postalCode}
+                onChange={(e) =>
+                  setTestConfig({ ...testConfig, postalCode: e.target.value })
+                }
               />
             </div>
           </div>
@@ -218,7 +442,10 @@ function Content() {
               </div>
             </div>
             <div className="flex w-full gap-2 pt-2">
-              <button className="flex-1 btn-submit">
+              <button
+                className="flex-1 btn-submit"
+                onClick={testWelcomeMessage}
+              >
                 Test welcome message
               </button>
               <button className="flex-1 btn-submit">
@@ -262,10 +489,24 @@ function Content() {
             </div>
           </div>
         </div>
-      </div>
+      </form>
       <div className="footer-container">
         <p className="footer-text">© 2024 Obamacare AI. All Rights Reserved.</p>
       </div>
+      <CarrierModal
+        className="w-full"
+        open={carrierModal}
+        options={langSnippet.carrier.options}
+        onClose={() => setCarrierModal(false)}
+        state={configSet?.healthInsuranceCarriers?.split(",") ?? []}
+        setState={(value: any) => {
+          setConfig({
+            ...configSet,
+            healthInsuranceCarriers: value.carriers.join(","),
+          });
+        }}
+        // onSave={onCarrierSave}
+      />
     </div>
   );
 }

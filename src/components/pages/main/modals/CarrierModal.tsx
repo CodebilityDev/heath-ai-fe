@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import IconSearch from "@svgs/IconSearch";
 import CheckBox from "@components/core/CheckBox";
 import { useRecoilState } from "recoil";
@@ -9,20 +9,24 @@ const CarrierModal = ({
   open,
   onClose,
   className,
-  selectedCarriers,
   options,
+  state,
+  setState,
 }: {
   open: boolean;
   onClose: any;
-  selectedCarriers: string[];
   className: string;
   options: string[];
+  state: any;
+  setState: any;
 }) => {
-  const [setting, setSetting] = useRecoilState<SettingInterface>(settingAtom);
-  const [carriers, setCarriers] = useState<string[]>([...selectedCarriers]);
+  const [carriers, setCarriers] = useState<string[]>([]);
+
+  useEffect(() => {
+    setCarriers([...state]);
+  }, [state]);
 
   const handleCheckBox = (event: any, value: string, type: string) => {
-    console.log("handle event change", event, value, type);
     if (type == "selectAll") {
       if (carriers.length == options.length) {
         setCarriers([]);
@@ -42,8 +46,8 @@ const CarrierModal = ({
   };
 
   const onSaveCarriers = () => {
-    setSetting({
-      ...setting,
+    setState({
+      ...state,
       carriers: [...carriers],
     });
     onClose();
@@ -52,50 +56,52 @@ const CarrierModal = ({
   return (
     <div className={className}>
       <div
-        className={`modal-container ${
+        className={`modal-container z-[60] ${
           open ? "visible bg-black/20" : "invisible"
         }`}
       >
-        <div className="modal-content md:w-[40%] w-full">
-          <div className="flex flex-col gap-[30px]">
-            <div className="w-full">
+        <div className="modal-content no-scrollbar md:w-[40%] w-full">
+          <div className="flex flex-col">
+            <div className="sticky top-0 z-20 w-full p-4 bg-white border-b-2">
               <p className="font-bold">Add Your Carriers</p>
             </div>
-            <div className="divider-x"></div>
-            <div className="flex md:flex-row flex-col w-full relative">
-              <div className="flex flex-1 md:w-full">
-                <input
-                  type="text"
-                  placeholder="Search..."
-                  className="search-input"
-                />
-                <div className="absolute top-5 left-5">
-                  <IconSearch />
+            <div className="flex flex-col p-4">
+              <div className="relative flex flex-col w-full mb-4">
+                <div className="flex flex-1 md:w-full">
+                  <input
+                    type="text"
+                    placeholder="Search..."
+                    className="search-input"
+                  />
+                  <div className="absolute top-5 left-5">
+                    <IconSearch />
+                  </div>
+                </div>
+                <div className="flex items-center justify-start flex-1 mt-4 md:justify-center md:w-full">
+                  <CheckBox
+                    label="Select All"
+                    checked={carriers.length == options.length}
+                    type="selectAll"
+                    handleChange={handleCheckBox}
+                  />
                 </div>
               </div>
-              <div className="flex flex-1 items-center md:justify-center justify-start mt-4 md:w-full">
-                <CheckBox
-                  label="Select All"
-                  checked={carriers.length == options.length}
-                  type="selectAll"
-                  handleChange={handleCheckBox}
-                />
+
+              <div className="my-4 carriers-container">
+                {options.map((option: string, idx: number) => {
+                  return (
+                    <CheckBox
+                      checked={carriers.includes(option)}
+                      label={option}
+                      type="carriers"
+                      handleChange={handleCheckBox}
+                      key={idx}
+                    />
+                  );
+                })}
               </div>
             </div>
-            <div className="carriers-container">
-              {options.map((option: string, idx: number) => {
-                return (
-                  <CheckBox
-                    checked={carriers.includes(option)}
-                    label={option}
-                    type="carriers"
-                    handleChange={handleCheckBox}
-                    key={idx}
-                  />
-                );
-              })}
-            </div>
-            <div className="w-full">
+            <div className="sticky bottom-0 w-full p-2 bg-white border-t-2 shadow-md">
               <div className="flex gap-[24px] justify-end content-center font-bold items-center">
                 <div>
                   <button className="flex items-center" onClick={onClose}>
