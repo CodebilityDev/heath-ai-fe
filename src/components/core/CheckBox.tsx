@@ -51,7 +51,7 @@ const CheckBox = ({
           </svg>
         )}
       </div>
-      <label className="text-sub-title ml-2">{label}</label>
+      <label className="text-xs md:text-sm ml-2">{label}</label>
     </div>
   );
 };

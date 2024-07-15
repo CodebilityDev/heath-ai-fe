@@ -239,10 +239,6 @@
     @apply outline-primary;
   }
 
-  .search-input {
-    @apply w-full py-[5px] pl-[5px] border border-gray-light focus:outline-primary rounded-[50px];
-  }
-
   /* button style */
 
   .btn {
@@ -290,7 +286,7 @@
   /* modal */
 
   .modal-container {
-    @apply w-full fixed inset-0 flex justify-center items-start transition-colors md:pt-[75px];
+    @apply w-full backdrop-blur-md flex justify-center items-center fixed inset-0 transition-colors;
   }
 
   .loader {
@@ -480,10 +476,6 @@
     @apply outline-primary;
   }
 
-  .search-input {
-    @apply w-full py-[17px] pl-[50px] border border-gray-light focus:outline-primary rounded-[50px];
-  }
-
   /* button style */
 
   .btn {
@@ -529,10 +521,6 @@
   }
 
   /* modal */
-
-  .modal-container {
-    @apply w-full fixed inset-0 flex justify-center items-start transition-colors md:pt-[75px];
-  }
 
   .loader {
     @apply fixed inset-0 flex items-center justify-center w-full transition-colors;
@@ -722,7 +710,7 @@
   }
 
   .search-input {
-    @apply w-full py-[17px] pl-[50px] border border-gray-light focus:outline-primary rounded-[50px];
+    @apply md:w-[20rem] w-44 py-2 pl-10 md:py-[17px] md:pl-[50px] border border-gray-light focus:outline-primary rounded-[50px];
   }
 
   /* button style */
@@ -770,11 +758,6 @@
   }
 
   /* modal */
-
-  .modal-container {
-    @apply w-full fixed inset-0 flex justify-center items-start transition-colors md:pt-[75px];
-  }
-
   .loader {
     @apply fixed inset-0 flex items-center justify-center w-full transition-colors;
   }

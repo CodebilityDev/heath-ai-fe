@@ -1,9 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import IconSearch from "@svgs/IconSearch";
 import CheckBox from "@components/core/CheckBox";
 import { useRecoilState } from "recoil";
 import { settingAtom } from "@state/Setting";
 import { SettingInterface } from "../../../../types/Setting";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import useDebounce from "@/hooks/useDebounce";
+import { MdClose } from "react-icons/md";
 
 const CarrierModal = ({
   open,
@@ -21,6 +24,18 @@ const CarrierModal = ({
   setState: any;
 }) => {
   const [carriers, setCarriers] = useState<string[]>([]);
+  const [search, setSearch] = useState<string>("");
+  const debouncedValue = useDebounce<string>(search, 500);
+
+  const searchedOptions = useMemo(() => {
+    return options.filter((option: string) =>
+      option.toLowerCase().includes(debouncedValue.toLowerCase())
+    );
+  }, [debouncedValue]);
+
+  const handleSearch = (event: any) => {
+    setSearch(event.target.value);
+  };
 
   useEffect(() => {
     setCarriers([...state]);
@@ -57,27 +72,27 @@ const CarrierModal = ({
     <div className={className}>
       <div
         className={`modal-container z-[60] ${
-          open ? "visible bg-black/20" : "invisible"
+          open ? "visible bg-black/20 backdrop-blur-md" : "invisible"
         }`}
       >
-        <div className="modal-content no-scrollbar md:w-[40%] w-full">
+        <div className="bg-white rounded-lg overflow-hidden w-full max-w-2xl p-4">
           <div className="flex flex-col">
-            <div className="sticky top-0 z-20 w-full p-4 bg-white border-b-2">
+            <div className="sticky items-center justify-between flex top-0 z-20 w-full p-4 bg-white border-b">
               <p className="font-bold">Add Your Carriers</p>
+              <MdClose className="cursor-pointer size-5" onClick={onClose} />
             </div>
             <div className="flex flex-col p-4">
               <div className="relative flex flex-col w-full mb-4">
-                <div className="flex flex-1 md:w-full">
+                <div className="flex justify-between flex-1 w-full">
                   <input
                     type="text"
                     placeholder="Search..."
-                    className="search-input"
+                    className="search-input text-xs md:text-base"
+                    onChange={handleSearch}
                   />
-                  <div className="absolute top-5 left-5">
+                  <div className="absolute top-[50%] translate-y-[-50%] left-4">
                     <IconSearch />
                   </div>
-                </div>
-                <div className="flex items-center justify-start flex-1 mt-4 md:justify-center md:w-full">
                   <CheckBox
                     label="Select All"
                     checked={carriers.length == options.length}
@@ -86,31 +101,41 @@ const CarrierModal = ({
                   />
                 </div>
               </div>
-
-              <div className="my-4 carriers-container">
-                {options.map((option: string, idx: number) => {
-                  return (
-                    <CheckBox
-                      checked={carriers.includes(option)}
-                      label={option}
-                      type="carriers"
-                      handleChange={handleCheckBox}
-                      key={idx}
-                    />
-                  );
-                })}
-              </div>
+              <ScrollArea className="h-[15rem] rounded-md my-4 ">
+                <div className="grid w-full grid-cols-2 gap-4">
+                  {searchedOptions.length > 0 ? (
+                    searchedOptions.map((option: string, idx: number) => {
+                      return (
+                        <div className="min-h-8 flex">
+                          <CheckBox
+                            checked={carriers.includes(option)}
+                            label={option}
+                            type="carriers"
+                            handleChange={handleCheckBox}
+                            key={idx}
+                          />
+                        </div>
+                      );
+                    })
+                  ) : (
+                    <p className="text-center col-span-2">No results found</p>
+                  )}
+                </div>
+              </ScrollArea>
             </div>
-            <div className="sticky bottom-0 w-full p-2 bg-white border-t-2 shadow-md">
+            <div className="sticky bottom-0 w-full p-2 bg-white">
               <div className="flex gap-[24px] justify-end content-center font-bold items-center">
                 <div>
-                  <button className="flex items-center" onClick={onClose}>
+                  <button
+                    className="flex text-sm md:text-base items-center"
+                    onClick={onClose}
+                  >
                     Cancel
                   </button>
                 </div>
                 <div>
                   <button
-                    className="flex btn btn-gray"
+                    className="flex text-sm md:text-base btn bg-gray rounded-md text-white"
                     onClick={onSaveCarriers}
                   >
                     Save
