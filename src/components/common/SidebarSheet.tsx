@@ -17,7 +17,7 @@ export function SheetSidebar({ children }: { children: React.ReactNode }) {
         )}
       </SheetTrigger>
       <SheetContent
-        className="overflow-y-auto sm:py-12 px-4 sm:px-12"
+        className="overflow-y-auto sm:py-12 px-6 sm:px-12 w-full sm:w-auto"
         side="left"
       >
         {children}
