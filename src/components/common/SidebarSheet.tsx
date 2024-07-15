@@ -4,7 +4,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 
 import { useState } from "react";
 
-export function SheetDemo({ children }: { children: React.ReactNode }) {
+export function SheetSidebar({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   console.log(isOpen);
   return (
@@ -16,7 +16,10 @@ export function SheetDemo({ children }: { children: React.ReactNode }) {
           <IoMdClose size={20} className="cursor-pointer" />
         )}
       </SheetTrigger>
-      <SheetContent className="overflow-y-auto px-12" side="left">
+      <SheetContent
+        className="overflow-y-auto sm:py-12 px-4 sm:px-12"
+        side="left"
+      >
         {children}
       </SheetContent>
     </Sheet>
