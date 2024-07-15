@@ -12,6 +12,8 @@ import { useQuery } from "@apollo/client";
 import { GetMe } from "@graphql/declarations/geMe";
 import { AUTHSTORE } from "@graphql/authStorage";
 import { FaArrowRotateLeft } from "react-icons/fa6";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import {
   CreateBotConfig,
   GetBotConfig,
@@ -27,6 +29,7 @@ import { twMerge } from "tailwind-merge";
 import { GetGHL } from "./graphql/declarations/ghs";
 import ApiKeyModal from "./components/pages/main/modals/ApiKeyModal";
 import HealthSherpaExcelExplore from "./components/pages/main/modals/HealthSherpaExcelExplore";
+import { Textarea } from "./components/ui/textarea";
 
 function Sidebar({ className }: { className?: string }) {
   const { data } = useQuery(GetMe);
@@ -259,6 +262,10 @@ function Content() {
       });
   };
 
+  const handleChatSubmit = (e: any) => {
+    console.log(e);
+  };
+
   useEffect(() => {
     if (data?.botConfigs) {
       if (data.botConfigs.length === 0) {
@@ -312,6 +319,15 @@ function Content() {
     console.log(testConfig);
   };
 
+  const convoStarter = [
+    `"Explain quantum computing in simple terms"`,
+    `"Explain quantum computing in simple terms"`,
+    `"Explain quantum computing in simple terms"`,
+    `"Explain quantum computing in simple terms"`,
+    `"Explain quantum computing in simple terms"`,
+    `"Explain quantum computing in simple terms"`,
+  ];
+
   return (
     <div className="flex-1 h-screen overflow-y-auto no-scrollbar">
       <div className="sticky top-0 left-0 z-50 flex justify-between w-full px-8 bg-white header-container">
@@ -324,309 +340,417 @@ function Content() {
           </SheetSidebar>
         </span>
       </div>
-      <form className="mt-8 form-container" onSubmit={handleSubmit}>
-        <div className="form-content">
-          {userLoading || loading ? (
-            <p className="text-xl font-bold animate-pulse">Loading...</p>
-          ) : (
-            <p className="text-xl font-bold">
-              BOT ID:{" "}
-              <span className="font-mono bg-gray-light">
-                {data?.botConfigs?.[0]?.id}
-              </span>
-            </p>
-          )}
-          <div className="w-full">
-            <p className="form-label">{langSnippet.mission.label}</p>
-            <textarea
-              rows={6}
-              placeholder={langSnippet.mission.placeholder}
-              className="form-input"
-              onChange={(e) => {
-                setConfig({ ...configSet, companyStatement: e.target.value });
-              }}
-              value={configSet?.companyStatement ?? ""}
-            ></textarea>
+
+      <Tabs defaultValue="welcomeTab" className="w-full h-[calc(100vh-80px)] ">
+        <TabsList className="w-full bg-transparent mt-8">
+          <div className="bg-gray-light p-2 rounded-xl">
+            <TabsTrigger className="py-4 rounded-xl" value="welcomeTab">
+              👋 Welcome messages
+            </TabsTrigger>
+            <TabsTrigger className="py-4 rounded-xl" value="chatTab">
+              💬 Start chating
+            </TabsTrigger>
           </div>
-          <div className="w-full">
-            <p className="form-label">{langSnippet.tone.label}</p>
-            <input
-              type="text"
-              placeholder={langSnippet.tone.placeholder}
-              className="form-input"
-              onChange={(e) => {
-                setConfig({ ...configSet, tonestyle: e.target.value });
-              }}
-              value={configSet?.tonestyle ?? ""}
-            />
-          </div>
-          <div className="w-full">
-            <p className="form-label">{langSnippet.plan.label}</p>
-            <CheckButtons
-              options={langSnippet.plan.options}
-              type="plan"
-              handleChange={(e: any, value: string) => {
-                setConfig({ ...configSet, priorityPlan: value });
-              }}
-              value={configSet?.priorityPlan ?? ""}
-            />
-          </div>
-          <div className="w-full">
-            <p className="form-label">{langSnippet.carrier.label}</p>
-            <div className="form-carrier-container">
-              <div className={"checked-carriers-container"}>
-                {configSet?.healthInsuranceCarriers
-                  ?.split(",")
-                  .map((carrier: string, idx: number) => {
-                    return (
-                      <CheckBox
-                        checked={true}
-                        label={carrier}
-                        type="carrier"
-                        handleChange={() => {}}
-                        key={idx}
-                      />
-                    );
-                  }) ?? []}
+        </TabsList>
+        <TabsContent value="welcomeTab">
+          <form className="mt-8 form-container" onSubmit={handleSubmit}>
+            <div className="form-content">
+              {userLoading || loading ? (
+                <p className="text-xl font-bold animate-pulse">Loading...</p>
+              ) : (
+                <p className="text-xl font-bold">
+                  BOT ID:{" "}
+                  <span className="font-mono bg-gray-light">
+                    {data?.botConfigs?.[0]?.id}
+                  </span>
+                </p>
+              )}
+              <div className="w-full">
+                <p className="form-label">{langSnippet.mission.label}</p>
+                <textarea
+                  rows={6}
+                  placeholder={langSnippet.mission.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      companyStatement: e.target.value,
+                    });
+                  }}
+                  value={configSet?.companyStatement ?? ""}
+                ></textarea>
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.tone.label}</p>
+                <input
+                  type="text"
+                  placeholder={langSnippet.tone.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({ ...configSet, tonestyle: e.target.value });
+                  }}
+                  value={configSet?.tonestyle ?? ""}
+                />
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.plan.label}</p>
+                <CheckButtons
+                  options={langSnippet.plan.options}
+                  type="plan"
+                  handleChange={(e: any, value: string) => {
+                    setConfig({ ...configSet, priorityPlan: value });
+                  }}
+                  value={configSet?.priorityPlan ?? ""}
+                />
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.carrier.label}</p>
+                <div className="form-carrier-container">
+                  <div className={"checked-carriers-container"}>
+                    {configSet?.healthInsuranceCarriers
+                      ?.split(",")
+                      .map((carrier: string, idx: number) => {
+                        return (
+                          <CheckBox
+                            checked={true}
+                            label={carrier}
+                            type="carrier"
+                            handleChange={() => {}}
+                            key={idx}
+                          />
+                        );
+                      }) ?? []}
+                  </div>
+                  <button
+                    className="btn-primary-lg btn-outlined"
+                    onClick={(e: any) => {
+                      e.preventDefault();
+                      setCarrierModal(true);
+                    }}
+                  >
+                    + Add Carriers
+                  </button>
+                </div>
+              </div>
+              <div className="w-full">
+                <p className="form-label">
+                  {langSnippet.recommendedPlan.label}
+                </p>
+                <CheckButtons
+                  options={langSnippet.recommendedPlan.options}
+                  type="recommendedPlan"
+                  handleChange={(e: any, value: string) => {
+                    setConfig({ ...configSet, presentationStrategy: value });
+                  }}
+                  value={configSet?.presentationStrategy ?? ""}
+                />
+              </div>
+              <div className="w-full">
+                <p className="form-label">
+                  {langSnippet.chatbotQuestion.label}
+                </p>
+                <input
+                  type="text"
+                  placeholder={langSnippet.chatbotQuestion.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      specificQuestions: e.target.value,
+                    });
+                  }}
+                  value={configSet?.specificQuestions ?? ""}
+                />
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.summary.label}</p>
+                <input
+                  type="text"
+                  placeholder={langSnippet.summary.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      summaryPrompt: e.target.value,
+                    });
+                  }}
+                  value={configSet?.summaryPrompt ?? ""}
+                />
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.exMessage.label}</p>
+                <textarea
+                  rows={6}
+                  placeholder={langSnippet.exMessage.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      welcomeMessage: e.target.value,
+                    });
+                  }}
+                  value={configSet?.welcomeMessage ?? ""}
+                ></textarea>
               </div>
               <button
-                className="btn-primary-lg btn-outlined"
-                onClick={(e: any) => {
-                  e.preventDefault();
-                  setCarrierModal(true);
-                }}
+                type="submit"
+                className="sticky w-full bottom-6 btn-submit"
+                onClick={() => {}}
               >
-                + Add Carriers
+                Save
               </button>
             </div>
-          </div>
-          <div className="w-full">
-            <p className="form-label">{langSnippet.recommendedPlan.label}</p>
-            <CheckButtons
-              options={langSnippet.recommendedPlan.options}
-              type="recommendedPlan"
-              handleChange={(e: any, value: string) => {
-                setConfig({ ...configSet, presentationStrategy: value });
-              }}
-              value={configSet?.presentationStrategy ?? ""}
-            />
-          </div>
-          <div className="w-full">
-            <p className="form-label">{langSnippet.chatbotQuestion.label}</p>
-            <input
-              type="text"
-              placeholder={langSnippet.chatbotQuestion.placeholder}
-              className="form-input"
-              onChange={(e) => {
-                setConfig({ ...configSet, specificQuestions: e.target.value });
-              }}
-              value={configSet?.specificQuestions ?? ""}
-            />
-          </div>
-          <div className="w-full">
-            <p className="form-label">{langSnippet.summary.label}</p>
-            <input
-              type="text"
-              placeholder={langSnippet.summary.placeholder}
-              className="form-input"
-              onChange={(e) => {
-                setConfig({ ...configSet, summaryPrompt: e.target.value });
-              }}
-              value={configSet?.summaryPrompt ?? ""}
-            />
-          </div>
-          <div className="w-full">
-            <p className="form-label">{langSnippet.exMessage.label}</p>
-            <textarea
-              rows={6}
-              placeholder={langSnippet.exMessage.placeholder}
-              className="form-input"
-              onChange={(e) => {
-                setConfig({ ...configSet, welcomeMessage: e.target.value });
-              }}
-              value={configSet?.welcomeMessage ?? ""}
-            ></textarea>
-          </div>
-          <button
-            type="submit"
-            className="sticky w-full bottom-6 btn-submit"
-            onClick={() => {}}
+          </form>
+          <form
+            className="mt-8 form-container"
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
           >
-            Save
-          </button>
-        </div>
-      </form>
-      <form
-        className="mt-8 form-container"
-        onSubmit={(e) => {
-          e.preventDefault();
-        }}
-      >
-        <div className="form-content">
-          <div className="w-full h-1 bg-gray-light-100"></div>
-          <p className="w-full p-2 pt-0 -mt-2 font-bold text-center">
-            Test Bot Sample
-          </p>
-          <div className="inline-form-container">
-            <div className="inline-form-element">
-              <p className="mb-2">First name</p>
-              <input
-                type="text"
-                placeholder="Ex: John"
-                className="form-input"
-                value={testConfig.firstName}
-                onChange={(e) =>
-                  setTestConfig({ ...testConfig, firstName: e.target.value })
-                }
-              />
-            </div>
-            <div className="inline-form-element">
-              <p className="mb-2">Last name</p>
-              <input
-                type="text"
-                placeholder="Ex: John"
-                className="form-input"
-                value={testConfig.lastName}
-                onChange={(e) =>
-                  setTestConfig({ ...testConfig, lastName: e.target.value })
-                }
-              />
-            </div>
-          </div>
-          <div className="inline-form-container">
-            <div className="inline-form-element">
-              <p className="mb-2">Date of Birth</p>
-              // TODO: Type Error
-              {/* <Datepicker
+            <div className="form-content">
+              <div className="w-full h-1 bg-gray-light-100"></div>
+              <p className="w-full p-2 pt-0 -mt-2 font-bold text-center">
+                Test Bot Sample
+              </p>
+              <div className="inline-form-container">
+                <div className="inline-form-element">
+                  <p className="mb-2">First name</p>
+                  <input
+                    type="text"
+                    placeholder="Ex: John"
+                    className="form-input"
+                    value={testConfig.firstName}
+                    onChange={(e) =>
+                      setTestConfig({
+                        ...testConfig,
+                        firstName: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+                <div className="inline-form-element">
+                  <p className="mb-2">Last name</p>
+                  <input
+                    type="text"
+                    placeholder="Ex: John"
+                    className="form-input"
+                    value={testConfig.lastName}
+                    onChange={(e) =>
+                      setTestConfig({
+                        ...testConfig,
+                        lastName: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <div className="inline-form-container">
+                <div className="inline-form-element">
+                  <p className="mb-2">Date of Birth</p>
+                  // TODO: Type Error
+                  {/* <Datepicker
                 asSingle={true}
                 useRange={false}
                 inputClassName="form-input"
                 placeholder={"Select date"}
               /> */}
-            </div>
-            <div className="inline-form-element">
-              <p className="mb-2">income</p>
-              <select
-                className="form-input hci-select"
-                value={testConfig.income}
-                onChange={(e) =>
-                  setTestConfig({ ...testConfig, income: e.target.value })
-                }
-              >
-                <option value={0}>0-10k/year</option>
-                <option value={1}>11-30k/year</option>
-              </select>
-            </div>
-          </div>
-          <div className="inline-form-container">
-            <div className="inline-form-element">
-              <p className="mb-2">Number of Dependents</p>
-              <select
-                value={testConfig.dependents}
-                onChange={(e) =>
-                  setTestConfig({ ...testConfig, dependents: e.target.value })
-                }
-                className="form-input hci-select"
-              >
-                <option value={0}>0</option>
-                <option value={1}>1</option>
-                <option value={2}>2</option>
-                <option value={3}>3</option>
-                <option value={4}>4</option>
-              </select>
-            </div>
-            <div className="inline-form-element">
-              <p className="mb-2">Postal Code</p>
-              <input
-                required
-                type="text"
-                placeholder="123456"
-                className="form-input"
-                value={testConfig.postalCode}
-                onChange={(e) =>
-                  setTestConfig({ ...testConfig, postalCode: e.target.value })
-                }
-              />
-            </div>
-          </div>
-          <div className="divider-x"></div>
-          <div className="flex flex-col w-full">
-            <div className="relative flex flex-1 w-full">
-              <textarea
-                rows={1}
-                placeholder="Hi how may i help you, please enter..."
-                className="p-4 pl-12 w-full border rounded-[12px] border-primary focus:ring-primary h-40 focus:border-primary resize-none overflow-y-hidden"
-              />
-              <div className="absolute top-4 left-4">
-                <IconMessage />
+                </div>
+                <div className="inline-form-element">
+                  <p className="mb-2">income</p>
+                  <select
+                    className="form-input hci-select"
+                    value={testConfig.income}
+                    onChange={(e) =>
+                      setTestConfig({ ...testConfig, income: e.target.value })
+                    }
+                  >
+                    <option value={0}>0-10k/year</option>
+                    <option value={1}>11-30k/year</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div className="flex w-full gap-2 pt-2">
-              <button
-                className="flex-1 btn-submit"
-                onClick={testWelcomeMessage}
-              >
-                Test welcome message
-              </button>
-              <button className="flex-1 btn-submit">
-                Save/Delete favourite format
-              </button>
-            </div>
-          </div>
-          <div className="divider-x"></div>
-          <div className="form-submit-container justify-center mb-[150px]">
-            <div className="relative flex flex-1 w-full">
-              <div className="inline-form-element">
-                <p className="mb-2">Users Select</p>
-                <div className="flex flex-col items-center w-full md:flex-row">
-                  <div className="relative flex flex-1 w-full mb-4 md:mr-4 md:mb-0">
-                    // TODO: TS error
-                    <Select
-                      isClearable={true}
-                      primaryColor={"violet"}
-                      isMultiple={true}
-                      options={[]}
-                      placeholder={"No users selected"}
-                      classNames={{
-                        menuButton: (value: any) => {
-                          return "multi-select-menu-button";
-                        },
-                        menu: "multi-select-menu",
-                        list: "multi-select-list",
-                        tagItem: (value: any) => {
-                          return "multi-select-tag-item";
-                        },
-                      }}
-                    />
+              <div className="inline-form-container">
+                <div className="inline-form-element">
+                  <p className="mb-2">Number of Dependents</p>
+                  <select
+                    value={testConfig.dependents}
+                    onChange={(e) =>
+                      setTestConfig({
+                        ...testConfig,
+                        dependents: e.target.value,
+                      })
+                    }
+                    className="form-input hci-select"
+                  >
+                    <option value={0}>0</option>
+                    <option value={1}>1</option>
+                    <option value={2}>2</option>
+                    <option value={3}>3</option>
+                    <option value={4}>4</option>
+                  </select>
+                </div>
+                <div className="inline-form-element">
+                  <p className="mb-2">Postal Code</p>
+                  <input
+                    required
+                    type="text"
+                    placeholder="123456"
+                    className="form-input"
+                    value={testConfig.postalCode}
+                    onChange={(e) =>
+                      setTestConfig({
+                        ...testConfig,
+                        postalCode: e.target.value,
+                      })
+                    }
+                  />
+                </div>
+              </div>
+              <div className="divider-x"></div>
+              <div className="flex flex-col w-full">
+                <div className="relative flex flex-1 w-full">
+                  <textarea
+                    rows={1}
+                    placeholder="Hi how may i help you, please enter..."
+                    className="p-4 pl-12 w-full border rounded-[12px] border-primary focus:ring-primary h-40 focus:border-primary resize-none overflow-y-hidden"
+                  />
+                  <div className="absolute top-4 left-4">
+                    <IconMessage />
                   </div>
-                  <div className="flex items-center w-full h-full md:w-auto">
-                    <button className="btn-submit">
-                      Text message to users
-                    </button>
+                </div>
+                <div className="flex w-full gap-2 pt-2">
+                  <button
+                    className="flex-1 btn-submit"
+                    onClick={testWelcomeMessage}
+                  >
+                    Test welcome message
+                  </button>
+                  <button className="flex-1 btn-submit">
+                    Save/Delete favourite format
+                  </button>
+                </div>
+              </div>
+              <div className="divider-x"></div>
+              <div className="form-submit-container justify-center mb-[150px]">
+                <div className="relative flex flex-1 w-full">
+                  <div className="inline-form-element">
+                    <p className="mb-2">Users Select</p>
+                    <div className="flex flex-col items-center w-full md:flex-row">
+                      <div className="relative flex flex-1 w-full mb-4 md:mr-4 md:mb-0">
+                        // TODO: TS error
+                        <Select
+                          isClearable={true}
+                          primaryColor={"violet"}
+                          isMultiple={true}
+                          options={[]}
+                          placeholder={"No users selected"}
+                          classNames={{
+                            menuButton: (value: any) => {
+                              return "multi-select-menu-button";
+                            },
+                            menu: "multi-select-menu",
+                            list: "multi-select-list",
+                            tagItem: (value: any) => {
+                              return "multi-select-tag-item";
+                            },
+                          }}
+                        />
+                      </div>
+                      <div className="flex items-center w-full h-full md:w-auto">
+                        <button className="btn-submit">
+                          Text message to users
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </form>
+          <div className="footer-container">
+            <p className="footer-text">
+              © 2024 Obamacare AI. All Rights Reserved.
+            </p>
           </div>
-        </div>
-      </form>
-      <div className="footer-container">
-        <p className="footer-text">© 2024 Obamacare AI. All Rights Reserved.</p>
-      </div>
-      <CarrierModal
-        className="w-full"
-        open={carrierModal}
-        options={langSnippet.carrier.options}
-        onClose={() => setCarrierModal(false)}
-        state={configSet?.healthInsuranceCarriers?.split(",") ?? []}
-        setState={(value: any) => {
-          setConfig({
-            ...configSet,
-            healthInsuranceCarriers: value.carriers.join(","),
-          });
-        }}
-        // onSave={onCarrierSave}
-      />
+          <CarrierModal
+            className="w-full"
+            open={carrierModal}
+            options={langSnippet.carrier.options}
+            onClose={() => setCarrierModal(false)}
+            state={configSet?.healthInsuranceCarriers?.split(",") ?? []}
+            setState={(value: any) => {
+              setConfig({
+                ...configSet,
+                healthInsuranceCarriers: value.carriers.join(","),
+              });
+            }}
+            // onSave={onCarrierSave}
+          />
+        </TabsContent>
+        <TabsContent
+          value="chatTab"
+          className="h-[calc(100%-80px)] relative justify-center items-start flex"
+        >
+          {/* TODO: Only for unlogged users */}
+          <p className="flex items-center gap-x-2 bg-[#F9F9F9] py-2 px-6 rounded-md mt-8 text-xs">
+            <img src="/images/alert.svg" alt="alert" className="size-4" />
+            Please{" "}
+            <a href="/sign-in" className="text-xs underline">
+              log in
+            </a>{" "}
+            or{" "}
+            <a href="/sign-up" className="text-xs underline">
+              sign up
+            </a>{" "}
+            to save and revisit your chat history!
+          </p>
+          <div className="absolute bottom-0 w-full left-[50%] -translate-x-1/2 flex flex-col">
+            <form
+              className="w-full max-w-4xl mx-auto form-container flex flex-col"
+              onSubmit={handleSubmit}
+            >
+              <div className="grid grid-cols-3 w-full  gap-x-4 gap-y-2 ">
+                {convoStarter.map((convo, index) => (
+                  <div
+                    key={`convo-${index}`}
+                    className="bg-[#624FF61A] text-primary text-center px-8 py-4 rounded-xl"
+                  >
+                    {convo} →
+                  </div>
+                ))}
+              </div>
+              <div className="relative flex flex-1 w-full gap-x-4 mt-10">
+                <div className="grow-wrap max-h-[10rem] min-h-[58px] w-full">
+                  <textarea
+                    name="text"
+                    id="text"
+                    placeholder="Hi how may i help you, please enter..."
+                    className="max-h-[10rem] w-full border rounded-[12px] border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    onInput={(e) =>
+                      (e.target.parentNode.dataset.replicatedValue =
+                        e.target.value)
+                    }
+                  />
+                </div>
+                <div className="absolute top-4 left-4">
+                  <IconMessage />
+                </div>
+                <button
+                  className="flex-1 btn-submit rounded-[14px] self-end"
+                  onClick={testWelcomeMessage}
+                >
+                  Send
+                </button>
+              </div>
+            </form>
+            <div className="footer-container mt-8">
+              <p className="footer-text">
+                © 2024 Obamacare AI. All Rights Reserved.
+              </p>
+            </div>
+          </div>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

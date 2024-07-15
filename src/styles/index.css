@@ -95,6 +95,28 @@
     background-size: 1rem;
     padding-right: 2.5rem;
   }
+
+  .grow-wrap {
+    display: grid;
+  }
+  .grow-wrap::after {
+    content: attr(data-replicated-value) " ";
+    white-space: pre-wrap;
+    visibility: hidden;
+    /* @apply; */
+  }
+  .grow-wrap > textarea {
+    resize: none;
+    /* @apply; */
+  }
+  .grow-wrap > textarea,
+  .grow-wrap::after {
+    padding-left: 3rem;
+    font: inherit;
+    @apply leading-normal;
+    grid-area: 1 / 1 / 2 / 2;
+  }
+
   .main-container {
     @apply relative flex flex-col w-full h-full overflow-auto bg-red-500 md:flex-row;
   }
