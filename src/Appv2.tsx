@@ -1,6 +1,6 @@
 //@ts-nocheck
 
-import IconRotateLeft from "@svgs/IconRotateLeft";
+// import IconRotateLeft from "@svgs/IconRotateLeft";
 import langSnippet from "@utils/LangSnippet";
 import "react-toastify/dist/ReactToastify.css";
 import CheckButtons from "@components/core/CheckButtons";
@@ -11,6 +11,7 @@ import IconMessage from "@svgs/IconMessage";
 import { useQuery } from "@apollo/client";
 import { GetMe } from "@graphql/declarations/geMe";
 import { AUTHSTORE } from "@graphql/authStorage";
+import { FaArrowRotateLeft } from "react-icons/fa6";
 import {
   CreateBotConfig,
   GetBotConfig,
@@ -21,7 +22,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { apolloClient } from "./graphql/client";
 import CarrierModal from "./components/pages/main/modals/CarrierModal";
-import { SheetDemo } from "./components/common/SidebarSheet";
+import { SheetSidebar } from "./components/common/SidebarSheet";
 import { twMerge } from "tailwind-merge";
 import { GetGHL } from "./graphql/declarations/ghs";
 import ApiKeyModal from "./components/pages/main/modals/ApiKeyModal";
@@ -35,30 +36,32 @@ function Sidebar({ className }: { className?: string }) {
     <>
       <div
         className={twMerge(
-          "h-screen overflow-y-auto no-scrollbar border border-gray-light shadow-lg",
+          "lg:h-screen lg:overflow-y-auto no-scrollbar border border-gray-light shadow-lg",
           className
         )}
       >
-        <div className="sidebar-header">
-          <p className="sidebar-title">My Account</p>
+        <div className="mt-2">
+          <p className="font-bold text-lg">My Account</p>
         </div>
-        <div className="-mt-4">
-          <div className="p-2">
-            <p>{data?.authenticatedItem?.email}</p>
+        <div className="">
+          <div className="sm:py-2">
+            <p className="text-xs sm:text-base lg:text-normal">
+              {data?.authenticatedItem?.email}
+            </p>
           </div>
           <button
-            className={"btn btn-primary"}
+            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
             onClick={() => {
               AUTHSTORE.clear();
               window.location.href = "/";
             }}
           >
-            <p className={"btn-text"}>Sign Out</p>
+            <p className={"text-xs sm:text-base btn-text"}>Sign Out</p>
           </button>
         </div>
-        <br />
-        <div className="sidebar-header">
-          <p className="sidebar-title">Agency information</p>
+        <hr class="h-px my-4 bg-gray-light border-0" />
+        <div className="">
+          <p className="font-bold text-lg">Agency information</p>
         </div>
         {data?.authenticatedItem?.ghlAccess && (
           <div className="-mt-4">
@@ -83,7 +86,7 @@ function Sidebar({ className }: { className?: string }) {
         )}
         <div>
           <button
-            className={"btn btn-primary"}
+            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
             onClick={() => {
               const baseURL = import.meta.env.VITE_GRAPHQL_URL.replace(
                 "/api/graphql",
@@ -104,9 +107,9 @@ function Sidebar({ className }: { className?: string }) {
               });
             }}
           >
-            <p className={"btn-text"}>
+            <p className={"text-primary"}>
               {
-                <span>
+                <span className="text-xs sm:text-base">
                   {data?.authenticatedItem?.ghlAccess
                     ? "Reconnect to GHL"
                     : "Connect to GHL"}
@@ -115,12 +118,12 @@ function Sidebar({ className }: { className?: string }) {
             </p>
           </button>
         </div>
-        <div className="sidebar-header">
-          <p className="sidebar-title">ChatGPT Settings</p>
+        <div className="my-4 sm:mt-12">
+          <p className="font-bold text-lg">ChatGPT Settings</p>
         </div>
         <div className="-mt-4">
           <div className="p-2">
-            <p>
+            <p className="text-xs sm:text-base">
               API Key:{" "}
               <>
                 {data?.authenticatedItem?.aiKey?.openapiKey
@@ -130,37 +133,41 @@ function Sidebar({ className }: { className?: string }) {
             </p>
           </div>
           <button
-            className={"btn btn-primary"}
+            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
             onClick={() => {
               setApiKeyModal(true);
             }}
           >
-            <p className={"btn-text"}>Add OpenAI API Key</p>
+            <p className={" text-primary text-xs sm:text-base"}>
+              Add OpenAI API Key
+            </p>
           </button>
         </div>
-        <div className="sidebar-header">
-          <p className="sidebar-title">Tools</p>
+        <div className="my-4 sm:mt-8">
+          <p className="font-bold text-lg">Tools</p>
         </div>
         <div className="-mt-4">
-          <button className={"btn btn-primary"}>
-            <p className={"btn-text"}>Health sherpa excel exports</p>
+          <button className={"bg-primary-light mt-2 w-full py-2 rounded-md"}>
+            <p className={"text-xs sm:text-base text-primary"}>
+              Health sherpa excel exports
+            </p>
           </button>
         </div>
 
-        <div className="mt-8">
+        <div className="mt-8 sm:mt-12">
           <span>Formats</span>
         </div>
         <div className="divider-x"></div>
         <div className="formats-buttons-container"></div>
         <div className="flex mt-8">
           <button className="inline">
-            <IconRotateLeft />
+            <FaArrowRotateLeft className="size-4 sm:size-5" />
           </button>
-          <span className="ml-2 font-medium">History</span>
+          <span className="ml-2 font-medium text-sm sm:text-base">History</span>
         </div>
         <div className="divider-x"></div>
         <div className="sidebar-history">
-          <p className="truncate ... py-1">
+          <p className="truncate ... py-1 text-sm sm:text-base">
             How should the chatbot summarize How should the chatbot summarize
             How should the chatbot summarize
           </p>
@@ -300,9 +307,9 @@ function Content() {
           Federal<span className="text-2xl text-primary">Plans</span>
         </p>
         <span className="block lg:hidden">
-          <SheetDemo>
+          <SheetSidebar>
             <Sidebar className="border-none shadow-none" />
-          </SheetDemo>
+          </SheetSidebar>
         </span>
       </div>
       <form className="mt-8 form-container" onSubmit={handleSubmit}>
