@@ -26,11 +26,13 @@ import { SheetSidebar } from "./components/common/SidebarSheet";
 import { twMerge } from "tailwind-merge";
 import { GetGHL } from "./graphql/declarations/ghs";
 import ApiKeyModal from "./components/pages/main/modals/ApiKeyModal";
+import HealthSherpaExcelExplore from "./components/pages/main/modals/HealthSherpaExcelExplore";
 
 function Sidebar({ className }: { className?: string }) {
   const { data } = useQuery(GetMe);
   const { data: GHLData } = useQuery(GetGHL);
   const [apiKeyModal, setApiKeyModal] = useState(false);
+  const [healthSherpaModal, setHealthSherpaModal] = useState(false);
 
   return (
     <>
@@ -147,7 +149,12 @@ function Sidebar({ className }: { className?: string }) {
           <p className="font-bold text-lg">Tools</p>
         </div>
         <div className="-mt-4">
-          <button className={"bg-primary-light mt-2 w-full py-2 rounded-md"}>
+          <button
+            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
+            onClick={() => {
+              setHealthSherpaModal(true);
+            }}
+          >
             <p className={"text-xs sm:text-base text-primary"}>
               Health sherpa excel exports
             </p>
@@ -176,6 +183,11 @@ function Sidebar({ className }: { className?: string }) {
       <ApiKeyModal
         open={apiKeyModal}
         onClose={() => setApiKeyModal(false)}
+        onConnect={() => {}}
+      />
+      <HealthSherpaExcelExplore
+        open={healthSherpaModal}
+        onClose={() => setHealthSherpaModal(false)}
         onConnect={() => {}}
       />
     </>
