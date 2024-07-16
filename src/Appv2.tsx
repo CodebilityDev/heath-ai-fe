@@ -1,4 +1,4 @@
-//@ts-nocheck
+// @ts-nocheck
 
 // import IconRotateLeft from "@svgs/IconRotateLeft";
 import langSnippet from "@utils/LangSnippet";
@@ -30,6 +30,8 @@ import { GetGHL } from "./graphql/declarations/ghs";
 import ApiKeyModal from "./components/pages/main/modals/ApiKeyModal";
 import HealthSherpaExcelExplore from "./components/pages/main/modals/HealthSherpaExcelExplore";
 import { Textarea } from "./components/ui/textarea";
+import ChatBubble from "./components/common/ChatBubble";
+import { SendHorizonal } from "lucide-react";
 
 function Sidebar({ className }: { className?: string }) {
   const { data } = useQuery(GetMe);
@@ -64,7 +66,7 @@ function Sidebar({ className }: { className?: string }) {
             <p className={"text-xs sm:text-base btn-text"}>Sign Out</p>
           </button>
         </div>
-        <hr class="h-px my-4 bg-gray-light border-0" />
+        <hr className="h-px my-4 bg-gray-light border-0" />
         <div className="">
           <p className="font-bold text-lg">Agency information</p>
         </div>
@@ -199,6 +201,7 @@ function Sidebar({ className }: { className?: string }) {
 
 function Content() {
   const [carrierModal, setCarrierModal] = useState(false);
+  const [tab, setTab] = useState<string>();
 
   const { data: userData, loading: userLoading } = useQuery(GetMe);
   const { data, loading } = useQuery(ListBotConfig, {
@@ -341,15 +344,24 @@ function Content() {
         </span>
       </div>
 
-      <Tabs defaultValue="welcomeTab" className="w-full h-[calc(100vh-80px)] ">
-        <TabsList className="w-full bg-transparent mt-8">
-          <div className="bg-gray-light p-2 rounded-xl">
-            <TabsTrigger className="py-4 rounded-xl" value="welcomeTab">
-              👋 Welcome messages
-            </TabsTrigger>
-            <TabsTrigger className="py-4 rounded-xl" value="chatTab">
-              💬 Start chating
-            </TabsTrigger>
+      <Tabs
+        onValueChange={(e) => setTab(e)}
+        defaultValue="welcomeTab"
+        className="w-full bg"
+      >
+        <TabsList className="w-full bg-transparent p-0 px-4 mt-[22px] md:mt-[30px]">
+          <div className="bg-gradient-to-b from-[#ffffff] to-[#ffffff00] backdrop-blur-sm flex justify-center w-full z-10 py-4">
+            <div className="p-2 bg-gray-light rounded-xl">
+              <TabsTrigger
+                className="rounded-xl py-2 md:py-4"
+                value="welcomeTab"
+              >
+                👋 Welcome messages
+              </TabsTrigger>
+              <TabsTrigger className="rounded-xl py-2 md:py-4" value="chatTab">
+                💬 Start chating
+              </TabsTrigger>
+            </div>
           </div>
         </TabsList>
         <TabsContent value="welcomeTab">
@@ -689,64 +701,108 @@ function Content() {
         </TabsContent>
         <TabsContent
           value="chatTab"
-          className="h-[calc(100%-80px)] relative justify-center items-start flex"
+          className={twMerge(
+            "relative justify-center items-center flex flex-col"
+          )}
         >
-          {/* TODO: Only for unlogged users */}
-          <p className="flex items-center gap-x-2 bg-[#F9F9F9] py-2 px-6 rounded-md mt-8 text-xs">
-            <img src="/images/alert.svg" alt="alert" className="size-4" />
-            Please{" "}
-            <a href="/sign-in" className="text-xs underline">
-              log in
-            </a>{" "}
-            or{" "}
-            <a href="/sign-up" className="text-xs underline">
-              sign up
-            </a>{" "}
-            to save and revisit your chat history!
-          </p>
-          <div className="absolute bottom-0 w-full left-[50%] -translate-x-1/2 flex flex-col">
-            <form
-              className="w-full max-w-4xl mx-auto form-container flex flex-col"
-              onSubmit={handleSubmit}
-            >
-              <div className="grid grid-cols-3 w-full  gap-x-4 gap-y-2 ">
-                {convoStarter.map((convo, index) => (
-                  <div
-                    key={`convo-${index}`}
-                    className="bg-[#624FF61A] text-primary text-center px-8 py-4 rounded-xl"
-                  >
-                    {convo} →
-                  </div>
-                ))}
-              </div>
-              <div className="relative flex flex-1 w-full gap-x-4 mt-10">
-                <div className="grow-wrap max-h-[10rem] min-h-[58px] w-full">
-                  <textarea
-                    name="text"
-                    id="text"
-                    placeholder="Hi how may i help you, please enter..."
-                    className="max-h-[10rem] w-full border rounded-[12px] border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    onInput={(e) =>
-                      (e.target.parentNode.dataset.replicatedValue =
-                        e.target.value)
-                    }
-                  />
-                </div>
-                <div className="absolute top-4 left-4">
-                  <IconMessage />
-                </div>
-                <button
-                  className="flex-1 btn-submit rounded-[14px] self-end"
-                  onClick={testWelcomeMessage}
-                >
-                  Send
-                </button>
-              </div>
-            </form>
-            <div className="footer-container mt-8">
-              <p className="footer-text">
-                © 2024 Obamacare AI. All Rights Reserved.
+          <div className="h-[calc(100vh-10rem+10px)] md:h-[calc(100vh-10rem)] flex flex-col w-full">
+            <div className="h-[calc(100%-3rem)] md:h-[calc(100%-6rem)] flex -mt-[5rem] overflow-y-auto flex-col-reverse  relative">
+              {/* TODO: Only for unlogged users */}
+              <p className="flex fixed top-36 left-1/2 lg:left-[calc(50%+11rem)] -translate-x-1/2 items-center gap-x-2 bg-[#F9F9F9] text-center justify-center py-2 px-6 w-full lg:w-auto rounded-md mt-8 text-xs">
+                <img src="/images/alert.svg" alt="alert" className="size-4" />
+                <p className="text-xs">
+                  Please{" "}
+                  <a href="/sign-in" className="text-xs underline">
+                    login
+                  </a>{" "}
+                  or{" "}
+                  <a href="/sign-up" className="text-xs underline">
+                    signup
+                  </a>{" "}
+                  to save and revisit your chat history!
+                </p>
               </p>
+              <div className="flex gap-4 py-8 px-2 md:px-8 w-full max-w-6xl mx-auto">
+                <div className="flex gap-4 flex-col overflow-hidden">
+                  {/* Dump all the messages here. Both user and chatbot. Just make
+                  sure to differentiate between them. */}
+                  {/* {Array.from({ length: 5 }).map((_, index) => (
+                    // Opacity-5 if current Session is !== to the session of the message object. This is to hide the messages that are from the previous session if the user is not logged in. It will only show the message of the current session
+                    <ChatBubble
+                      userChat="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae provident delectus veniam. Earum quo veritatis iure dignissimos recusandae alias officiis?"
+                      chatBotResponse={`Ok What is your zip code, age and estimated yearly income, is it safe to say you make more than 22k/year and do you live alone or have dependents? \n\nOk great if you like any of the plans above and are ready, lets start building a more precise quote for you with other details in mind like if you are taking any special meds or like to keep alignment with your current provider.  Would you like to get started?`}
+                      className="opacity-40 blur-sm"
+                    />
+                  ))}
+                  <ChatBubble
+                    userChat="What is the best obamacare silver plan in my area?"
+                    chatBotResponse={`Ok What is your zip code, age and estimated yearly income, is it safe to say you make more than 22k/year and do you live alone or have dependents? \n\nOk great if you like any of the plans above and are ready, lets start building a more precise quote for you with other details in mind like if you are taking any special meds or like to keep alignment with your current provider.  Would you like to get started?`}
+                  />
+                  <ChatBubble
+                    userChat="Yes"
+                    chatBotResponse={`Ok great, i just need a couple personal details and I can do the heavy lifting.  I just need your first and last name, dob and consent to look on your behalf.`}
+                  />
+                  <ChatBubble
+                    userChat="John smith” 11/11/1980"
+                    chatBotResponse={`Perfect now here is a link to confirm your consent so that i can find the best plan on your behalf.  Aka do the heavy lifting based on 100’s of variables
+https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
+                  /> */}
+                </div>
+              </div>
+            </div>
+            <div className="absolute bottom-0 w-full left-[50%] -translate-x-1/2 flex flex-col">
+              <form
+                className="w-full max-w-6xl px-4 mx-auto form-container flex flex-col"
+                onSubmit={handleSubmit}
+              >
+                <div className="grid grid-cols-3 w-full gap-x-2 md:gap-x-4 gap-y-2 ">
+                  {/* Only show when there is no conversation for the current session. Even if there is a conversation history, as long as the sesssion is new and the user is not logged in, show this convo starter */}
+                  {convoStarter.map((convo, index) => (
+                    <div
+                      key={`convo-${index}`}
+                      className="bg-[#624FF61A] text-xs md:text-sm text-primary text-center px-4 md:px-8 py-4 rounded-xl"
+                    >
+                      {convo} →
+                    </div>
+                  ))}
+                </div>
+                <div className="relative flex flex-1 w-full gap-x-2 md:gap-x-4 mt-10">
+                  <div className="grow-wrap max-h-[10rem] md:min-h-[58px] w-full">
+                    <Textarea
+                      name="text"
+                      autoComplete="off"
+                      autoCorrect="off"
+                      autoFocus
+                      spellCheck={false}
+                      rows={1}
+                      tabIndex={0}
+                      id="text"
+                      placeholder="Hi how may i help you, please enter..."
+                      className="max-h-[10rem] w-full rounded-[12px] border border-primary"
+                      onInput={(e) =>
+                        (e.target.parentNode.dataset.replicatedValue =
+                          e.target.value)
+                      }
+                    />
+                  </div>
+                  <div className="absolute top-1/2 -translate-y-1/2 left-4">
+                    <IconMessage />
+                  </div>
+
+                  <button
+                    className="flex-1 btn-submit self-end"
+                    // onClick={testWelcomeMessage}
+                  >
+                    <p className="hidden md:block">Send</p>
+                    <SendHorizonal size={18} className="md:hidden block" />
+                  </button>
+                </div>
+              </form>
+              <div className="flex justify-center py-4 lg:mt-8">
+                <p className="footer-text">
+                  © 2024 Obamacare AI. All Rights Reserved.
+                </p>
+              </div>
             </div>
           </div>
         </TabsContent>

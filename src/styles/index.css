@@ -98,23 +98,23 @@
 
   .grow-wrap {
     display: grid;
+    /* overflow: hidden; */
   }
   .grow-wrap::after {
     content: attr(data-replicated-value) " ";
     white-space: pre-wrap;
     visibility: hidden;
-    /* @apply; */
   }
   .grow-wrap > textarea {
     resize: none;
-    /* @apply; */
+    @apply pt-3 md:pt-4;
   }
   .grow-wrap > textarea,
   .grow-wrap::after {
     padding-left: 3rem;
-    font: inherit;
+    /* font: inherit; */
     @apply leading-normal;
-    grid-area: 1 / 1 / 2 / 2;
+    grid-area: 1 / 1 / 1 / 1;
   }
 
   .main-container {
@@ -296,7 +296,7 @@
   }
 
   .btn-submit {
-    @apply bg-primary rounded-[14px] text-white px-[30px] py-[17px] w-full md:w-auto disabled:bg-gray;
+    @apply bg-primary rounded-full md:rounded-[14px] text-white md:p-0 md:px-[30px] md:py-[17px] p-3 w-full md:w-auto disabled:bg-gray;
   }
 
   /* divider */
@@ -532,10 +532,6 @@
     @apply font-medium text-white;
   }
 
-  .btn-submit {
-    @apply bg-primary rounded-[14px] text-white px-[30px] py-[17px] w-full md:w-auto disabled:bg-gray;
-  }
-
   /* divider */
 
   .divider-x {
@@ -767,10 +763,6 @@
 
   .btn-text-disabled {
     @apply font-medium text-white;
-  }
-
-  .btn-submit {
-    @apply bg-primary rounded-[14px] text-white px-[30px] py-[17px] w-full md:w-auto disabled:bg-gray;
   }
 
   /* divider */
