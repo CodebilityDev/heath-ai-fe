@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
-import IconSearch from "@svgs/IconSearch";
-import CheckBox from "@components/core/CheckBox";
+import IconSearch from "@/assets/svgs/IconSearch";
+import CheckBox from "@/components/core/CheckBox";
 import { useRecoilState } from "recoil";
-import { settingAtom } from "@state/Setting";
+import { settingAtom } from "@/state/Setting";
 import { SettingInterface } from "../../../../types/Setting";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useDebounce from "@/hooks/useDebounce";

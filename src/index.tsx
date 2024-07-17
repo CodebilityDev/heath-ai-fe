@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom/client";
 import "react-toastify/dist/ReactToastify.css";
-import "@styles/index.css";
+import "@/styles/index.css";
 import { RecoilRoot } from "recoil";
 import { RouterProviderComponent } from "./providers/router-provider";
 import ToastContainer from "@/components/common/ToastContainer";
