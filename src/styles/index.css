@@ -114,9 +114,9 @@
     padding-right: 2.5rem;
   }
 
+  /* Textarea  */
   .grow-wrap {
     display: grid;
-    /* overflow: hidden; */
   }
   .grow-wrap::after {
     content: attr(data-replicated-value) " ";
@@ -141,7 +141,6 @@
   }
 
   /* sidebar */
-
   .sidebar-container {
     @apply flex lg:w-[325px] w-full;
   }
