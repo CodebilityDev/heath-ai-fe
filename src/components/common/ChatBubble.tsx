@@ -4,12 +4,10 @@ import { twMerge } from "tailwind-merge";
 const ChatBubble = ({
   userChat,
   chatBotResponse,
-  sessionId,
   className,
 }: {
   userChat: string;
   chatBotResponse: React.ReactNode;
-  sessionId?: string;
   className?: string;
 }) => {
   return (

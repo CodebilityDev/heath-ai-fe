@@ -1,18 +1,15 @@
-//@ts-nocheck
-
 import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
-import {
-  SettingInterface,
-  OpenAiAPIKeyInterface,
-  ExcelExploreInterface,
-} from "@types/Setting";
+import { SettingInterface } from "@/types/Setting";
+
+import { OpenAiAPIKeyInterface, ExcelExploreInterface } from "@/types/AppState";
+
 import {
   defaultSetting,
   defaultOpenAiAPIKey,
   defaultExcelExplore,
-} from "@utils/Default";
+} from "@/utils/Default";
 
 const { persistAtom } = recoilPersist();
 

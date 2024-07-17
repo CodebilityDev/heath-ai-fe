@@ -1,4 +1,4 @@
-import { graphql } from "@graphql/generated";
+import { graphql } from "../generated";
 
 export const GetGHL = graphql(`
   query Ghl_me {

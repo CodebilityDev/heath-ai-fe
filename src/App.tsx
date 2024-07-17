@@ -1,14 +1,13 @@
-// @ts-nocheck
-import langSnippet from "@utils/LangSnippet";
+import langSnippet from "@/utils/LangSnippet";
 import "react-toastify/dist/ReactToastify.css";
-import CheckButtons from "@components/core/CheckButtons";
-import CheckBox from "@components/core/CheckBox";
+import CheckButtons from "@/components/core/CheckButtons";
+import CheckBox from "@/components/core/CheckBox";
 import Datepicker, { DateValueType } from "react-tailwindcss-datepicker";
 import Select from "react-tailwindcss-select";
-import IconMessage from "@svgs/IconMessage";
+import IconMessage from "./assets/svgs/IconMessage";
 import { useQuery } from "@apollo/client";
-import { GetMe } from "@graphql/declarations/geMe";
-import { AUTHSTORE } from "@graphql/authStorage";
+import { GetMe } from "@/graphql/declarations/geMe";
+import { AUTHSTORE } from "@/graphql/authStorage";
 import { FaArrowRotateLeft } from "react-icons/fa6";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
@@ -31,7 +30,8 @@ import { Textarea } from "./components/ui/textarea";
 import ChatBubble from "./components/common/ChatBubble";
 import { SendHorizonal } from "lucide-react";
 import ChatBot from "./components/pages/main/ChatBot";
-import { TestConfigInterface } from "./types/Setting";
+import { ConfigInterface, TestConfigInterface } from "./types/Setting";
+import { SelectValue } from "react-tailwindcss-select/dist/components/type";
 
 function Sidebar({ className }: { className?: string }) {
   const { data } = useQuery(GetMe);
@@ -103,7 +103,7 @@ function Sidebar({ className }: { className?: string }) {
               fetch(redirect, {
                 method: "GET",
                 headers: {
-                  Authorization: `Bearer ${AUTHSTORE.get("token")}`,
+                  Authorization: `Bearer ${AUTHSTORE.get()}`,
                 },
               }).then((res) => {
                 if (res.ok) {
@@ -201,6 +201,7 @@ function Sidebar({ className }: { className?: string }) {
 
 function Content() {
   const [carrierModal, setCarrierModal] = useState(false);
+  const [selectedItem, setSelectedItem] = useState<SelectValue>(null);
   const [tab, setTab] = useState<string>();
   const [configSet, setConfig] = useState<ConfigInterface | undefined>();
   const [testConfig, setTestConfig] = useState<TestConfigInterface>({
@@ -633,6 +634,7 @@ function Content() {
                           primaryColor={"violet"}
                           isMultiple={true}
                           options={[]}
+                          value={selectedItem}
                           placeholder={"No users selected"}
                           classNames={{
                             menuButton: (value: any) => {
@@ -644,6 +646,7 @@ function Content() {
                               return "multi-select-tag-item";
                             },
                           }}
+                          onChange={(e: any) => setSelectedItem(e.target.value)}
                         />
                       </div>
                       <div className="flex items-center w-full h-full md:w-auto">

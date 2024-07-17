@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Pages
-import SignInPage from "@pages/SignIn";
-import MainLayout from "../../src/layout";
-import SignUpPage from "@pages/SignUp";
-import ForgotPasswordPage from "@pages/ForgotPassword";
-import ResetPasswordPage from "@pages/ResetPassword";
+import SignInPage from "@/pages/SignIn";
+import MainLayout from "@/layout";
+import SignUpPage from "@/pages/SignUp";
+import ForgotPasswordPage from "@/pages/ForgotPassword";
+import ResetPasswordPage from "@/pages/ResetPassword";
 
 import { ProtectedPath } from "./ProtectedPath";
 import Landing from "@/pages/Landing";
