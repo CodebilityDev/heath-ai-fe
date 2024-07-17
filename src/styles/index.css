@@ -104,6 +104,7 @@
     content: attr(data-replicated-value) " ";
     white-space: pre-wrap;
     visibility: hidden;
+    @apply !w-0;
   }
   .grow-wrap > textarea {
     resize: none;
@@ -113,8 +114,8 @@
   .grow-wrap::after {
     padding-left: 3rem;
     /* font: inherit; */
-    @apply leading-normal;
-    grid-area: 1 / 1 / 1 / 1;
+    @apply leading-normal w-full;
+    grid-area: 1 / 1 / 2 / 2;
   }
 
   .main-container {

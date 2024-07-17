@@ -8,7 +8,7 @@ const ChatBubble = ({
   className,
 }: {
   userChat: string;
-  chatBotResponse: string;
+  chatBotResponse: React.ReactNode;
   sessionId?: string;
   className?: string;
 }) => {
