@@ -3,6 +3,7 @@ import ChatBubble from "@/components/common/ChatBubble";
 import { Textarea } from "@/components/ui/textarea";
 import { AIContextProvider, useAIContext } from "@/providers/AI-Provider";
 import { SendHorizonal } from "lucide-react";
+import { nanoid } from "nanoid";
 import { useEffect } from "react";
 const Chat = () => {
   const { aiState, setAIState } = useAIContext();
@@ -20,6 +21,51 @@ const Chat = () => {
   //     ],
   //   });
   // }, []);
+
+  const handleChatSubmit = async (e: any) => {
+    e.preventDefault();
+    const userChat = e.target[0].value;
+
+    const generatedId = nanoid();
+
+    setAIState((prev) => ({
+      ...prev,
+      isChatting: true,
+      messages: [
+        ...prev.messages,
+        {
+          id: generatedId,
+          userMessage: userChat,
+        },
+      ],
+    }));
+
+    await (async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      setAIState((prev) => {
+        const newMessage = prev.messages.map((m: any) => {
+          if (m.id === generatedId) {
+            return {
+              ...m,
+              botMessage: "hello im a bot",
+            };
+          }
+          return m;
+        });
+        return {
+          ...prev,
+          messages: [...newMessage],
+        };
+      });
+    })();
+    setAIState((prev) => ({
+      ...prev,
+      isChatting: false,
+    }));
+  };
+
+  // console.log(JSON.stringify(aiState));
 
   const convoStarter = [
     `"Explain quantum computing in simple terms"`,
@@ -55,7 +101,7 @@ const Chat = () => {
             {aiState.messages.map((message, index) => (
               // Opacity-5 if current Session is !== to the session of the message object. This is to hide the messages that are from the previous session if the user is not logged in. It will only show the message of the current session
               <ChatBubble
-                userChat={message.userMessage}
+                userChat={message.userMessage!}
                 chatBotResponse={message.botMessage}
                 key={`chat-bubble-${index}`}
                 // className="opacity-40 blur-sm"
@@ -80,7 +126,7 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
       <div className="absolute bottom-0 w-full left-[50%] -translate-x-1/2 flex flex-col">
         <form
           className="w-full max-w-6xl px-4 mx-auto form-container flex flex-col"
-          // onSubmit={}
+          onSubmit={handleChatSubmit}
         >
           <div className="grid grid-cols-3 w-full gap-x-2 md:gap-x-4 gap-y-2 ">
             {/* Only show when there is no conversation for the current session. Even if there is a conversation history, as long as the sesssion is new and the user is not logged in, show this convo starter */}
@@ -96,12 +142,13 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
           <div className="relative flex flex-1 w-full gap-x-2 md:gap-x-4 mt-10">
             <div className="grow-wrap max-h-[10rem] md:min-h-[58px] w-full">
               <Textarea
-                name="text"
+                name="user-prompt"
                 autoComplete="off"
                 autoCorrect="off"
                 autoFocus
                 spellCheck={false}
                 rows={1}
+                disabled={aiState.isChatting}
                 tabIndex={0}
                 id="text"
                 placeholder="Hi how may i help you, please enter..."
@@ -117,7 +164,9 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
 
             <button
               className="flex-1 btn-submit self-end"
-              // onClick={testWelcomeMessage}
+              type="submit"
+              disabled={aiState.isChatting}
+              aria-disabled={aiState.isChatting}
             >
               <p className="hidden md:block">Send</p>
               <SendHorizonal size={18} className="md:hidden block" />
