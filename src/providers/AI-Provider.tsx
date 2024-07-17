@@ -1,8 +1,9 @@
 import { createContext, useContext, useState } from "react";
 
 interface Message {
-  userMessage: string;
-  botMessage: React.ReactNode;
+  id?: string;
+  userMessage?: string;
+  botMessage?: React.ReactNode;
 }
 type AIContextType = {
   aiState: {
