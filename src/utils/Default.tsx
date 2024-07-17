@@ -1,7 +1,7 @@
 import { SettingInterface } from "@/types/Setting";
 import { AppStateInterface, ExcelExploreInterface } from "@/types/AppState";
 import { AgentInterface } from "@/types/Agent";
-import API from "@utils/API";
+import API from "@/utils/API";
 
 import { OpenAiAPIKeyInterface } from "@/types/AppState";
 

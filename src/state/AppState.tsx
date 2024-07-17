@@ -2,7 +2,7 @@ import { atom, selector } from "recoil";
 import { recoilPersist } from "recoil-persist";
 
 import { AppStateInterface } from "@/types/AppState";
-import { defaultAppState } from "@utils/Default";
+import { defaultAppState } from "@/utils/Default";
 
 const { persistAtom } = recoilPersist();
 

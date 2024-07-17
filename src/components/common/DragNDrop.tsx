@@ -1,25 +1,30 @@
-//@ts-nocheck
 import React, { useEffect, useState } from "react";
 import { AiOutlineCheckCircle, AiOutlineCloudUpload } from "react-icons/ai";
 import { MdClear } from "react-icons/md";
 import "@/styles/dragNdrop.css";
 
-const DragNdrop = ({ onFilesSelected, width }) => {
+const DragNdrop = ({
+  onFilesSelected,
+  width,
+}: {
+  onFilesSelected: Function;
+  width: string;
+}) => {
   const [files, setFiles] = useState<File[]>([]);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: any) => {
     const selectedFiles = event.target.files;
     if (selectedFiles && selectedFiles.length > 0) {
       const newFiles = Array.from(selectedFiles);
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+      setFiles((prevFiles: any) => [...prevFiles, ...newFiles]);
     }
   };
-  const handleDrop = (event) => {
+  const handleDrop = (event: any) => {
     event.preventDefault();
     const droppedFiles = event.dataTransfer.files;
     if (droppedFiles.length > 0) {
       const newFiles = Array.from(droppedFiles);
-      setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+      setFiles((prevFiles: any) => [...prevFiles, ...newFiles]);
     }
   };
 
@@ -48,7 +53,6 @@ const DragNdrop = ({ onFilesSelected, width }) => {
           }`}
           onDrop={handleDrop}
           onDragOver={(event) => event.preventDefault()}
-          htmlFor="browse"
         >
           <>
             <div className="upload-info">

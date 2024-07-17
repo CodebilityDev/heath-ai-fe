@@ -1,4 +1,4 @@
-import { graphql } from "@graphql/generated";
+import { graphql } from "../generated";
 
 export const GetBotConfig = graphql(`
   query BotConfig($where: BotConfigWhereUniqueInput!) {

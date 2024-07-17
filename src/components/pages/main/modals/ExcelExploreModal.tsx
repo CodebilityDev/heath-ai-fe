@@ -1,4 +1,4 @@
-import IconUpload from "@svgs/IconUpload";
+import IconUpload from "@/assets/svgs/IconUpload";
 
 const ExcelExploreModal = ({
   open,

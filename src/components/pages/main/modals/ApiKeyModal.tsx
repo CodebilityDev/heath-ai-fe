@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { oaKeySelector } from "@state/Setting";
-import IconSave from "@svgs/IconSave";
+// import { oaKeySelector } from "@state/Setting";
+// import IconSave from "@svgs/IconSave";
 import { OpenAiAPIKeyInterface } from "@/types/AppState";
 import { useQuery } from "@apollo/client";
 import { GetMe, UpdateAIKey, UpdateUser } from "@/graphql/declarations/geMe";

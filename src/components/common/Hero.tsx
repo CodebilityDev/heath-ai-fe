@@ -1,8 +1,7 @@
-import React from "react";
 import Container from "../core/Container";
 import { twMerge } from "tailwind-merge";
 import Button from "../core/Button";
-import { ArrowRight, LogOut } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 const Hero = () => {
   const avatar = [

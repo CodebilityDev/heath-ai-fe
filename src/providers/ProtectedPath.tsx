@@ -1,6 +1,6 @@
-import { AUTHSTORE } from "@graphql/authStorage";
-import { apolloClient } from "@graphql/client";
-import { GetMe } from "@graphql/declarations/geMe";
+import { AUTHSTORE } from "@/graphql/authStorage";
+import { apolloClient } from "@/graphql/client";
+import { GetMe } from "@/graphql/declarations/geMe";
 import { PropsWithChildren, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 

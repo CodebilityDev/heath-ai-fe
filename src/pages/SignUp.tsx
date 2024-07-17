@@ -1,6 +1,4 @@
-//@ts-nocheck
-
-import Button from "@components/core/Button";
+import Button from "@/components/core/Button";
 import { IoClose } from "react-icons/io5";
 import { useLocation, useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
@@ -8,10 +6,10 @@ import { FcGoogle } from "react-icons/fc";
 import { BsApple } from "react-icons/bs";
 import { IoIosLock } from "react-icons/io";
 import { MdEmail } from "react-icons/md";
-import Input from "@components/core/Input";
-import { apolloClient } from "@graphql/client";
-import { Login, Register } from "@graphql/declarations/auth";
-import { AUTHSTORE } from "@graphql/authStorage";
+import Input from "@/components/core/Input";
+import { apolloClient } from "@/graphql/client";
+import { Login, Register } from "@/graphql/declarations/auth";
+import { AUTHSTORE } from "@/graphql/authStorage";
 import { toast } from "react-toastify";
 
 const SignUpPage = () => {

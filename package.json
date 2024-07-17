@@ -30,10 +30,13 @@
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
+    "@hookform/resolvers": "^3.9.0",
     "@lifeomic/axios-fetch": "^3.1.0",
     "@radix-ui/react-dialog": "^1.1.1",
+    "@radix-ui/react-label": "^2.1.0",
     "@radix-ui/react-scroll-area": "^1.1.0",
     "@radix-ui/react-select": "^2.1.1",
+    "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
     "@radix-ui/react-tabs": "^1.1.0",
     "ai": "^3.2.27",
@@ -48,6 +51,7 @@
     "lucide-react": "^0.408.0",
     "nanoid": "^5.0.7",
     "postcss-cli": "^11.0.0",
+    "react-hook-form": "^7.52.1",
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.24.1",
     "react-tailwindcss-datepicker": "^1.6.6",
@@ -56,6 +60,7 @@
     "recoil": "^0.7.7",
     "recoil-persist": "^5.1.0",
     "tailwind-merge": "^2.4.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.23.8"
   }
 }
