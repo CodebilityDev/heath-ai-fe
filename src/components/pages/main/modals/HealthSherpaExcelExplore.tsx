@@ -41,43 +41,43 @@ const HealthSherpaExcelExplore = ({
     }
   }, [userData]);
 
-  // const update = async () => {
-  //   // if user already has an api key, update it
-  //   if (userData?.authenticatedItem?.aiKey?.id) {
-  //     await apolloClient.mutate({
-  //       mutation: UpdateAIKey,
-  //       variables: {
-  //         where: {
-  //           id: userData?.authenticatedItem?.aiKey?.id,
-  //         },
-  //         data: {
-  //           openapiKey: apiKey,
-  //         },
-  //       },
-  //     });
-  //   } else {
-  //     // if user doesn't have an api key, create one
-  //     await apolloClient.mutate({
-  //       mutation: UpdateUser,
-  //       variables: {
-  //         where: {
-  //           id: userData?.authenticatedItem?.id,
-  //         },
-  //         data: {
-  //           aiKey: {
-  //             create: {
-  //               openapiKey: apiKey,
-  //             },
-  //           },
-  //         },
-  //       },
-  //     });
+  const update = async () => {
+    // if user already has an api key, update it
+    if (userData?.authenticatedItem?.aiKey?.id) {
+      await apolloClient.mutate({
+        mutation: UpdateAIKey,
+        variables: {
+          where: {
+            id: userData?.authenticatedItem?.aiKey?.id,
+          },
+          data: {
+            openapiKey: apiKey,
+          },
+        },
+      });
+    } else {
+      // if user doesn't have an api key, create one
+      await apolloClient.mutate({
+        mutation: UpdateUser,
+        variables: {
+          where: {
+            id: userData?.authenticatedItem?.id,
+          },
+          data: {
+            aiKey: {
+              create: {
+                openapiKey: apiKey,
+              },
+            },
+          },
+        },
+      });
 
-  //     toast.success("API Key added successfully");
+      toast.success("API Key added successfully");
 
-  //     onConnect();
-  //   }
-  // };
+      onConnect();
+    }
+  };
 
   return (
     <div
