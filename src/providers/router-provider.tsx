@@ -1,21 +1,15 @@
-import React, { useEffect } from "react";
-
-import {
-  createBrowserRouter,
-  RouterProvider,
-  useLocation,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 // Pages
-import App from "../App";
 import SignInPage from "@pages/SignIn";
 import MainLayout from "../../src/layout";
 import SignUpPage from "@pages/SignUp";
-import Main from "@/pages/Main";
 import ForgotPasswordPage from "@pages/ForgotPassword";
 import ResetPasswordPage from "@pages/ResetPassword";
-import Appv2 from "../Appv2";
+
 import { ProtectedPath } from "./ProtectedPath";
+import Landing from "@/pages/Landing";
+import App from "@/App";
 
 const router = createBrowserRouter([
   {
@@ -23,13 +17,13 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <App />,
+        element: <Landing />,
       },
       {
         path: "/app",
         element: (
           <ProtectedPath>
-            <Appv2 />
+            <App />
           </ProtectedPath>
         ),
       },
