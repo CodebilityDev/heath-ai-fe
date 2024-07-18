@@ -42,6 +42,8 @@ const NavigationButtons = ({
       </Button>
     );
   }
+
+  return null;
 };
 
 export default NavigationButtons;

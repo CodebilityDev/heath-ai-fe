@@ -7,6 +7,7 @@ export const sidebarLinks = [
         icon: "/svgs/link1.svg",
         to: "/app",
       },
+
       {
         name: "SMS Chat Builder",
         icon: "/svgs/link2.svg",
