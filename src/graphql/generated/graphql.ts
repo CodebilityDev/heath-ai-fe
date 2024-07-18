@@ -82,11 +82,27 @@ export type BotConfig = {
   name?: Maybe<Scalars['String']['output']>;
   presentationStrategy?: Maybe<Scalars['String']['output']>;
   priorityPlan?: Maybe<Scalars['String']['output']>;
+  sessions?: Maybe<Array<ChatSession>>;
+  sessionsCount?: Maybe<Scalars['Int']['output']>;
   specificQuestions?: Maybe<Scalars['String']['output']>;
   summaryPrompt?: Maybe<Scalars['String']['output']>;
   tonestyle?: Maybe<Scalars['String']['output']>;
   user?: Maybe<User>;
   welcomeMessage?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type BotConfigSessionsArgs = {
+  cursor?: InputMaybe<ChatSessionWhereUniqueInput>;
+  orderBy?: Array<ChatSessionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ChatSessionWhereInput;
+};
+
+
+export type BotConfigSessionsCountArgs = {
+  where?: ChatSessionWhereInput;
 };
 
 export type BotConfigCreateInput = {
@@ -95,6 +111,7 @@ export type BotConfigCreateInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   presentationStrategy?: InputMaybe<Scalars['String']['input']>;
   priorityPlan?: InputMaybe<Scalars['String']['input']>;
+  sessions?: InputMaybe<ChatSessionRelateToManyForCreateInput>;
   specificQuestions?: InputMaybe<Scalars['String']['input']>;
   summaryPrompt?: InputMaybe<Scalars['String']['input']>;
   tonestyle?: InputMaybe<Scalars['String']['input']>;
@@ -137,6 +154,7 @@ export type BotConfigUpdateInput = {
   name?: InputMaybe<Scalars['String']['input']>;
   presentationStrategy?: InputMaybe<Scalars['String']['input']>;
   priorityPlan?: InputMaybe<Scalars['String']['input']>;
+  sessions?: InputMaybe<ChatSessionRelateToManyForUpdateInput>;
   specificQuestions?: InputMaybe<Scalars['String']['input']>;
   summaryPrompt?: InputMaybe<Scalars['String']['input']>;
   tonestyle?: InputMaybe<Scalars['String']['input']>;
@@ -154,6 +172,7 @@ export type BotConfigWhereInput = {
   name?: InputMaybe<StringFilter>;
   presentationStrategy?: InputMaybe<StringFilter>;
   priorityPlan?: InputMaybe<StringFilter>;
+  sessions?: InputMaybe<ChatSessionManyRelationFilter>;
   specificQuestions?: InputMaybe<StringFilter>;
   summaryPrompt?: InputMaybe<StringFilter>;
   tonestyle?: InputMaybe<StringFilter>;
@@ -162,6 +181,67 @@ export type BotConfigWhereInput = {
 };
 
 export type BotConfigWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type ChatSession = {
+  __typename?: 'ChatSession';
+  botConfig?: Maybe<BotConfig>;
+  id: Scalars['ID']['output'];
+  keywords?: Maybe<Scalars['String']['output']>;
+  sessionData?: Maybe<Scalars['JSON']['output']>;
+};
+
+export type ChatSessionCreateInput = {
+  botConfig?: InputMaybe<BotConfigRelateToOneForCreateInput>;
+  keywords?: InputMaybe<Scalars['String']['input']>;
+  sessionData?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type ChatSessionManyRelationFilter = {
+  every?: InputMaybe<ChatSessionWhereInput>;
+  none?: InputMaybe<ChatSessionWhereInput>;
+  some?: InputMaybe<ChatSessionWhereInput>;
+};
+
+export type ChatSessionOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+  keywords?: InputMaybe<OrderDirection>;
+};
+
+export type ChatSessionRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<ChatSessionWhereUniqueInput>>;
+  create?: InputMaybe<Array<ChatSessionCreateInput>>;
+};
+
+export type ChatSessionRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<ChatSessionWhereUniqueInput>>;
+  create?: InputMaybe<Array<ChatSessionCreateInput>>;
+  disconnect?: InputMaybe<Array<ChatSessionWhereUniqueInput>>;
+  set?: InputMaybe<Array<ChatSessionWhereUniqueInput>>;
+};
+
+export type ChatSessionUpdateArgs = {
+  data: ChatSessionUpdateInput;
+  where: ChatSessionWhereUniqueInput;
+};
+
+export type ChatSessionUpdateInput = {
+  botConfig?: InputMaybe<BotConfigRelateToOneForUpdateInput>;
+  keywords?: InputMaybe<Scalars['String']['input']>;
+  sessionData?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type ChatSessionWhereInput = {
+  AND?: InputMaybe<Array<ChatSessionWhereInput>>;
+  NOT?: InputMaybe<Array<ChatSessionWhereInput>>;
+  OR?: InputMaybe<Array<ChatSessionWhereInput>>;
+  botConfig?: InputMaybe<BotConfigWhereInput>;
+  id?: InputMaybe<IdFilter>;
+  keywords?: InputMaybe<StringFilter>;
+};
+
+export type ChatSessionWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -588,6 +668,8 @@ export type Mutation = {
   createAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   createBotConfig?: Maybe<BotConfig>;
   createBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  createChatSession?: Maybe<ChatSession>;
+  createChatSessions?: Maybe<Array<Maybe<ChatSession>>>;
   createGHLAccess?: Maybe<GhlAccess>;
   createGHLAccesses?: Maybe<Array<Maybe<GhlAccess>>>;
   createGroup?: Maybe<Group>;
@@ -605,6 +687,8 @@ export type Mutation = {
   deleteAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   deleteBotConfig?: Maybe<BotConfig>;
   deleteBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  deleteChatSession?: Maybe<ChatSession>;
+  deleteChatSessions?: Maybe<Array<Maybe<ChatSession>>>;
   deleteGHLAccess?: Maybe<GhlAccess>;
   deleteGHLAccesses?: Maybe<Array<Maybe<GhlAccess>>>;
   deleteGroup?: Maybe<Group>;
@@ -622,6 +706,8 @@ export type Mutation = {
   updateAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   updateBotConfig?: Maybe<BotConfig>;
   updateBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  updateChatSession?: Maybe<ChatSession>;
+  updateChatSessions?: Maybe<Array<Maybe<ChatSession>>>;
   updateGHLAccess?: Maybe<GhlAccess>;
   updateGHLAccesses?: Maybe<Array<Maybe<GhlAccess>>>;
   updateGroup?: Maybe<Group>;
@@ -691,6 +777,16 @@ export type MutationCreateBotConfigArgs = {
 
 export type MutationCreateBotConfigsArgs = {
   data: Array<BotConfigCreateInput>;
+};
+
+
+export type MutationCreateChatSessionArgs = {
+  data: ChatSessionCreateInput;
+};
+
+
+export type MutationCreateChatSessionsArgs = {
+  data: Array<ChatSessionCreateInput>;
 };
 
 
@@ -779,6 +875,16 @@ export type MutationDeleteBotConfigsArgs = {
 };
 
 
+export type MutationDeleteChatSessionArgs = {
+  where: ChatSessionWhereUniqueInput;
+};
+
+
+export type MutationDeleteChatSessionsArgs = {
+  where: Array<ChatSessionWhereUniqueInput>;
+};
+
+
 export type MutationDeleteGhlAccessArgs = {
   where: GhlAccessWhereUniqueInput;
 };
@@ -858,6 +964,17 @@ export type MutationUpdateBotConfigArgs = {
 
 export type MutationUpdateBotConfigsArgs = {
   data: Array<BotConfigUpdateArgs>;
+};
+
+
+export type MutationUpdateChatSessionArgs = {
+  data: ChatSessionUpdateInput;
+  where: ChatSessionWhereUniqueInput;
+};
+
+
+export type MutationUpdateChatSessionsArgs = {
+  data: Array<ChatSessionUpdateArgs>;
 };
 
 
@@ -964,6 +1081,9 @@ export type Query = {
   botConfig?: Maybe<BotConfig>;
   botConfigs?: Maybe<Array<BotConfig>>;
   botConfigsCount?: Maybe<Scalars['Int']['output']>;
+  chatSession?: Maybe<ChatSession>;
+  chatSessions?: Maybe<Array<ChatSession>>;
+  chatSessionsCount?: Maybe<Scalars['Int']['output']>;
   gHLAccess?: Maybe<GhlAccess>;
   gHLAccesses?: Maybe<Array<GhlAccess>>;
   gHLAccessesCount?: Maybe<Scalars['Int']['output']>;
@@ -1023,6 +1143,25 @@ export type QueryBotConfigsArgs = {
 
 export type QueryBotConfigsCountArgs = {
   where?: BotConfigWhereInput;
+};
+
+
+export type QueryChatSessionArgs = {
+  where: ChatSessionWhereUniqueInput;
+};
+
+
+export type QueryChatSessionsArgs = {
+  cursor?: InputMaybe<ChatSessionWhereUniqueInput>;
+  orderBy?: Array<ChatSessionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ChatSessionWhereInput;
+};
+
+
+export type QueryChatSessionsCountArgs = {
+  where?: ChatSessionWhereInput;
 };
 
 
@@ -1532,6 +1671,13 @@ export type Ghl_MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type Ghl_MeQuery = { __typename?: 'Query', ghl_me?: { __typename?: 'GHLMeReturn', name: string, email: string, firstName: string, lastName: string, phone: string, address: string, state: string, country: string, postalCode: string } | null };
 
+export type ChatSessionQueryVariables = Exact<{
+  where: ChatSessionWhereUniqueInput;
+}>;
+
+
+export type ChatSessionQuery = { __typename?: 'Query', chatSession?: { __typename?: 'ChatSession', sessionData?: any | null } | null };
+
 
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authclient_login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ClientItemAuthenticationWithPasswordSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionToken"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"firstName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lastName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authclient_register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"firstName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"firstName"}}},{"kind":"Argument","name":{"kind":"Name","value":"lastName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lastName"}}}]}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
@@ -1546,3 +1692,4 @@ export const UserDocument = {"kind":"Document","definitions":[{"kind":"Operation
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
 export const UpdateAiKeyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAIKey"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AIKeyWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AIKeyUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAIKey"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateAiKeyMutation, UpdateAiKeyMutationVariables>;
 export const Ghl_MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Ghl_me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"state"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}}]}}]}}]} as unknown as DocumentNode<Ghl_MeQuery, Ghl_MeQueryVariables>;
+export const ChatSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatSession"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChatSessionWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chatSession"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionData"}}]}}]}}]} as unknown as DocumentNode<ChatSessionQuery, ChatSessionQueryVariables>;
