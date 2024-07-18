@@ -9,7 +9,8 @@ import ResetPasswordPage from "@/pages/ResetPassword";
 
 import { ProtectedPath } from "./ProtectedPath";
 import Landing from "@/pages/Landing";
-import App from "@/App";
+import { ChatPage } from "@/pages/ChatPage";
+import { BotEditor } from "@/pages/BotEditor";
 
 const router = createBrowserRouter([
   {
@@ -23,9 +24,13 @@ const router = createBrowserRouter([
         path: "/app",
         element: (
           <ProtectedPath>
-            <App />
+            <BotEditor />
           </ProtectedPath>
         ),
+      },
+      {
+        path: "/chat",
+        element: <ChatPage />,
       },
       {
         path: "/sign-in",

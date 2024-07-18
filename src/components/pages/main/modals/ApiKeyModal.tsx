@@ -64,6 +64,9 @@ const ApiKeyModal = ({
 
       onConnect();
     }
+
+    toast.success("API Key updated successfully");
+    onClose();
   };
 
   return (
@@ -72,10 +75,10 @@ const ApiKeyModal = ({
         open ? "visible bg-black/20" : "invisible"
       }`}
     >
-      <div className="modal-content bg-white max-w-2xl w-full no-scrollbar">
+      <div className="w-full max-w-2xl bg-white modal-content no-scrollbar">
         <div className="flex flex-col gap-[30px]">
           <div className="w-full">
-            <p className="font-bold text-xl">Add OpenAI API Key</p>
+            <p className="text-xl font-bold">Add OpenAI API Key</p>
           </div>
           <div className="divider-x"></div>
           <div className="flex flex-col gap-[20px]">
@@ -89,7 +92,7 @@ const ApiKeyModal = ({
                   placeholder="API"
                   className="form-input"
                 />
-                <p className="mb-2 mt-6 font-semibold">Secret Key</p>
+                {/* <p className="mt-6 mb-2 font-semibold">Secret Key</p>
                 <input
                   // type="password"
                   value={apiKey}
@@ -97,16 +100,16 @@ const ApiKeyModal = ({
                   placeholder="123456"
                   className="form-input"
                 />
-                <span className="flex gap-x-2 mt-6 font-semibold">
+                <span className="flex mt-6 font-semibold gap-x-2">
                   White Link
                   <Switch />
                 </span>
-                <div className="flex gap-x-2 items-center font-semibold mt-6">
+                <div className="flex items-center mt-6 font-semibold gap-x-2">
                   Upload Logo
-                  {/* TODO: setup cropper */}
+                  TODO: setup cropper
                   <img src="/images/avatarFallback.png" alt="" />
                 </div>
-                <p className="mb-2 mt-6 font-semibold">
+                <p className="mt-6 mb-2 font-semibold">
                   Go High-Level(GHL) business IT
                 </p>
                 <input
@@ -116,14 +119,14 @@ const ApiKeyModal = ({
                   placeholder="API"
                   className="form-input"
                 />
-                <p className="mb-2 mt-6 font-semibold">API</p>
+                <p className="mt-6 mb-2 font-semibold">API</p>
                 <input
                   // type="password"
                   value={apiKey}
                   // onChange={(e) => setApiKey(e.target.value)}
                   placeholder="123456"
                   className="form-input"
-                />
+                /> */}
               </div>
             </div>
           </div>
