@@ -63,7 +63,7 @@ function Sidebar({ className }: { className?: string }) {
           <button
             className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
             onClick={() => {
-              navigate("/chatbot");
+              navigate("/app");
             }}
           >
             <p className={"text-xs sm:text-base btn-text"}>Bot Editor</p>
