@@ -25,7 +25,7 @@ const ChatBubble = ({
           <div className="w-24 h-8 rounded-md bg-gray-light-100">&nbsp;</div>
         </div>
       )}
-      <p className="px-4 break-words text- text-wrap">
+      <p className="px-4 break-words whitespace-pre-wrap text- text-wrap">
         {`${chatBotResponse ?? ""}`}
       </p>
     </div>
