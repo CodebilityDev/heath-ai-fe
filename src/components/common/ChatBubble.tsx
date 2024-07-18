@@ -1,5 +1,4 @@
 import React from "react";
-import Markdown from "react-markdown";
 import { twMerge } from "tailwind-merge";
 
 const ChatBubble = ({
@@ -26,9 +25,9 @@ const ChatBubble = ({
           <div className="w-24 h-8 rounded-md bg-gray-light-100">&nbsp;</div>
         </div>
       )}
-      <Markdown className="px-4 break-words text- text-wrap">
+      <p className="px-4 break-words text- text-wrap">
         {`${chatBotResponse ?? ""}`}
-      </Markdown>
+      </p>
     </div>
   );
 };
