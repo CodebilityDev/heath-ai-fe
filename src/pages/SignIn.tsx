@@ -11,25 +11,30 @@ import { apolloClient } from "@/graphql/client";
 import { Login } from "@/graphql/declarations/auth";
 import { AUTHSTORE } from "@/graphql/authStorage";
 import { toast } from "react-toastify";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { z } from "zod";
+import { signInSchema } from "@/types/FormTypes";
+import useFormProvider from "@/providers/useFormProvider";
 
 const SignInPage = () => {
   const { pathname } = useLocation();
-  console.log(pathname);
   const navigate = useNavigate();
 
-  const processSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    let formData = new FormData(e.currentTarget);
-    let data = Object.fromEntries(formData.entries()) as {
-      email: string;
-      password: string;
-    };
+  const { signInForm: form } = useFormProvider();
 
+  const processSubmit = async (formData: z.infer<typeof signInSchema>) => {
     const login = await apolloClient.mutate({
       mutation: Login,
       variables: {
-        email: data.email,
-        password: data.password,
+        email: formData.email,
+        password: formData.password,
       },
     });
 
@@ -125,34 +130,60 @@ const SignInPage = () => {
                 OR
               </span>
             </div>
-            <form
-              className="flex flex-col items-center w-full max-w-md space-y-4"
-              onSubmit={processSubmit}
-            >
-              <Input
-                logo={<MdEmail className="size-5 text-gray" />}
-                placeholder="Email or Username"
-                name="email"
-              />
-              <Input
-                logo={<IoIosLock className="size-5 text-gray" />}
-                placeholder="Password"
-                type="password"
-                name="password"
-              />
-              <a
-                href="/forgot-password"
-                className="self-start text-sm text-primary hover:underline"
+
+            <Form {...form}>
+              <form
+                onSubmit={form.handleSubmit(processSubmit)}
+                className="flex flex-col items-center w-full max-w-md space-y-4"
               >
-                Forgot password?
-              </a>
-              <Button
-                className="py-3 text-white bg-primary rounded-xl"
-                type="submit"
-              >
-                Sign in to Healthcare Plans
-              </Button>
-            </form>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <Input
+                          logo={<MdEmail className="size-5 text-gray" />}
+                          placeholder="Email or Username"
+                          type="email"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <Input
+                          logo={<IoIosLock className="size-5 text-gray" />}
+                          placeholder="Password"
+                          type="password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <a
+                  href="/forgot-password"
+                  className="self-start text-sm text-primary hover:underline"
+                >
+                  Forgot password?
+                </a>
+                <Button
+                  className="py-3 text-white bg-primary rounded-xl"
+                  type="submit"
+                >
+                  Sign in to Healthcare Plans
+                </Button>
+              </form>
+            </Form>
           </div>
         </div>
       </div>

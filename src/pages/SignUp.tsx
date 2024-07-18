@@ -11,28 +11,29 @@ import { apolloClient } from "@/graphql/client";
 import { Login, Register } from "@/graphql/declarations/auth";
 import { AUTHSTORE } from "@/graphql/authStorage";
 import { toast } from "react-toastify";
+import useFormProvider from "@/providers/useFormProvider";
+import { z } from "zod";
+import { signUpSchema } from "@/types/FormTypes";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form";
 
 const SignUpPage = () => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
-  console.log(pathname);
 
-  const processSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("submit");
-    let formData = new FormData(e.currentTarget);
-    let data = Object.fromEntries(formData.entries()) as {
-      email: string;
-      password: string;
-    };
+  const { signUpForm: form } = useFormProvider();
 
-    console.log(data);
-
+  const processSubmit = async (formData: z.infer<typeof signUpSchema>) => {
     const register = await apolloClient.mutate({
       mutation: Register,
       variables: {
-        email: data.email,
-        password: data.password,
+        email: formData.email,
+        password: formData.password,
       },
     });
 
@@ -40,8 +41,8 @@ const SignUpPage = () => {
       const login = await apolloClient.mutate({
         mutation: Login,
         variables: {
-          email: data.email,
-          password: data.password,
+          email: formData.email,
+          password: formData.password,
         },
       });
 
@@ -141,28 +142,71 @@ const SignUpPage = () => {
                 OR
               </span>
             </div>
-            <form
-              className="flex flex-col items-center w-full max-w-md space-y-4"
-              onSubmit={processSubmit}
-            >
-              <Input
-                name="email"
-                logo={<MdEmail className="size-5 text-gray" />}
-                placeholder="Email or Username"
-              />
-              <Input
-                name="password"
-                logo={<IoIosLock className="size-5 text-gray" />}
-                placeholder="Password"
-                type="password"
-              />
-              <Button
-                className="py-3 text-white bg-primary rounded-xl"
-                type="submit"
+            <Form {...form}>
+              <form
+                className="flex flex-col items-center w-full max-w-md space-y-4"
+                onSubmit={form.handleSubmit(processSubmit)}
               >
-                Sign up to Healthcare Plans
-              </Button>
-            </form>
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <Input
+                          type="email"
+                          logo={<MdEmail className="size-5 text-gray" />}
+                          placeholder="Email or Username"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <Input
+                          logo={<IoIosLock className="size-5 text-gray" />}
+                          placeholder="Password"
+                          type="password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem className="w-full">
+                      <FormControl>
+                        <Input
+                          logo={<IoIosLock className="size-5 text-gray" />}
+                          placeholder="Confirm Password"
+                          type="password"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <Button
+                  className="py-3 text-white bg-primary rounded-xl"
+                  type="submit"
+                >
+                  Sign up to Healthcare Plans
+                </Button>
+              </form>
+            </Form>
           </div>
         </div>
       </div>
