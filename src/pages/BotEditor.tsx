@@ -6,7 +6,7 @@ import Select from "react-tailwindcss-select";
 import { useQuery } from "@apollo/client";
 import { GetMe } from "@/graphql/declarations/geMe";
 import { AUTHSTORE } from "@/graphql/authStorage";
-import { FaArrowRotateLeft } from "react-icons/fa6";
+import { BiSolidUserDetail } from "react-icons/bi";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
@@ -24,7 +24,15 @@ import { SheetSidebar } from "@/components/common/SidebarSheet";
 import IconMessage from "@/assets/svgs/IconMessage";
 import CarrierModal from "@/components/pages/main/modals/CarrierModal";
 import { GetGHL } from "@/graphql/declarations/ghs";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import AvatarIcon from "@/components/core/AvatarIcon";
+import { sidebarLinks } from "@/constans/sidebar";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { Button } from "@/components/ui/button";
+import NavigationButtons from "@/components/common/NavigationButtons";
+import DialogComponent from "@/components/common/DialogComponent";
+import { FaSignOutAlt } from "react-icons/fa";
+import { Input } from "@/components/ui/input";
 
 function Sidebar({ className }: { className?: string }) {
   const { data: userData } = useQuery(GetMe);
@@ -32,6 +40,7 @@ function Sidebar({ className }: { className?: string }) {
   const [apiKeyModal, setApiKeyModal] = useState(false);
   const [healthSherpaModal, setHealthSherpaModal] = useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const { data: botList, loading } = useQuery(ListBotConfig, {
     variables: {
@@ -52,89 +61,194 @@ function Sidebar({ className }: { className?: string }) {
     <>
       <div
         className={twMerge(
-          "lg:h-screen lg:overflow-y-auto no-scrollbar border border-gray-light shadow-lg",
+          "h-screen overflow-auto flex-col no-scrollbar py-6 border border-gray-light shadow-lg",
           className
         )}
       >
-        <div className="mt-2">
-          <p className="text-lg font-bold">Tools</p>
-        </div>
-        <div className="">
-          <button
-            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
-            onClick={() => {
-              navigate("/app");
-            }}
-          >
-            <p className={"text-xs sm:text-base btn-text"}>Bot Editor</p>
-          </button>
-          {!loading ? (
-            <button
-              className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
-              onClick={() => {
-                // navigate("/chat?id=" + botID);
-                // open in new tab
-                window.open("/chat?id=" + botID, "_blank");
-              }}
-            >
-              <p className={"text-xs sm:text-base btn-text"}>
-                Shareable Chatbot Page
-              </p>
-            </button>
-          ) : (
-            <p className="p-4 text-center">Loading Chatbot Link</p>
-          )}
-        </div>
-        <hr className="h-px my-4 border-0 bg-gray-light" />
-        <div className="mt-2">
-          <p className="text-lg font-bold">My Account</p>
-        </div>
-        <div className="">
-          <div className="sm:py-2">
-            <p className="text-xs sm:text-base lg:text-normal">
-              {userData?.authenticatedItem?.email}
-            </p>
-          </div>
-          <button
-            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
-            onClick={() => {
-              AUTHSTORE.clear();
-              window.location.href = "/";
-            }}
-          >
-            <p className={"text-xs sm:text-base btn-text"}>Sign Out</p>
-          </button>
-        </div>
-        <hr className="h-px my-4 border-0 bg-gray-light" />
-        <div className="">
-          <p className="text-lg font-bold">Agency information</p>
-        </div>
-        <div className="my-4">
-          {userData?.authenticatedItem?.ghlAccess && (
-            <div className="-mt-4">
-              <div className="p-2">
-                <p>
-                  Name: <>{GHLData?.ghl_me?.name}</>
+        <div className="pb-6 px-2 md:px-8">
+          <h1 className="text-lg font-bold">Agency Information</h1>
+          <div className="border flex p-2 bg-primary-light shadow-md rounded-xl mt-6">
+            <div className="flex items-center flex-1 gap-x-2 overflow-hidden">
+              <AvatarIcon />
+              <div className="flex flex-col overflow-hidden">
+                <p className="truncate text-xs md:text-base">
+                  {userData?.authenticatedItem?.email}
                 </p>
-                <p>
-                  Email: <>{GHLData?.ghl_me?.email}</>
-                </p>
-                <p>
-                  Phone: <>{GHLData?.ghl_me?.phone}</>
-                </p>
-                <p>
-                  State: <>{GHLData?.ghl_me?.state}</>
-                </p>
-                <p>
-                  Country: <>{GHLData?.ghl_me?.country}</>
-                </p>
+                <hr className="h-px bg-gray border-0 mt-1 dark:bg-gray-700" />
+                <div className="flex justify-start">
+                  <span>
+                    <DialogComponent
+                      trigger={
+                        <Button
+                          variant="ghost"
+                          className="rounded-full group p-0 h-8 w-8  hover:bg-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                        >
+                          <BiSolidUserDetail
+                            size={24}
+                            className="text-black/50 transition group-hover:text-primary"
+                          />
+                        </Button>
+                      }
+                    >
+                      <div className="bg-gradient-to-b to-[#a393f337] from-[#624ff600] w-full overflow-hidden flex rounded-xl mt-6 py-4">
+                        <div className="flex flex-1 px-4 gap-x-4 overflow-hidden">
+                          <AvatarIcon className="w-24 h-24" />
+                          <div className="flex flex-col flex-1">
+                            <Input
+                              className="text-sm bg-transparent font-bold p-0 rounded-none border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 h-auto"
+                              value={userData?.authenticatedItem?.email || ""}
+                              onChange={(e) => {
+                                e.preventDefault();
+                              }}
+                            />
+                            <p className="mt-2 text-sm">
+                              Waterproffing company
+                            </p>
+                            <p className="text-sm">
+                              Duffy, Australian Capital Territory, 2611
+                            </p>
+                            <p className="text-xs mt-2 text-gray">
+                              Member Since, Dec 2007
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <p className="text-xs flex gap-x-2 sm:text-base">
+                        <span className="text-primary font-bold">
+                          API Key:{" "}
+                        </span>
+                        {userData?.authenticatedItem?.aiKey?.openapiKey
+                          ? "Connected"
+                          : "Not Connected"}
+                      </p>
+                      <p className="text-xs flex gap-x-2 sm:text-base">
+                        <span className="text-primary font-bold">
+                          GHL Access:{" "}
+                        </span>
+                        {userData?.authenticatedItem?.ghlAccess
+                          ? "Connected"
+                          : "Not Connected"}
+                      </p>
+                      <div>
+                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                          Name:{" "}
+                          <span className="text-black text-xs md:text-sm">
+                            {GHLData?.ghl_me?.name ?? "No Data"}
+                          </span>
+                        </p>
+                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                          Email:{" "}
+                          <span className="text-black text-xs md:text-sm">
+                            {GHLData?.ghl_me?.email ?? "No Data"}
+                          </span>
+                        </p>
+                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                          Phone:{" "}
+                          <span className="text-black text-xs md:text-sm">
+                            {GHLData?.ghl_me?.phone ?? "No Data"}
+                          </span>
+                        </p>
+                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                          State:{" "}
+                          <span className="text-black text-xs md:text-sm">
+                            {GHLData?.ghl_me?.state ?? "No Data"}
+                          </span>
+                        </p>
+                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                          Country:
+                          <span className="text-black text-xs md:text-sm">
+                            {GHLData?.ghl_me?.country ?? "No Data"}{" "}
+                          </span>
+                        </p>
+                      </div>
+                    </DialogComponent>
+                  </span>
+                  <Button
+                    onClick={() => {
+                      AUTHSTORE.clear();
+                      window.location.href = "/";
+                    }}
+                    className="p-0 group rounded-full h-8 w-8 hover:bg-transparent"
+                    variant="ghost"
+                  >
+                    <FaSignOutAlt
+                      size={18}
+                      className="text-black/50 group-hover:text-red-400 transition"
+                    />
+                  </Button>
+                </div>
               </div>
             </div>
-          )}
+          </div>
         </div>
-        <div>
-          <button
-            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
+        {/*   ( */}
+
+        <ScrollArea className="px-2 md:px-8">
+          {sidebarLinks.map(({ category, links }, categoryIndex) => (
+            <>
+              {category === "Settings" && (
+                <hr className="h-px bg-gray border-0 mt-12 dark:bg-gray-700" />
+              )}
+              <div
+                className={twMerge(
+                  "mt-8 flex flex-col",
+                  category === "Settings" && "mt-2",
+                  categoryIndex === 0 && "mt-0"
+                )}
+                key={`category-${categoryIndex}`}
+              >
+                <p className="text-base text-black/60 mb-2">{category}</p>
+                <div className="space-y-2">
+                  {links.map(({ name, icon, to, type }, linkIndex) => (
+                    <NavigationButtons
+                      type={(type as any) || undefined}
+                      linkProps={{
+                        to,
+                        pathname,
+                      }}
+                      onClick={() => {
+                        if (type === "btn") {
+                          if (name === "Health sherpa excel exports") {
+                            setHealthSherpaModal(true);
+                          } else if (name === "Open AI Keys") {
+                            setApiKeyModal(true);
+                          } else if (
+                            name === "Shareable Chatbot Page" &&
+                            !loading
+                          ) {
+                            window.open("/chat?id=" + botID, "_blank");
+                          }
+                        }
+                      }}
+                      disabled={
+                        type === "btn" &&
+                        name === "Shareable Chatbot Page" &&
+                        loading
+                      }
+                      key={`link-${categoryIndex}-${linkIndex}`}
+                    >
+                      <img src={icon} alt="svg1" className="mr-2" />
+                      <p
+                        className={twMerge(
+                          "text-sm",
+                          pathname === to && "text-primary font-bold"
+                        )}
+                      >
+                        {name === "Shareable Chatbot Page" && loading
+                          ? "Loading Chatbot Link"
+                          : name}
+                      </p>
+                    </NavigationButtons>
+                  ))}
+                </div>
+              </div>
+            </>
+          ))}
+        </ScrollArea>
+        <div className="px-2 md:px-8">
+          <Button
+            variant="outline"
+            className="w-full font-bold hover:text-white hover:bg-primary mt-8 py-6"
             onClick={() => {
               const baseURL = import.meta.env.VITE_GRAPHQL_URL.replace(
                 "/api/graphql",
@@ -155,57 +269,12 @@ function Sidebar({ className }: { className?: string }) {
               });
             }}
           >
-            <p className={"text-primary"}>
-              {
-                <span className="text-xs sm:text-base">
-                  {userData?.authenticatedItem?.ghlAccess
-                    ? "Reconnect to GHL"
-                    : "Connect to GHL"}
-                </span>
-              }
-            </p>
-          </button>
+            {userData?.authenticatedItem?.ghlAccess
+              ? "Reconnect to GHL"
+              : "Apply to GHL"}
+          </Button>
         </div>
-        <div className="my-4 sm:mt-12">
-          <p className="text-lg font-bold">ChatGPT Settings</p>
-        </div>
-        <div className="-mt-4">
-          <div className="p-2">
-            <p className="text-xs sm:text-base">
-              API Key:{" "}
-              <>
-                {userData?.authenticatedItem?.aiKey?.openapiKey
-                  ? "Connected"
-                  : "Not Connected"}
-              </>
-            </p>
-          </div>
-          <button
-            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
-            onClick={() => {
-              setApiKeyModal(true);
-            }}
-          >
-            <p className={" text-primary text-xs sm:text-base"}>
-              Add OpenAI API Key
-            </p>
-          </button>
-        </div>
-        <div className="my-4 sm:mt-8">
-          <p className="text-lg font-bold">Tools</p>
-        </div>
-        <div className="-mt-4">
-          <button
-            className={"bg-primary-light mt-2 w-full py-2 rounded-md"}
-            onClick={() => {
-              setHealthSherpaModal(true);
-            }}
-          >
-            <p className={"text-xs sm:text-base text-primary"}>
-              Health sherpa excel exports
-            </p>
-          </button>
-        </div>
+        {/* Separate */}
       </div>
       <ApiKeyModal
         open={apiKeyModal}
@@ -327,7 +396,7 @@ function Content() {
         </p>
         <span className="block lg:hidden">
           <SheetSidebar>
-            <Sidebar className="border-none shadow-none" />
+            <Sidebar className="border-none shadow-none flex" />
           </SheetSidebar>
         </span>
       </div>
@@ -667,7 +736,7 @@ function Content() {
 export const BotEditor = () => {
   return (
     <div className="flex justify-end w-full">
-      <Sidebar className="w-[350px] hidden lg:block p-8" />
+      <Sidebar className="w-[350px] hidden lg:flex" />
       <Content />
     </div>
   );
