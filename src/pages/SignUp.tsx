@@ -28,8 +28,6 @@ const SignUpPage = () => {
 
   const { signUpForm: form } = useFormProvider();
 
-  console.log(form.getValues());
-
   const processSubmit = async (formData: z.infer<typeof signUpSchema>) => {
     const register = await apolloClient.mutate({
       mutation: Register,
