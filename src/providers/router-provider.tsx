@@ -29,6 +29,14 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/smschatbuilder",
+        element: (
+          <ProtectedPath>
+            <BotEditor />
+          </ProtectedPath>
+        ),
+      },
+      {
         path: "/chat",
         element: <ChatPage />,
       },
