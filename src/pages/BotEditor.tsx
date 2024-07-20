@@ -33,6 +33,7 @@ import NavigationButtons from "@/components/common/NavigationButtons";
 import DialogComponent from "@/components/common/DialogComponent";
 import { FaSignOutAlt } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
+import { DatePicker } from "@/components/common/DatePicker";
 
 function Sidebar({ className }: { className?: string }) {
   const { data: userData } = useQuery(GetMe);
@@ -305,6 +306,7 @@ function Content() {
   });
 
   const { data: userData, loading: userLoading } = useQuery(GetMe);
+  const [date, setDate] = useState<Date>();
   const { data, loading } = useQuery(ListBotConfig, {
     variables: {
       where: {
@@ -590,13 +592,7 @@ function Content() {
           <div className="inline-form-container">
             <div className="inline-form-element">
               <p className="mb-2">Date of Birth</p>
-              // TODO: Type Error
-              {/* <Datepicker
-                asSingle={true}
-                useRange={false}
-                inputClassName="form-input"
-                placeholder={"Select date"}
-              /> */}
+              <DatePicker date={date} setDate={setDate} />
             </div>
             <div className="inline-form-element">
               <p className="mb-2">income</p>
@@ -680,7 +676,6 @@ function Content() {
                 <p className="mb-2">Users Select</p>
                 <div className="flex flex-col items-center w-full md:flex-row">
                   <div className="relative flex flex-1 w-full mb-4 md:mr-4 md:mb-0">
-                    // TODO: TS error
                     <Select
                       isClearable={true}
                       primaryColor={"violet"}

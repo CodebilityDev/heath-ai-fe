@@ -11,7 +11,7 @@ export const sidebarLinks = [
       {
         name: "SMS Chat Builder",
         icon: "/svgs/link2.svg",
-        to: "",
+        to: "/smschatbuilder",
       },
       {
         name: "Shareable Chatbot Page",
