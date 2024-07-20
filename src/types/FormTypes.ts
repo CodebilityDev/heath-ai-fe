@@ -9,7 +9,7 @@ export const signInSchema = z
       .email({ message: "Invalid email" }),
     password: z
       .string()
-      .min(8, { message: "Password must be at least 8 characters" })
+      // .min(8, { message: "Password must be at least 8 characters" })
       .max(32, { message: "Password must be at most 32 characters" }),
   })
   .required();

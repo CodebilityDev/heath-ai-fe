@@ -20,26 +20,26 @@ export const defaultExcelExplore: ExcelExploreInterface = {
   fileUrl: "",
 };
 
-export const defaultSetting: SettingInterface = {
-  id: "",
-  formatName: "",
-  mission: "",
-  tone: "",
-  plan: "Silver(Recommended)",
-  carriers: [],
-  recommendedPlan: 0,
-  chatbotQuestion: "",
-  summary: "",
-  exMessage: "",
-  firstName: "",
-  lastName: "",
-  dob: "2024-01-01",
-  income: 0,
-  dependents: 0,
-  zipCode: 0,
-  agentFirstName: "",
-  agentLastName: "",
-};
+// export const defaultSetting: SettingInterface = {
+//   id: "",
+//   formatName: "",
+//   mission: "",
+//   tone: "",
+//   plan: "Silver(Recommended)",
+//   carriers: [],
+//   recommendedPlan: 0,
+//   chatbotQuestion: "",
+//   summary: "",
+//   exMessage: "",
+//   firstName: "",
+//   lastName: "",
+//   dob: "2024-01-01",
+//   income: 0,
+//   dependents: 0,
+//   zipCode: 0,
+//   agentFirstName: "",
+//   agentLastName: "",
+// };
 
 export const defaultAgent: AgentInterface = {
   agentId: "",

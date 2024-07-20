@@ -13,6 +13,7 @@ export const GetMe = graphql(`
         createdAt
         ghlAccess {
           id
+          locationId
           refreshToken
           scope
         }
