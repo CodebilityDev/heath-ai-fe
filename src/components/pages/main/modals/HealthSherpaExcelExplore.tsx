@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { oaKeySelector } from "@/state/Setting";
+// import { oaKeySelector } from "@/state/Setting";
 import IconSave from "@/assets/svgs/IconSave";
 import { OpenAiAPIKeyInterface } from "@/types/AppState";
 import { useQuery } from "@apollo/client";
@@ -85,18 +85,18 @@ const HealthSherpaExcelExplore = ({
         open ? "visible bg-black/20" : "invisible"
       }`}
     >
-      <div className="modal-content bg-white max-w-2xl w-full no-scrollbar">
+      <div className="w-full max-w-2xl bg-white modal-content no-scrollbar">
         <div className="flex flex-col gap-[30px]">
           <div className="w-full">
-            <p className="font-bold text-xl">Health Sherpa Excel Explore</p>
+            <p className="text-xl font-bold">Health Sherpa Excel Explore</p>
           </div>
           <div className="divider-x"></div>
           <div className="flex flex-col gap-[20px]">
             <div className="inline-form-container">
               <div className="inline-form-element">
-                <p className="font-semibold mb-2">Description</p>
+                <p className="mb-2 font-semibold">Description</p>
                 <Textarea placeholder="Type your message here." />
-                <p className="font-semibold mt-6 mb-2">Select Type</p>
+                <p className="mt-6 mb-2 font-semibold">Select Type</p>
                 <Select>
                   <SelectTrigger className="w-72">
                     <SelectValue placeholder="Select a fruit" />

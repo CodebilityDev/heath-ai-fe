@@ -23,7 +23,11 @@ import { toast } from "react-toastify";
 import { SheetSidebar } from "@/components/common/SidebarSheet";
 import IconMessage from "@/assets/svgs/IconMessage";
 import CarrierModal from "@/components/pages/main/modals/CarrierModal";
-import { GetGHL } from "@/graphql/declarations/ghs";
+import {
+  GetGHL,
+  ghl_getContacts,
+  Ghl_sendMessage,
+} from "@/graphql/declarations/ghs";
 import { useLocation, useNavigate } from "react-router-dom";
 import AvatarIcon from "@/components/core/AvatarIcon";
 import { sidebarLinks } from "@/constans/sidebar";
@@ -68,37 +72,37 @@ function Sidebar({ className }: { className?: string }) {
           className
         )}
       >
-        <div className="pb-6 px-2 md:px-8">
+        <div className="px-2 pb-6 md:px-8">
           <h1 className="text-lg font-bold">Agency Information</h1>
-          <div className="border flex p-2 bg-primary-light shadow-md rounded-xl mt-6">
-            <div className="flex items-center flex-1 gap-x-2 overflow-hidden">
+          <div className="flex p-2 mt-6 border shadow-md bg-primary-light rounded-xl">
+            <div className="flex items-center flex-1 overflow-hidden gap-x-2">
               <AvatarIcon />
               <div className="flex flex-col overflow-hidden">
-                <p className="truncate text-xs md:text-base">
+                <p className="text-xs truncate md:text-base">
                   {userData?.authenticatedItem?.email}
                 </p>
-                <hr className="h-px bg-gray border-0 mt-1 dark:bg-gray-700" />
+                <hr className="h-px mt-1 border-0 bg-gray dark:bg-gray-700" />
                 <div className="flex justify-start">
                   <span>
                     <DialogComponent
                       trigger={
                         <Button
                           variant="ghost"
-                          className="rounded-full group p-0 h-8 w-8  hover:bg-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                          className="w-8 h-8 p-0 rounded-full group hover:bg-transparent focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                         >
                           <BiSolidUserDetail
                             size={24}
-                            className="text-black/50 transition group-hover:text-primary"
+                            className="transition text-black/50 group-hover:text-primary"
                           />
                         </Button>
                       }
                     >
                       <div className="bg-gradient-to-b to-[#a393f337] from-[#624ff600] w-full overflow-hidden flex rounded-xl mt-6 py-4">
-                        <div className="flex flex-1 px-4 gap-x-4 overflow-hidden">
+                        <div className="flex flex-1 px-4 overflow-hidden gap-x-4">
                           <AvatarIcon className="w-24 h-24" />
                           <div className="flex flex-col flex-1">
                             <Input
-                              className="text-sm bg-transparent font-bold p-0 rounded-none border-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0 h-auto"
+                              className="h-auto p-0 text-sm font-bold bg-transparent border-none rounded-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
                               value={userData?.authenticatedItem?.email || ""}
                               onChange={(e) => {
                                 e.preventDefault();
@@ -110,22 +114,22 @@ function Sidebar({ className }: { className?: string }) {
                             <p className="text-sm">
                               Duffy, Australian Capital Territory, 2611
                             </p>
-                            <p className="text-xs mt-2 text-gray">
+                            <p className="mt-2 text-xs text-gray">
                               Member Since, Dec 2007
                             </p>
                           </div>
                         </div>
                       </div>
-                      <p className="text-xs flex gap-x-2 sm:text-base">
-                        <span className="text-primary font-bold">
+                      <p className="flex text-xs gap-x-2 sm:text-base">
+                        <span className="font-bold text-primary">
                           API Key:{" "}
                         </span>
                         {userData?.authenticatedItem?.aiKey?.openapiKey
                           ? "Connected"
                           : "Not Connected"}
                       </p>
-                      <p className="text-xs flex gap-x-2 sm:text-base">
-                        <span className="text-primary font-bold">
+                      <p className="flex text-xs gap-x-2 sm:text-base">
+                        <span className="font-bold text-primary">
                           GHL Access:{" "}
                         </span>
                         {userData?.authenticatedItem?.ghlAccess
@@ -133,33 +137,33 @@ function Sidebar({ className }: { className?: string }) {
                           : "Not Connected"}
                       </p>
                       <div>
-                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
                           Name:{" "}
-                          <span className="text-black text-xs md:text-sm">
+                          <span className="text-xs text-black md:text-sm">
                             {GHLData?.ghl_me?.name ?? "No Data"}
                           </span>
                         </p>
-                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
                           Email:{" "}
-                          <span className="text-black text-xs md:text-sm">
+                          <span className="text-xs text-black md:text-sm">
                             {GHLData?.ghl_me?.email ?? "No Data"}
                           </span>
                         </p>
-                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
                           Phone:{" "}
-                          <span className="text-black text-xs md:text-sm">
+                          <span className="text-xs text-black md:text-sm">
                             {GHLData?.ghl_me?.phone ?? "No Data"}
                           </span>
                         </p>
-                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
                           State:{" "}
-                          <span className="text-black text-xs md:text-sm">
+                          <span className="text-xs text-black md:text-sm">
                             {GHLData?.ghl_me?.state ?? "No Data"}
                           </span>
                         </p>
-                        <p className="text-xs text-primary flex items-center gap-x-2 sm:text-base">
+                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
                           Country:
-                          <span className="text-black text-xs md:text-sm">
+                          <span className="text-xs text-black md:text-sm">
                             {GHLData?.ghl_me?.country ?? "No Data"}{" "}
                           </span>
                         </p>
@@ -171,12 +175,12 @@ function Sidebar({ className }: { className?: string }) {
                       AUTHSTORE.clear();
                       window.location.href = "/";
                     }}
-                    className="p-0 group rounded-full h-8 w-8 hover:bg-transparent"
+                    className="w-8 h-8 p-0 rounded-full group hover:bg-transparent"
                     variant="ghost"
                   >
                     <FaSignOutAlt
                       size={18}
-                      className="text-black/50 group-hover:text-red-400 transition"
+                      className="transition text-black/50 group-hover:text-red-400"
                     />
                   </Button>
                 </div>
@@ -190,7 +194,7 @@ function Sidebar({ className }: { className?: string }) {
           {sidebarLinks.map(({ category, links }, categoryIndex) => (
             <>
               {category === "Settings" && (
-                <hr className="h-px bg-gray border-0 mt-12 dark:bg-gray-700" />
+                <hr className="h-px mt-12 border-0 bg-gray dark:bg-gray-700" />
               )}
               <div
                 className={twMerge(
@@ -200,7 +204,7 @@ function Sidebar({ className }: { className?: string }) {
                 )}
                 key={`category-${categoryIndex}`}
               >
-                <p className="text-base text-black/60 mb-2">{category}</p>
+                <p className="mb-2 text-base text-black/60">{category}</p>
                 <div className="space-y-2">
                   {links.map(({ name, icon, to, type }, linkIndex) => (
                     <NavigationButtons
@@ -251,7 +255,7 @@ function Sidebar({ className }: { className?: string }) {
         <div className="px-2 md:px-8">
           <Button
             variant="outline"
-            className="w-full font-bold hover:text-white hover:bg-primary mt-8 py-6"
+            className="w-full py-6 mt-8 font-bold hover:text-white hover:bg-primary"
             onClick={() => {
               const baseURL = import.meta.env.VITE_GRAPHQL_URL.replace(
                 "/api/graphql",
@@ -298,13 +302,21 @@ function Content() {
   const [selectedItem, setSelectedItem] = useState<SelectValue>(null);
   const [configSet, setConfig] = useState<ConfigInterface | undefined>();
   const [testConfig, setTestConfig] = useState<TestConfigInterface>({
-    firstName: "",
-    lastName: "",
-    dob: null,
-    income: "",
-    dependents: "",
-    postalCode: "",
+    first_name: "",
+    last_name: "",
+    dob: "",
     message: "",
+    number_of_tax_dependents: "",
+    yearly_income: "",
+    zip_code: "",
+  });
+
+  const { data: contactList } = useQuery(ghl_getContacts, {
+    variables: {
+      input: {
+        query: "",
+      },
+    },
   });
 
   const { data: userData, loading: userLoading } = useQuery(GetMe);
@@ -330,7 +342,53 @@ function Content() {
       },
     },
     skip: !userData?.authenticatedItem?.id,
+    // dont use cache
+    fetchPolicy: "no-cache",
   });
+
+  const [actualSend, setActualSend] = useState(false);
+  const [testLoading, setTestLoading] = useState(false);
+  const [lastMessage, setLastMessage] = useState("");
+  const [chatThread, setChatThread] = useState<
+    {
+      role: string;
+      content: string;
+    }[]
+  >([]);
+  const sendMessage = async () => {
+    if (!selectedItem) {
+      return;
+    }
+    if (!userData?.authenticatedItem?.ghlAccess?.locationId) {
+      toast.error("Please connect to GHL first");
+      return;
+    }
+    setTestLoading(true);
+    setLastMessage("");
+    setChatThread([]);
+
+    const message = await apolloClient.mutate({
+      mutation: Ghl_sendMessage,
+      variables: {
+        input: {
+          actualSend: actualSend,
+          contactID: (selectedItem as any).value,
+          location_id: userData?.authenticatedItem?.ghlAccess?.locationId,
+          dob: date?.toISOString(),
+          first_name: testConfig.first_name,
+          last_name: testConfig.last_name,
+          yearly_income: testConfig.yearly_income,
+          number_of_tax_dependents: testConfig.number_of_tax_dependents,
+          zip_code: testConfig.zip_code,
+        },
+      },
+    });
+
+    // toast.success(JSON.stringify(message));
+    setLastMessage(message.data?.ghl_sendMessage?.message ?? "");
+    setTestLoading(false);
+    setChatThread(JSON.parse(message.data?.ghl_sendMessage?.thread ?? "[]"));
+  };
 
   useEffect(() => {
     if (data?.botConfigs) {
@@ -382,6 +440,8 @@ function Content() {
             specificQuestions: configSet?.specificQuestions,
             summaryPrompt: configSet?.summaryPrompt,
             welcomeMessage: configSet?.welcomeMessage,
+            welcomeMessageFormat: configSet?.welcomeMessageFormat,
+            noZipCodeMessage: configSet?.noZipCodeMessage,
           },
         },
       })
@@ -410,7 +470,7 @@ function Content() {
         </p>
         <span className="block lg:hidden">
           <SheetSidebar>
-            <Sidebar className="border-none shadow-none flex" />
+            <Sidebar className="flex border-none shadow-none" />
           </SheetSidebar>
         </span>
       </div>
@@ -628,6 +688,36 @@ function Content() {
               value={configSet?.welcomeMessage ?? ""}
             ></textarea>
           </div>
+          <div className="w-full">
+            <p className="form-label">{langSnippet.welcomeMessage.label}</p>
+            <textarea
+              rows={6}
+              placeholder={langSnippet.welcomeMessage.placeholder}
+              className="form-input"
+              onChange={(e) => {
+                setConfig({
+                  ...configSet,
+                  welcomeMessageFormat: e.target.value,
+                });
+              }}
+              value={configSet?.welcomeMessageFormat ?? ""}
+            ></textarea>
+          </div>
+          <div className="w-full">
+            <p className="form-label">{langSnippet.noZipMessage.label}</p>
+            <textarea
+              rows={6}
+              placeholder={langSnippet.noZipMessage.placeholder}
+              className="form-input"
+              onChange={(e) => {
+                setConfig({
+                  ...configSet,
+                  noZipCodeMessage: e.target.value,
+                });
+              }}
+              value={configSet?.noZipCodeMessage ?? ""}
+            ></textarea>
+          </div>
           <button
             type="submit"
             className="sticky w-full bottom-6 btn-submit"
@@ -655,11 +745,11 @@ function Content() {
                 type="text"
                 placeholder="Ex: John"
                 className="form-input"
-                value={testConfig.firstName}
+                value={testConfig.first_name}
                 onChange={(e) =>
                   setTestConfig({
                     ...testConfig,
-                    firstName: e.target.value,
+                    first_name: e.target.value,
                   })
                 }
               />
@@ -670,11 +760,11 @@ function Content() {
                 type="text"
                 placeholder="Ex: John"
                 className="form-input"
-                value={testConfig.lastName}
+                value={testConfig.last_name}
                 onChange={(e) =>
                   setTestConfig({
                     ...testConfig,
-                    lastName: e.target.value,
+                    last_name: e.target.value,
                   })
                 }
               />
@@ -683,15 +773,28 @@ function Content() {
           <div className="inline-form-container">
             <div className="inline-form-element">
               <p className="mb-2">Date of Birth</p>
-              <DatePicker date={date} setDate={setDate} />
+              <input
+                type="date"
+                className="form-input"
+                value={testConfig.dob}
+                onChange={(e) =>
+                  setTestConfig({
+                    ...testConfig,
+                    dob: e.target.value,
+                  })
+                }
+              />
             </div>
             <div className="inline-form-element">
               <p className="mb-2">income</p>
               <select
                 className="form-input hci-select"
-                value={testConfig.income}
+                value={testConfig.yearly_income}
                 onChange={(e) =>
-                  setTestConfig({ ...testConfig, income: e.target.value })
+                  setTestConfig({
+                    ...testConfig,
+                    yearly_income: e.target.value,
+                  })
                 }
               >
                 <option value={0}>0-10k/year</option>
@@ -703,11 +806,11 @@ function Content() {
             <div className="inline-form-element">
               <p className="mb-2">Number of Dependents</p>
               <select
-                value={testConfig.dependents}
+                value={testConfig.number_of_tax_dependents}
                 onChange={(e) =>
                   setTestConfig({
                     ...testConfig,
-                    dependents: e.target.value,
+                    number_of_tax_dependents: e.target.value,
                   })
                 }
                 className="form-input hci-select"
@@ -726,18 +829,18 @@ function Content() {
                 type="text"
                 placeholder="123456"
                 className="form-input"
-                value={testConfig.postalCode}
+                value={testConfig.zip_code}
                 onChange={(e) =>
                   setTestConfig({
                     ...testConfig,
-                    postalCode: e.target.value,
+                    zip_code: e.target.value,
                   })
                 }
               />
             </div>
           </div>
           <div className="divider-x"></div>
-          <div className="flex flex-col w-full">
+          {/* <div className="flex flex-col w-full">
             <div className="relative flex flex-1 w-full">
               <textarea
                 rows={1}
@@ -749,17 +852,14 @@ function Content() {
               </div>
             </div>
             <div className="flex w-full gap-2 pt-2">
-              <button
-                className="flex-1 btn-submit"
-                onClick={testWelcomeMessage}
-              >
+              <button className="flex-1 btn-submit" onClick={sendMessage}>
                 Test welcome message
               </button>
               <button className="flex-1 btn-submit">
                 Save/Delete favourite format
               </button>
             </div>
-          </div>
+          </div> */}
           <div className="divider-x"></div>
           <div className="form-submit-container justify-center mb-[150px]">
             <div className="relative flex flex-1 w-full">
@@ -768,11 +868,20 @@ function Content() {
                 <div className="flex flex-col items-center w-full md:flex-row">
                   <div className="relative flex flex-1 w-full mb-4 md:mr-4 md:mb-0">
                     <Select
+                      value={selectedItem}
+                      onChange={(e) => setSelectedItem(e)}
                       isClearable={true}
                       primaryColor={"violet"}
-                      isMultiple={true}
-                      options={[]}
-                      value={selectedItem}
+                      // isMultiple={true}
+                      options={
+                        contactList?.ghl_getContacts?.contacts?.map(
+                          (contact) => ({
+                            label: contact?.contactName ?? "",
+                            value: contact?.id ?? "",
+                          })
+                        ) ?? []
+                      }
+                      // value={selectedItem}
                       placeholder={"No users selected"}
                       classNames={{
                         menuButton: (value: any) => {
@@ -784,14 +893,57 @@ function Content() {
                           return "multi-select-tag-item";
                         },
                       }}
-                      onChange={(e: any) => setSelectedItem(e.target.value)}
+                      // onChange={(e: any) => setSelectedItem(e.target.value)}
                     />
                   </div>
                   <div className="flex items-center w-full h-full md:w-auto">
-                    <button className="btn-submit">
-                      Text message to users
+                    <button
+                      className="btn-submit"
+                      onClick={sendMessage}
+                      disabled={testLoading || !selectedItem}
+                    >
+                      {(testLoading && "Sending...") ||
+                        (!selectedItem && "Select User") ||
+                        "Send Message"}
                     </button>
                   </div>
+                </div>
+                <div className="mt-4">
+                  {/* checkbox */}
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        id="test"
+                        name="test"
+                        className="mr-2"
+                        checked={actualSend}
+                        onChange={(e) => setActualSend(e.target.checked)}
+                      />
+                      <label htmlFor="test">
+                        Send real SMS Message to User
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-2 mt-4 border-t-2">
+                  <p className="text-lg font-bold">Actual Message:</p>
+
+                  <p className="whitespace-pre-wrap">{lastMessage}</p>
+                </div>
+                <div className="p-2 mt-8 font-mono text-xs break-all bg-slate-200">
+                  <p className="font-bold">Chat Thread Debugging</p>
+                  {chatThread.map((item, idx) => (
+                    <div key={idx} className="py-2">
+                      <p>
+                        <b>{item.role}</b>:{" "}
+                      </p>
+                      <p className="max-h-[20rem] overflow-y-auto no-scrollbar">
+                        {item.content}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

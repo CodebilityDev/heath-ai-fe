@@ -13,6 +13,8 @@ export const GetBotConfig = graphql(`
       specificQuestions
       summaryPrompt
       welcomeMessage
+      welcomeMessageFormat
+      noZipCodeMessage
     }
   }
 `);
@@ -30,6 +32,8 @@ export const ListBotConfig = graphql(`
       specificQuestions
       summaryPrompt
       welcomeMessage
+      welcomeMessageFormat
+      noZipCodeMessage
     }
   }
 `);
