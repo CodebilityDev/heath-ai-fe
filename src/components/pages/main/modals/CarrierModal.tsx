@@ -2,8 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import IconSearch from "@/assets/svgs/IconSearch";
 import CheckBox from "@/components/core/CheckBox";
 import { useRecoilState } from "recoil";
-import { settingAtom } from "@/state/Setting";
-import { SettingInterface } from "../../../../types/Setting";
+// import { SettingInterface } from "../../../../types/Setting";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useDebounce from "@/hooks/useDebounce";
 import { MdClose } from "react-icons/md";
@@ -75,9 +74,9 @@ const CarrierModal = ({
           open ? "visible bg-black/20 backdrop-blur-md" : "invisible"
         }`}
       >
-        <div className="bg-white rounded-lg overflow-hidden w-full max-w-2xl p-4">
+        <div className="w-full max-w-2xl p-4 overflow-hidden bg-white rounded-lg">
           <div className="flex flex-col">
-            <div className="sticky items-center justify-between flex top-0 z-20 w-full p-4 bg-white border-b">
+            <div className="sticky top-0 z-20 flex items-center justify-between w-full p-4 bg-white border-b">
               <p className="font-bold">Add Your Carriers</p>
               <MdClose className="cursor-pointer size-5" onClick={onClose} />
             </div>
@@ -87,7 +86,7 @@ const CarrierModal = ({
                   <input
                     type="text"
                     placeholder="Search..."
-                    className="search-input text-xs md:text-base"
+                    className="text-xs search-input md:text-base"
                     onChange={handleSearch}
                   />
                   <div className="absolute top-[50%] translate-y-[-50%] left-4">
@@ -106,7 +105,7 @@ const CarrierModal = ({
                   {searchedOptions.length > 0 ? (
                     searchedOptions.map((option: string, idx: number) => {
                       return (
-                        <div className="min-h-8 flex">
+                        <div className="flex min-h-8">
                           <CheckBox
                             checked={carriers.includes(option)}
                             label={option}
@@ -118,7 +117,7 @@ const CarrierModal = ({
                       );
                     })
                   ) : (
-                    <p className="text-center col-span-2">No results found</p>
+                    <p className="col-span-2 text-center">No results found</p>
                   )}
                 </div>
               </ScrollArea>
@@ -127,7 +126,7 @@ const CarrierModal = ({
               <div className="flex gap-[24px] justify-end content-center font-bold items-center">
                 <div>
                   <button
-                    className="flex text-sm md:text-base items-center"
+                    className="flex items-center text-sm md:text-base"
                     onClick={onClose}
                   >
                     Cancel
@@ -135,7 +134,7 @@ const CarrierModal = ({
                 </div>
                 <div>
                   <button
-                    className="flex text-sm md:text-base btn bg-gray rounded-md text-white"
+                    className="flex text-sm text-white rounded-md md:text-base btn bg-gray"
                     onClick={onSaveCarriers}
                   >
                     Save

@@ -132,7 +132,7 @@
   .grow-wrap::after {
     padding-left: 3rem;
     /* font: inherit; */
-    @apply leading-normal w-full;
+    @apply w-full leading-normal;
     grid-area: 1 / 1 / 2 / 2;
   }
 
@@ -326,7 +326,7 @@
   /* modal */
 
   .modal-container {
-    @apply w-full backdrop-blur-md flex justify-center items-center fixed inset-0 transition-colors;
+    @apply fixed inset-0 flex items-center justify-center w-full transition-colors backdrop-blur-md;
   }
 
   .loader {
@@ -352,4 +352,13 @@
   .multi-select-tag-item {
     @apply bg-white border border-gray-light rounded-[8px] flex p-2;
   }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

@@ -80,6 +80,7 @@ export type BotConfig = {
   healthInsuranceCarriers?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
+  noZipCodeMessage?: Maybe<Scalars['String']['output']>;
   presentationStrategy?: Maybe<Scalars['String']['output']>;
   priorityPlan?: Maybe<Scalars['String']['output']>;
   sessions?: Maybe<Array<ChatSession>>;
@@ -89,6 +90,7 @@ export type BotConfig = {
   tonestyle?: Maybe<Scalars['String']['output']>;
   user?: Maybe<User>;
   welcomeMessage?: Maybe<Scalars['String']['output']>;
+  welcomeMessageFormat?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -109,6 +111,7 @@ export type BotConfigCreateInput = {
   companyStatement?: InputMaybe<Scalars['String']['input']>;
   healthInsuranceCarriers?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  noZipCodeMessage?: InputMaybe<Scalars['String']['input']>;
   presentationStrategy?: InputMaybe<Scalars['String']['input']>;
   priorityPlan?: InputMaybe<Scalars['String']['input']>;
   sessions?: InputMaybe<ChatSessionRelateToManyForCreateInput>;
@@ -117,6 +120,7 @@ export type BotConfigCreateInput = {
   tonestyle?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<UserRelateToOneForCreateInput>;
   welcomeMessage?: InputMaybe<Scalars['String']['input']>;
+  welcomeMessageFormat?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type BotConfigOrderByInput = {
@@ -124,12 +128,14 @@ export type BotConfigOrderByInput = {
   healthInsuranceCarriers?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
+  noZipCodeMessage?: InputMaybe<OrderDirection>;
   presentationStrategy?: InputMaybe<OrderDirection>;
   priorityPlan?: InputMaybe<OrderDirection>;
   specificQuestions?: InputMaybe<OrderDirection>;
   summaryPrompt?: InputMaybe<OrderDirection>;
   tonestyle?: InputMaybe<OrderDirection>;
   welcomeMessage?: InputMaybe<OrderDirection>;
+  welcomeMessageFormat?: InputMaybe<OrderDirection>;
 };
 
 export type BotConfigRelateToOneForCreateInput = {
@@ -152,6 +158,7 @@ export type BotConfigUpdateInput = {
   companyStatement?: InputMaybe<Scalars['String']['input']>;
   healthInsuranceCarriers?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
+  noZipCodeMessage?: InputMaybe<Scalars['String']['input']>;
   presentationStrategy?: InputMaybe<Scalars['String']['input']>;
   priorityPlan?: InputMaybe<Scalars['String']['input']>;
   sessions?: InputMaybe<ChatSessionRelateToManyForUpdateInput>;
@@ -160,6 +167,7 @@ export type BotConfigUpdateInput = {
   tonestyle?: InputMaybe<Scalars['String']['input']>;
   user?: InputMaybe<UserRelateToOneForUpdateInput>;
   welcomeMessage?: InputMaybe<Scalars['String']['input']>;
+  welcomeMessageFormat?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type BotConfigWhereInput = {
@@ -170,6 +178,7 @@ export type BotConfigWhereInput = {
   healthInsuranceCarriers?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   name?: InputMaybe<StringFilter>;
+  noZipCodeMessage?: InputMaybe<StringFilter>;
   presentationStrategy?: InputMaybe<StringFilter>;
   priorityPlan?: InputMaybe<StringFilter>;
   sessions?: InputMaybe<ChatSessionManyRelationFilter>;
@@ -178,6 +187,7 @@ export type BotConfigWhereInput = {
   tonestyle?: InputMaybe<StringFilter>;
   user?: InputMaybe<UserWhereInput>;
   welcomeMessage?: InputMaybe<StringFilter>;
+  welcomeMessageFormat?: InputMaybe<StringFilter>;
 };
 
 export type BotConfigWhereUniqueInput = {
@@ -351,6 +361,26 @@ export type GhlAccessWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type GhlContact = {
+  __typename?: 'GHLContact';
+  businessId?: Maybe<Scalars['String']['output']>;
+  contactName?: Maybe<Scalars['String']['output']>;
+  country?: Maybe<Scalars['String']['output']>;
+  dateAdded?: Maybe<Scalars['String']['output']>;
+  email?: Maybe<Scalars['String']['output']>;
+  firstName?: Maybe<Scalars['String']['output']>;
+  id?: Maybe<Scalars['String']['output']>;
+  lastName?: Maybe<Scalars['String']['output']>;
+  locationId?: Maybe<Scalars['String']['output']>;
+  source?: Maybe<Scalars['String']['output']>;
+  timezone?: Maybe<Scalars['String']['output']>;
+};
+
+export type GhlContactList = {
+  __typename?: 'GHLContactList';
+  contacts?: Maybe<Array<Maybe<GhlContact>>>;
+};
+
 export type GhlMeReturn = {
   __typename?: 'GHLMeReturn';
   address: Scalars['String']['output'];
@@ -362,6 +392,37 @@ export type GhlMeReturn = {
   phone: Scalars['String']['output'];
   postalCode: Scalars['String']['output'];
   state: Scalars['String']['output'];
+};
+
+export type GhlMessageReturn = {
+  __typename?: 'GHLMessageReturn';
+  contactID: Scalars['String']['output'];
+  message: Scalars['String']['output'];
+  thread: Scalars['String']['output'];
+};
+
+export type Ghl_GetContactsInput = {
+  query?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Ghl_SendMessageInput = {
+  actualSend?: InputMaybe<Scalars['Boolean']['input']>;
+  agent_first_name?: InputMaybe<Scalars['String']['input']>;
+  agent_last_name?: InputMaybe<Scalars['String']['input']>;
+  contactID: Scalars['String']['input'];
+  dob?: InputMaybe<Scalars['String']['input']>;
+  first_name?: InputMaybe<Scalars['String']['input']>;
+  gender?: InputMaybe<Scalars['String']['input']>;
+  has_tax_dependents?: InputMaybe<Scalars['String']['input']>;
+  how_many_people_in_your_household_need_to_be_on_the_plan?: InputMaybe<Scalars['String']['input']>;
+  last_name?: InputMaybe<Scalars['String']['input']>;
+  location_id: Scalars['String']['input'];
+  number_of_tax_dependents?: InputMaybe<Scalars['String']['input']>;
+  projected_annual_household_income?: InputMaybe<Scalars['String']['input']>;
+  spouse_name?: InputMaybe<Scalars['String']['input']>;
+  state?: InputMaybe<Scalars['String']['input']>;
+  yearly_income?: InputMaybe<Scalars['String']['input']>;
+  zip_code?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Group = {
@@ -702,6 +763,7 @@ export type Mutation = {
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
   endSession: Scalars['Boolean']['output'];
+  ghl_sendMessage?: Maybe<GhlMessageReturn>;
   updateAIKey?: Maybe<AiKey>;
   updateAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   updateBotConfig?: Maybe<BotConfig>;
@@ -945,6 +1007,11 @@ export type MutationDeleteUsersArgs = {
 };
 
 
+export type MutationGhl_SendMessageArgs = {
+  input: Ghl_SendMessageInput;
+};
+
+
 export type MutationUpdateAiKeyArgs = {
   data: AiKeyUpdateInput;
   where: AiKeyWhereUniqueInput;
@@ -1088,6 +1155,7 @@ export type Query = {
   gHLAccesses?: Maybe<Array<GhlAccess>>;
   gHLAccessesCount?: Maybe<Scalars['Int']['output']>;
   ghl_accessToken?: Maybe<Scalars['String']['output']>;
+  ghl_getContacts?: Maybe<GhlContactList>;
   ghl_me?: Maybe<GhlMeReturn>;
   group?: Maybe<Group>;
   groupMember?: Maybe<GroupMember>;
@@ -1181,6 +1249,11 @@ export type QueryGHlAccessesArgs = {
 
 export type QueryGHlAccessesCountArgs = {
   where?: GhlAccessWhereInput;
+};
+
+
+export type QueryGhl_GetContactsArgs = {
+  input: Ghl_GetContactsInput;
 };
 
 
@@ -1614,14 +1687,14 @@ export type BotConfigQueryVariables = Exact<{
 }>;
 
 
-export type BotConfigQuery = { __typename?: 'Query', botConfig?: { __typename?: 'BotConfig', id: string, name?: string | null, companyStatement?: string | null, tonestyle?: string | null, priorityPlan?: string | null, healthInsuranceCarriers?: string | null, presentationStrategy?: string | null, specificQuestions?: string | null, summaryPrompt?: string | null, welcomeMessage?: string | null } | null };
+export type BotConfigQuery = { __typename?: 'Query', botConfig?: { __typename?: 'BotConfig', id: string, name?: string | null, companyStatement?: string | null, tonestyle?: string | null, priorityPlan?: string | null, healthInsuranceCarriers?: string | null, presentationStrategy?: string | null, specificQuestions?: string | null, summaryPrompt?: string | null, welcomeMessage?: string | null, welcomeMessageFormat?: string | null, noZipCodeMessage?: string | null } | null };
 
 export type BotConfigsQueryVariables = Exact<{
   where: BotConfigWhereInput;
 }>;
 
 
-export type BotConfigsQuery = { __typename?: 'Query', botConfigs?: Array<{ __typename?: 'BotConfig', id: string, name?: string | null, companyStatement?: string | null, tonestyle?: string | null, priorityPlan?: string | null, healthInsuranceCarriers?: string | null, presentationStrategy?: string | null, specificQuestions?: string | null, summaryPrompt?: string | null, welcomeMessage?: string | null }> | null };
+export type BotConfigsQuery = { __typename?: 'Query', botConfigs?: Array<{ __typename?: 'BotConfig', id: string, name?: string | null, companyStatement?: string | null, tonestyle?: string | null, priorityPlan?: string | null, healthInsuranceCarriers?: string | null, presentationStrategy?: string | null, specificQuestions?: string | null, summaryPrompt?: string | null, welcomeMessage?: string | null, welcomeMessageFormat?: string | null, noZipCodeMessage?: string | null }> | null };
 
 export type CreateBotConfigMutationVariables = Exact<{
   data: BotConfigCreateInput;
@@ -1648,7 +1721,7 @@ export type DeleteBotConfigMutation = { __typename?: 'Mutation', deleteBotConfig
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, name?: string | null, lastName?: string | null, displayName?: string | null, email?: string | null, role?: UserRoleType | null, createdAt?: any | null, ghlAccess?: { __typename?: 'GHLAccess', id: string, refreshToken?: string | null, scope?: string | null } | null, aiKey?: { __typename?: 'AIKey', id: string, openapiKey?: string | null } | null } | null };
+export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, name?: string | null, lastName?: string | null, displayName?: string | null, email?: string | null, role?: UserRoleType | null, createdAt?: any | null, ghlAccess?: { __typename?: 'GHLAccess', id: string, locationId?: string | null, refreshToken?: string | null, scope?: string | null } | null, aiKey?: { __typename?: 'AIKey', id: string, openapiKey?: string | null } | null } | null };
 
 export type UpdateUserMutationVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -1671,6 +1744,20 @@ export type Ghl_MeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type Ghl_MeQuery = { __typename?: 'Query', ghl_me?: { __typename?: 'GHLMeReturn', name: string, email: string, firstName: string, lastName: string, phone: string, address: string, state: string, country: string, postalCode: string } | null };
 
+export type Ghl_GetContactsQueryVariables = Exact<{
+  input: Ghl_GetContactsInput;
+}>;
+
+
+export type Ghl_GetContactsQuery = { __typename?: 'Query', ghl_getContacts?: { __typename?: 'GHLContactList', contacts?: Array<{ __typename?: 'GHLContact', id?: string | null, locationId?: string | null, email?: string | null, timezone?: string | null, country?: string | null, source?: string | null, dateAdded?: string | null, businessId?: string | null, firstName?: string | null, lastName?: string | null, contactName?: string | null } | null> | null } | null };
+
+export type Ghl_SendMessageMutationVariables = Exact<{
+  input: Ghl_SendMessageInput;
+}>;
+
+
+export type Ghl_SendMessageMutation = { __typename?: 'Mutation', ghl_sendMessage?: { __typename?: 'GHLMessageReturn', message: string, contactID: string, thread: string } | null };
+
 export type ChatSessionQueryVariables = Exact<{
   where: ChatSessionWhereUniqueInput;
 }>;
@@ -1683,13 +1770,15 @@ export const LoginDocument = {"kind":"Document","definitions":[{"kind":"Operatio
 export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"firstName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lastName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authclient_register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"firstName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"firstName"}}},{"kind":"Argument","name":{"kind":"Name","value":"lastName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lastName"}}}]}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
 export const RequestResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"RequestResetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authclient_requestPasswordReset"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}}]}]}}]} as unknown as DocumentNode<RequestResetPasswordMutation, RequestResetPasswordMutationVariables>;
 export const ResetPasswordDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"ResetPassword"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"token"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authclient_resetPassword"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"token"},"value":{"kind":"Variable","name":{"kind":"Name","value":"token"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}]}]}}]} as unknown as DocumentNode<ResetPasswordMutation, ResetPasswordMutationVariables>;
-export const BotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"botConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"companyStatement"}},{"kind":"Field","name":{"kind":"Name","value":"tonestyle"}},{"kind":"Field","name":{"kind":"Name","value":"priorityPlan"}},{"kind":"Field","name":{"kind":"Name","value":"healthInsuranceCarriers"}},{"kind":"Field","name":{"kind":"Name","value":"presentationStrategy"}},{"kind":"Field","name":{"kind":"Name","value":"specificQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"summaryPrompt"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessage"}}]}}]}}]} as unknown as DocumentNode<BotConfigQuery, BotConfigQueryVariables>;
-export const BotConfigsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BotConfigs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"botConfigs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"companyStatement"}},{"kind":"Field","name":{"kind":"Name","value":"tonestyle"}},{"kind":"Field","name":{"kind":"Name","value":"priorityPlan"}},{"kind":"Field","name":{"kind":"Name","value":"healthInsuranceCarriers"}},{"kind":"Field","name":{"kind":"Name","value":"presentationStrategy"}},{"kind":"Field","name":{"kind":"Name","value":"specificQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"summaryPrompt"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessage"}}]}}]}}]} as unknown as DocumentNode<BotConfigsQuery, BotConfigsQueryVariables>;
+export const BotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"botConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"companyStatement"}},{"kind":"Field","name":{"kind":"Name","value":"tonestyle"}},{"kind":"Field","name":{"kind":"Name","value":"priorityPlan"}},{"kind":"Field","name":{"kind":"Name","value":"healthInsuranceCarriers"}},{"kind":"Field","name":{"kind":"Name","value":"presentationStrategy"}},{"kind":"Field","name":{"kind":"Name","value":"specificQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"summaryPrompt"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessage"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessageFormat"}},{"kind":"Field","name":{"kind":"Name","value":"noZipCodeMessage"}}]}}]}}]} as unknown as DocumentNode<BotConfigQuery, BotConfigQueryVariables>;
+export const BotConfigsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"BotConfigs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"botConfigs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"companyStatement"}},{"kind":"Field","name":{"kind":"Name","value":"tonestyle"}},{"kind":"Field","name":{"kind":"Name","value":"priorityPlan"}},{"kind":"Field","name":{"kind":"Name","value":"healthInsuranceCarriers"}},{"kind":"Field","name":{"kind":"Name","value":"presentationStrategy"}},{"kind":"Field","name":{"kind":"Name","value":"specificQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"summaryPrompt"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessage"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessageFormat"}},{"kind":"Field","name":{"kind":"Name","value":"noZipCodeMessage"}}]}}]}}]} as unknown as DocumentNode<BotConfigsQuery, BotConfigsQueryVariables>;
 export const CreateBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateBotConfigMutation, CreateBotConfigMutationVariables>;
 export const UpdateBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateBotConfigMutation, UpdateBotConfigMutationVariables>;
 export const DeleteBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteBotConfigMutation, DeleteBotConfigMutationVariables>;
-export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"ghlAccess"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"scope"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aiKey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"openapiKey"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
+export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"ghlAccess"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"scope"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aiKey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"openapiKey"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
 export const UpdateAiKeyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAIKey"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AIKeyWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AIKeyUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAIKey"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateAiKeyMutation, UpdateAiKeyMutationVariables>;
 export const Ghl_MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Ghl_me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"state"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}}]}}]}}]} as unknown as DocumentNode<Ghl_MeQuery, Ghl_MeQueryVariables>;
+export const Ghl_GetContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ghl_getContacts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_getContactsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_getContacts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"source"}},{"kind":"Field","name":{"kind":"Name","value":"dateAdded"}},{"kind":"Field","name":{"kind":"Name","value":"businessId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"contactName"}}]}}]}}]}}]} as unknown as DocumentNode<Ghl_GetContactsQuery, Ghl_GetContactsQueryVariables>;
+export const Ghl_SendMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Ghl_sendMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_sendMessageInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_sendMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"contactID"}},{"kind":"Field","name":{"kind":"Name","value":"thread"}}]}}]}}]} as unknown as DocumentNode<Ghl_SendMessageMutation, Ghl_SendMessageMutationVariables>;
 export const ChatSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatSession"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChatSessionWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chatSession"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionData"}}]}}]}}]} as unknown as DocumentNode<ChatSessionQuery, ChatSessionQueryVariables>;
