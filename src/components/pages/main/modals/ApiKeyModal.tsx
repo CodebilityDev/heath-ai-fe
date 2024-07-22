@@ -75,7 +75,7 @@ const ApiKeyModal = ({
         open ? "visible bg-black/20" : "invisible"
       }`}
     >
-      <div className="w-full max-w-2xl bg-white modal-content no-scrollbar">
+      <div className="w-full p-8 max-w-2xl bg-white modal-content no-scrollbar">
         <div className="flex flex-col gap-[30px]">
           <div className="w-full">
             <p className="text-xl font-bold">Add OpenAI API Key</p>

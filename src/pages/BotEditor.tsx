@@ -100,76 +100,83 @@ function Sidebar({ className }: { className?: string }) {
                         </Button>
                       }
                     >
-                      <div className="bg-gradient-to-b to-[#a393f337] from-[#624ff600] w-full overflow-hidden flex rounded-xl mt-6 py-4">
-                        <div className="flex flex-1 px-4 overflow-hidden gap-x-4">
-                          <AvatarIcon className="w-24 h-24" />
-                          <div className="flex flex-col flex-1">
-                            <Input
-                              className="h-auto p-0 text-sm font-bold bg-transparent border-none rounded-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
-                              value={userData?.authenticatedItem?.email || ""}
-                              onChange={(e) => {
-                                e.preventDefault();
-                              }}
-                            />
-                            <p className="mt-2 text-sm">
-                              Waterproffing company
+                      <div className="pb-8">
+                        <div className="bg-gradient-to-b to-[#a393f337] from-[#624ff600] w-full overflow-hidden flex rounded-xl mt-6 py-4">
+                          <div className="flex flex-1 px-4 overflow-hidden gap-x-4">
+                            <AvatarIcon className="w-24 h-24" />
+                            <div className="flex flex-col flex-1">
+                              <Input
+                                className="h-auto p-0 text-sm font-bold bg-transparent border-none rounded-none focus-visible:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+                                value={userData?.authenticatedItem?.email || ""}
+                                onChange={(e) => {
+                                  e.preventDefault();
+                                }}
+                              />
+                              <p className="mt-2 text-sm">
+                                Waterproffing company
+                              </p>
+                              <p className="text-sm">
+                                Duffy, Australian Capital Territory, 2611
+                              </p>
+                              <p className="mt-2 text-xs text-gray">
+                                Member Since, Dec 2007
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="border rounded-xl ">
+                          <div className="p-4 rounded-xl">
+                            <p className="flex text-xs gap-x-2 sm:text-base">
+                              <span className="font-bold text-primary">
+                                API Key:{" "}
+                              </span>
+                              {userData?.authenticatedItem?.aiKey?.openapiKey
+                                ? "Connected"
+                                : "Not Connected"}
                             </p>
-                            <p className="text-sm">
-                              Duffy, Australian Capital Territory, 2611
+                          </div>
+                          <hr className="h-px border-0 bg-gray dark:bg-gray-700" />
+                          <div className="p-4 rounded-xl shado-md">
+                            <p className="flex text-xs gap-x-2 sm:text-base">
+                              <span className="font-bold text-primary">
+                                GHL Access:{" "}
+                              </span>
+                              {userData?.authenticatedItem?.ghlAccess
+                                ? "Connected"
+                                : "Not Connected"}
                             </p>
-                            <p className="mt-2 text-xs text-gray">
-                              Member Since, Dec 2007
+                            <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
+                              Name:{" "}
+                              <span className="text-xs text-black md:text-sm">
+                                {GHLData?.ghl_me?.name ?? "No Data"}
+                              </span>
+                            </p>
+                            <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
+                              Email:{" "}
+                              <span className="text-xs text-black md:text-sm">
+                                {GHLData?.ghl_me?.email ?? "No Data"}
+                              </span>
+                            </p>
+                            <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
+                              Phone:{" "}
+                              <span className="text-xs text-black md:text-sm">
+                                {GHLData?.ghl_me?.phone ?? "No Data"}
+                              </span>
+                            </p>
+                            <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
+                              State:{" "}
+                              <span className="text-xs text-black md:text-sm">
+                                {GHLData?.ghl_me?.state ?? "No Data"}
+                              </span>
+                            </p>
+                            <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
+                              Country:
+                              <span className="text-xs text-black md:text-sm">
+                                {GHLData?.ghl_me?.country ?? "No Data"}{" "}
+                              </span>
                             </p>
                           </div>
                         </div>
-                      </div>
-                      <p className="flex text-xs gap-x-2 sm:text-base">
-                        <span className="font-bold text-primary">
-                          API Key:{" "}
-                        </span>
-                        {userData?.authenticatedItem?.aiKey?.openapiKey
-                          ? "Connected"
-                          : "Not Connected"}
-                      </p>
-                      <p className="flex text-xs gap-x-2 sm:text-base">
-                        <span className="font-bold text-primary">
-                          GHL Access:{" "}
-                        </span>
-                        {userData?.authenticatedItem?.ghlAccess
-                          ? "Connected"
-                          : "Not Connected"}
-                      </p>
-                      <div>
-                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
-                          Name:{" "}
-                          <span className="text-xs text-black md:text-sm">
-                            {GHLData?.ghl_me?.name ?? "No Data"}
-                          </span>
-                        </p>
-                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
-                          Email:{" "}
-                          <span className="text-xs text-black md:text-sm">
-                            {GHLData?.ghl_me?.email ?? "No Data"}
-                          </span>
-                        </p>
-                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
-                          Phone:{" "}
-                          <span className="text-xs text-black md:text-sm">
-                            {GHLData?.ghl_me?.phone ?? "No Data"}
-                          </span>
-                        </p>
-                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
-                          State:{" "}
-                          <span className="text-xs text-black md:text-sm">
-                            {GHLData?.ghl_me?.state ?? "No Data"}
-                          </span>
-                        </p>
-                        <p className="flex items-center text-xs text-primary gap-x-2 sm:text-base">
-                          Country:
-                          <span className="text-xs text-black md:text-sm">
-                            {GHLData?.ghl_me?.country ?? "No Data"}{" "}
-                          </span>
-                        </p>
                       </div>
                     </DialogComponent>
                   </span>

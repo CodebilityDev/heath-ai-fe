@@ -86,10 +86,10 @@ const CarrierModal = ({
                   <input
                     type="text"
                     placeholder="Search..."
-                    className="text-xs search-input md:text-base"
+                    className="text-xs border border-gray pl-8 pr-4 py-2 rounded-md md:text-base"
                     onChange={handleSearch}
                   />
-                  <div className="absolute top-[50%] translate-y-[-50%] left-4">
+                  <div className="absolute top-[50%] translate-y-[-50%] left-2">
                     <IconSearch />
                   </div>
                   <CheckBox
