@@ -124,7 +124,7 @@ function Sidebar({ className }: { className?: string }) {
                             </div>
                           </div>
                         </div>
-                        <div className="border rounded-xl ">
+                        <div className="border rounded-xl mt-4">
                           <div className="p-4 rounded-xl">
                             <p className="flex text-xs gap-x-2 sm:text-base">
                               <span className="font-bold text-primary">
