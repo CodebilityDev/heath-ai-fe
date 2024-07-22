@@ -40,6 +40,7 @@ import { Input } from "@/components/ui/input";
 import { DatePicker } from "@/components/common/DatePicker";
 import { Textarea } from "@/components/ui/textarea";
 import { DeleteIcon, EditIcon } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Sidebar({ className }: { className?: string }) {
   const { data: userData } = useQuery(GetMe);
@@ -78,10 +79,12 @@ function Sidebar({ className }: { className?: string }) {
             <div className="flex items-center flex-1 overflow-hidden gap-x-2">
               <AvatarIcon />
               <div className="flex flex-col overflow-hidden">
-                <p className="text-xs truncate md:text-base">
-                  {userData?.authenticatedItem?.email}
+                <p className="text-xs truncate md:text-base rounded-md">
+                  {userData?.authenticatedItem?.email ?? (
+                    <Skeleton className="h-4 mb-2 w-52 bg-gray-light" />
+                  )}
                 </p>
-                <hr className="h-px mt-1 border-0 bg-gray dark:bg-gray-700" />
+                <hr className="h-px border-0 bg-gray dark:bg-gray-700" />
                 <div className="flex justify-start">
                   <span>
                     <DialogComponent
