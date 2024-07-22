@@ -334,7 +334,7 @@
   }
 
   .modal-content {
-    @apply bg-white shadow  rounded-[20px] max-h-[80vh] overflow-auto;
+    @apply bg-white shadow  rounded-[20px] overflow-auto;
   }
 
   .multi-select-menu-button {
