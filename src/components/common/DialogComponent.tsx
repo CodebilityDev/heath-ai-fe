@@ -17,15 +17,10 @@ const DialogComponent = ({
   return (
     <Dialog>
       <DialogTrigger>{trigger}</DialogTrigger>
-      <DialogContent>
+      <DialogContent className="rounded-xl">
         <DialogHeader className="sr-only">
-          <DialogTitle className="sr-only">
-            Are you absolutely sure?
-          </DialogTitle>
-          <DialogDescription className="sr-only">
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
-          </DialogDescription>
+          <DialogTitle className="sr-only">Info</DialogTitle>
+          <DialogDescription className="sr-only">User Info</DialogDescription>
         </DialogHeader>
         {children}
       </DialogContent>
