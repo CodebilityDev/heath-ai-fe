@@ -80,10 +80,8 @@ function Sidebar({ className }: { className?: string }) {
               <AvatarIcon />
               <div className="flex flex-col overflow-hidden">
                 <p className="text-xs truncate md:text-base rounded-md">
-                  {userData?.authenticatedItem?.email ? (
+                  {userData?.authenticatedItem?.email ?? (
                     <Skeleton className="h-4 mb-2 w-52 bg-gray-light" />
-                  ) : (
-                    userData?.authenticatedItem?.email
                   )}
                 </p>
                 <hr className="h-px border-0 bg-gray dark:bg-gray-700" />
