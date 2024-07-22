@@ -180,7 +180,7 @@ const SignInPage = () => {
                   className="py-3 text-white bg-primary rounded-xl"
                   type="submit"
                 >
-                  Sign in to Healthcare Plans
+                  Sign in
                 </Button>
               </form>
             </Form>
