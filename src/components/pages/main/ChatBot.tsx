@@ -305,11 +305,14 @@ const Chat = ({ paddingTop }: { paddingTop?: string }) => {
         </p> */}
         <div
           className={twMerge(
-            "flex gap-4 py-8 px-2 md:px-8 w-full max-w-6xl mx-auto lg:pt-[90px] pt-24",
+            "flex gap-4 py-8 px-2 md:px-8 w-full max-w-6xl mx-auto lg:pt-[90px] pt-24 pb-52",
             paddingTop
           )}
         >
-          <div className="flex flex-col gap-4 overflow-hidden" id="chatpane">
+          <div
+            className="flex flex-col gap-4 overflow-hidden w-full"
+            id="chatpane"
+          >
             {/* Dump all the messages here. Both user and chatbot. Just make
         sure to differentiate between them. */}
             {aiState.messages.map((message, index) => (
@@ -342,7 +345,7 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
           </div>
         </div>
       </div>
-      <div className="absolute bottom-0 w-full left-[50%] -translate-x-1/2 flex flex-col">
+      <div className="absolute pt-4 bg-white bottom-0 w-full left-[50%] -translate-x-1/2 flex flex-col">
         <form
           className="flex flex-col w-full max-w-6xl px-4 mx-auto form-container"
           onSubmit={handleChatSubmit}
@@ -350,14 +353,14 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
         >
           <div className="grid w-full grid-cols-3 gap-x-2 md:gap-x-4 gap-y-2 ">
             {/* Only show when there is no conversation for the current session. Even if there is a conversation history, as long as the sesssion is new and the user is not logged in, show this convo starter */}
-            {/* {convoStarter.map((convo, index) => (
+            {convoStarter.map((convo, index) => (
               <div
                 key={`convo-${index}`}
                 className="bg-[#624FF61A] text-xs md:text-sm text-primary text-center px-4 md:px-8 py-4 rounded-xl"
               >
                 {convo} →
               </div>
-            ))} */}
+            ))}
           </div>
           <div className="relative flex flex-1 w-full mt-10 gap-x-2 md:gap-x-2">
             <div className="w-full h-fit">
