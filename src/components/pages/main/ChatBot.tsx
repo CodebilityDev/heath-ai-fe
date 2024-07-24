@@ -8,7 +8,8 @@ import { useQuery } from "@apollo/client";
 import { SendHorizonal } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
-const Chat = () => {
+import { twMerge } from "tailwind-merge";
+const Chat = ({ paddingTop }: { paddingTop?: string }) => {
   const { aiState, setAIState } = useAIContext();
   const { sessionId, generateNewSessionId } = useSessionProvider();
   const [functionData, setFunctionData] = useState<{
@@ -285,7 +286,7 @@ const Chat = () => {
   }
 
   return (
-    <div className="h-[calc(100vh-10rem+10px)] md:h-[calc(100vh-5rem)] flex flex-col w-full">
+    <div className="h-[calc(100vh-5rem)] md:h-[calc(100vh-5rem)] flex flex-col w-full">
       <div className="h-[calc(100%-3rem)] md:h-[calc(100%-6rem)] flex -mt-[5rem] overflow-y-auto flex-col-reverse relative">
         {/* TODO: Only for unlogged users */}
         {/* <p className="flex fixed top-36 left-1/2 lg:left-[calc(50%+11rem)] -translate-x-1/2 items-center gap-x-2 bg-[#F9F9F9] text-center justify-center py-2 px-6 w-full lg:w-auto rounded-md mt-8 text-xs">
@@ -302,7 +303,12 @@ const Chat = () => {
             to save and revisit your chat history!
           </p>
         </p> */}
-        <div className="flex gap-4 py-8 px-2 md:px-8 w-full max-w-6xl mx-auto md:pt-[90px] pt-20">
+        <div
+          className={twMerge(
+            "flex gap-4 py-8 px-2 md:px-8 w-full max-w-6xl mx-auto lg:pt-[90px] pt-24",
+            paddingTop
+          )}
+        >
           <div className="flex flex-col gap-4 overflow-hidden" id="chatpane">
             {/* Dump all the messages here. Both user and chatbot. Just make
         sure to differentiate between them. */}
@@ -366,7 +372,7 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
                 tabIndex={0}
                 id="text"
                 placeholder="Hi how may i help you, please enter..."
-                className="h-fit pl-12 py-4 rounded-[12px] border border-primary"
+                className="h-fit pl-12 py-4 rounded-[12px] border border-primary resize-none"
                 onInput={(e: any) =>
                   (e.target.parentNode.dataset.replicatedValue = e.target.value)
                 }
@@ -416,8 +422,8 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
   );
 };
 
-const ChatBot = () => {
-  return <Chat />;
+const ChatBot = ({ paddingTop }: { paddingTop?: string }) => {
+  return <Chat paddingTop={paddingTop} />;
 };
 
 export default ChatBot;

@@ -27,7 +27,7 @@ export const sidebarLinks = [
       {
         name: "Conversational Chat Builder",
         icon: "/svgs/link3.svg",
-        to: "",
+        to: "/conversationalchatbuilder",
       },
       {
         name: "Insights",

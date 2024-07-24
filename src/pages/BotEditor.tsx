@@ -42,7 +42,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { DeleteIcon, EditIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 
-function Sidebar({ className }: { className?: string }) {
+export function Sidebar({ className }: { className?: string }) {
   const { data: userData } = useQuery(GetMe);
   const { data: GHLData } = useQuery(GetGHL);
   const [apiKeyModal, setApiKeyModal] = useState(false);
@@ -331,15 +331,6 @@ function Content() {
 
   const { data: userData, loading: userLoading } = useQuery(GetMe);
   const [date, setDate] = useState<Date>();
-  const [textArea, setTextArea] = useState("");
-  const [editMode, setEditMode] = useState<{
-    mode: boolean;
-    idxToEdit: number | null;
-  }>({
-    mode: false,
-    idxToEdit: null,
-  });
-  const [prePrompts, setPrePrompts] = useState<string[] | []>([]);
 
   const { data, loading } = useQuery(ListBotConfig, {
     variables: {
@@ -563,85 +554,7 @@ function Content() {
               </button>
             </div>
           </div>
-          <div className="w-full">
-            <p className="form-label">Pre Prompt Editor</p>
-            <div className="form-carrier-container">
-              <div className={"w-full"}>
-                <Textarea
-                  className="w-full resize-none rounded-xl mb-4 h-32"
-                  rows={2}
-                  placeholder="Enter pre prompt"
-                  onChange={(e: any) => {
-                    setTextArea(e.target.value);
-                  }}
-                  value={textArea}
-                />
-                <div className="w-full mb-4 flex gap-2 flex-wrap">
-                  {prePrompts.map((prePrompt: string, idx: number) => (
-                    <div
-                      key={`prePrompt-${idx}`}
-                      className="w-72 justify-between flex gap-x-1 items-center bg-primary text-white  px-4 rounded-lg overflow-hidden py-2"
-                    >
-                      <p className="truncate">{prePrompt}</p>
-                      <div className="flex">
-                        <Button
-                          variant="ghost"
-                          className="p-0 h-8 w-8 hover:bg-transparent hover:text-green-300 rounded-full"
-                          onClick={() => {
-                            setEditMode((prev) => ({
-                              ...prev,
-                              mode: true,
-                              idxToEdit: idx,
-                            }));
-                            setTextArea(prePrompts[idx]);
-                          }}
-                        >
-                          <EditIcon className="size-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          className="p-0 h-8 w-8 hover:bg-transparent hover:text-red-300  rounded-full"
-                          onClick={() => {
-                            setPrePrompts(
-                              prePrompts.filter((_, i) => i !== idx)
-                            );
-                          }}
-                        >
-                          <DeleteIcon className="size-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <button
-                className="btn-primary-lg btn-outlined disabled:text-gray disabled:border-gray disabled:cursor-not-allowed disabled:hover:bg-transparent"
-                disabled={prePrompts.length >= 4 || !textArea}
-                aria-disabled={prePrompts.length >= 4 || !textArea}
-                onClick={(e: any) => {
-                  e.preventDefault();
 
-                  setTextArea("");
-                  if (editMode.mode) {
-                    setEditMode((prev) => ({
-                      ...prev,
-                      mode: false,
-                      idxToEdit: null,
-                    }));
-
-                    setPrePrompts((prev) => {
-                      prev[editMode.idxToEdit!] = textArea;
-                      return prev;
-                    });
-                    return;
-                  }
-                  setPrePrompts((prev) => [...prev, textArea]);
-                }}
-              >
-                {!editMode.mode ? "+ Add Pre Prompts" : "Update Pre Prompt"}
-              </button>
-            </div>
-          </div>
           <div className="w-full">
             <p className="form-label">{langSnippet.recommendedPlan.label}</p>
             <CheckButtons
