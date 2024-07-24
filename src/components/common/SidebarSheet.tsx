@@ -1,12 +1,24 @@
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { IoMdClose } from "react-icons/io";
 import { GiHamburgerMenu } from "react-icons/gi";
 
 import { useState } from "react";
+import { twMerge } from "tailwind-merge";
 
-export function SheetSidebar({ children }: { children: React.ReactNode }) {
+export function SheetSidebar({
+  children,
+  sheetContentClassName,
+}: {
+  children: React.ReactNode;
+  sheetContentClassName?: string;
+}) {
   const [isOpen, setIsOpen] = useState(false);
-  console.log(isOpen);
   return (
     <Sheet onOpenChange={setIsOpen} open={isOpen}>
       <SheetTrigger asChild>
@@ -17,9 +29,14 @@ export function SheetSidebar({ children }: { children: React.ReactNode }) {
         )}
       </SheetTrigger>
       <SheetContent
-        className="overflow-hidden p-0 px-4 w-full sm:w-auto"
+        className={twMerge(
+          "overflow-hidden p-0 px-4 w-full sm:w-auto",
+          sheetContentClassName
+        )}
         side="left"
       >
+        <SheetTitle className="sr-only">Sidebar</SheetTitle>
+        <SheetDescription className="sr-only"></SheetDescription>
         {children}
       </SheetContent>
     </Sheet>
