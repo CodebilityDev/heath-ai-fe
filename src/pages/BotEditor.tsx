@@ -41,6 +41,7 @@ import { DatePicker } from "@/components/common/DatePicker";
 import { Textarea } from "@/components/ui/textarea";
 import { DeleteIcon, EditIcon } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Switch } from "@/components/ui/switch";
 
 export function Sidebar({ className }: { className?: string }) {
   const { data: userData } = useQuery(GetMe);
@@ -347,6 +348,7 @@ function Content() {
     fetchPolicy: "no-cache",
   });
 
+  const [toggleSwitch, setToggleSwitch] = useState(false);
   const [actualSend, setActualSend] = useState(false);
   const [testLoading, setTestLoading] = useState(false);
   const [lastMessage, setLastMessage] = useState("");
@@ -487,6 +489,16 @@ function Content() {
               </span>
             </p>
           )}
+          <div className="item-center flex gap-x-2">
+            <Switch
+              checked={toggleSwitch}
+              onCheckedChange={() => setToggleSwitch((prev) => !prev)}
+            />
+            {!toggleSwitch
+              ? "Enable Auto Welcome Message"
+              : "Enable Auto GPT Reply"}
+          </div>
+
           <div className="w-full">
             <p className="form-label">{langSnippet.mission.label}</p>
             <textarea
