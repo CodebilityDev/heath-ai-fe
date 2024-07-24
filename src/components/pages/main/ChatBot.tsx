@@ -9,7 +9,15 @@ import { SendHorizonal } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-const Chat = ({ paddingTop }: { paddingTop?: string }) => {
+const Chat = ({
+  paddingTop,
+  modelIDprop,
+  testingMode,
+}: {
+  paddingTop?: string;
+  modelIDprop?: string;
+  testingMode?: boolean;
+}) => {
   const { aiState, setAIState } = useAIContext();
   const { sessionId, generateNewSessionId } = useSessionProvider();
   const [functionData, setFunctionData] = useState<{
@@ -19,7 +27,7 @@ const Chat = ({ paddingTop }: { paddingTop?: string }) => {
     name: "",
     data: {},
   });
-  const [modelID, setModelID] = useState<string | null>(null);
+  const [modelID, setModelID] = useState<string | null>(modelIDprop || null);
   const { data: chatSessionData } = useQuery(GetChatSession, {
     variables: {
       where: {
@@ -85,10 +93,11 @@ const Chat = ({ paddingTop }: { paddingTop?: string }) => {
 
   // get modelid from url params
   useEffect(() => {
+    if (modelID) return;
     const urlParams = new URLSearchParams(window.location.search);
-    const modelID = urlParams.get("id");
-    if (modelID) {
-      setModelID(modelID);
+    const modelid = urlParams.get("id");
+    if (modelid) {
+      setModelID(modelid);
     }
   }, []);
 
@@ -286,8 +295,18 @@ const Chat = ({ paddingTop }: { paddingTop?: string }) => {
   }
 
   return (
-    <div className="h-[calc(100vh-5rem)] md:h-[calc(100vh-5rem)] flex flex-col w-full">
-      <div className="h-[calc(100%-3rem)] md:h-[calc(100%-6rem)] flex -mt-[5rem] overflow-y-auto flex-col-reverse relative">
+    <div
+      className={twMerge(
+        "h-[calc(100vh-5rem)] md:h-[calc(100vh-5rem)] flex flex-col w-full",
+        testingMode && "md:h-[calc(100vh-15rem-2px)] h-[calc(100vh-15rem-2px)]"
+      )}
+    >
+      <div
+        className={twMerge(
+          "h-[calc(100%-3rem)] md:h-[calc(100%-6rem)] flex -mt-[5rem] overflow-y-auto flex-col-reverse relative",
+          testingMode && "h-[calc(100%-1rem)] md:h-[calc(100%-2rem)]"
+        )}
+      >
         {/* TODO: Only for unlogged users */}
         {/* <p className="flex fixed top-36 left-1/2 lg:left-[calc(50%+11rem)] -translate-x-1/2 items-center gap-x-2 bg-[#F9F9F9] text-center justify-center py-2 px-6 w-full lg:w-auto rounded-md mt-8 text-xs">
           <img src="/images/alert.svg" alt="alert" className="size-4" />
@@ -305,8 +324,10 @@ const Chat = ({ paddingTop }: { paddingTop?: string }) => {
         </p> */}
         <div
           className={twMerge(
-            "flex gap-4 py-8 px-2 md:px-8 w-full max-w-6xl mx-auto lg:pt-[90px] pt-24 pb-52",
-            paddingTop
+            "flex gap-4 py-8 px-2 md:px-8 w-full max-w-6xl mx-auto lg:pt-[90px] pt-24",
+            paddingTop,
+            !testingMode && "pb-52",
+            testingMode && "lg:pt-[70px] pt-16"
           )}
         >
           <div
@@ -345,24 +366,36 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
           </div>
         </div>
       </div>
-      <div className="absolute pt-4 bg-white bottom-0 w-full left-[50%] -translate-x-1/2 flex flex-col">
+      <div
+        className={twMerge(
+          "absolute pt-4  bg-white bottom-0 w-full left-[50%] -translate-x-1/2 flex flex-col",
+          !testingMode && "pt-4"
+        )}
+      >
         <form
           className="flex flex-col w-full max-w-6xl px-4 mx-auto form-container"
           onSubmit={handleChatSubmit}
           id="chat-form"
         >
-          <div className="grid w-full grid-cols-3 gap-x-2 md:gap-x-4 gap-y-2 ">
-            {/* Only show when there is no conversation for the current session. Even if there is a conversation history, as long as the sesssion is new and the user is not logged in, show this convo starter */}
-            {convoStarter.map((convo, index) => (
-              <div
-                key={`convo-${index}`}
-                className="bg-[#624FF61A] text-xs md:text-sm text-primary text-center px-4 md:px-8 py-4 rounded-xl"
-              >
-                {convo} →
-              </div>
-            ))}
-          </div>
-          <div className="relative flex flex-1 w-full mt-10 gap-x-2 md:gap-x-2">
+          {!testingMode && (
+            <div className="grid w-full grid-cols-3 gap-x-2 md:gap-x-4 gap-y-2 ">
+              {/* Only show when there is no conversation for the current session. Even if there is a conversation history, as long as the sesssion is new and the user is not logged in, show this convo starter */}
+              {convoStarter.map((convo, index) => (
+                <div
+                  key={`convo-${index}`}
+                  className="bg-[#624FF61A] text-xs md:text-sm text-primary text-center px-4 md:px-8 py-4 rounded-xl"
+                >
+                  {convo} →
+                </div>
+              ))}
+            </div>
+          )}
+          <div
+            className={twMerge(
+              "relative flex flex-1 w-full  gap-x-2 md:gap-x-2",
+              !testingMode && "mt-10"
+            )}
+          >
             <div className="w-full h-fit">
               <Textarea
                 name="user-prompt"
@@ -415,18 +448,34 @@ https://api.leadconnectorhq.com/widget/survey/G7G1OQqFDfdSB1TGnii2`}
             </span>
           </p>
         </form>
-        <div className="flex justify-center py-2 mb-2 lg:mt-2">
-          <p className="footer-text">
-            © 2024 Obamacare AI. All Rights Reserved.
-          </p>
-        </div>
+        {!testingMode && (
+          <div className="flex justify-center py-2 mb-2 lg:mt-2">
+            <p className="footer-text">
+              © 2024 Obamacare AI. All Rights Reserved.
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
-const ChatBot = ({ paddingTop }: { paddingTop?: string }) => {
-  return <Chat paddingTop={paddingTop} />;
+const ChatBot = ({
+  paddingTop,
+  modelIDprop,
+  testingMode,
+}: {
+  paddingTop?: string;
+  modelIDprop?: string;
+  testingMode?: boolean;
+}) => {
+  return (
+    <Chat
+      paddingTop={paddingTop}
+      modelIDprop={modelIDprop}
+      testingMode={testingMode}
+    />
+  );
 };
 
 export default ChatBot;
