@@ -294,6 +294,7 @@ export type GhlAccess = {
   planId?: Maybe<Scalars['String']['output']>;
   refreshToken?: Maybe<Scalars['String']['output']>;
   scope?: Maybe<Scalars['String']['output']>;
+  updatedAt?: Maybe<Scalars['DateTime']['output']>;
   user?: Maybe<User>;
 };
 
@@ -304,6 +305,7 @@ export type GhlAccessCreateInput = {
   planId?: InputMaybe<Scalars['String']['input']>;
   refreshToken?: InputMaybe<Scalars['String']['input']>;
   scope?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   user?: InputMaybe<UserRelateToOneForCreateInput>;
 };
 
@@ -315,6 +317,7 @@ export type GhlAccessOrderByInput = {
   planId?: InputMaybe<OrderDirection>;
   refreshToken?: InputMaybe<OrderDirection>;
   scope?: InputMaybe<OrderDirection>;
+  updatedAt?: InputMaybe<OrderDirection>;
 };
 
 export type GhlAccessRelateToOneForCreateInput = {
@@ -340,6 +343,7 @@ export type GhlAccessUpdateInput = {
   planId?: InputMaybe<Scalars['String']['input']>;
   refreshToken?: InputMaybe<Scalars['String']['input']>;
   scope?: InputMaybe<Scalars['String']['input']>;
+  updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
   user?: InputMaybe<UserRelateToOneForUpdateInput>;
 };
 
@@ -354,6 +358,7 @@ export type GhlAccessWhereInput = {
   planId?: InputMaybe<StringFilter>;
   refreshToken?: InputMaybe<StringFilter>;
   scope?: InputMaybe<StringFilter>;
+  updatedAt?: InputMaybe<DateTimeNullableFilter>;
   user?: InputMaybe<UserWhereInput>;
 };
 
@@ -403,6 +408,10 @@ export type GhlMessageReturn = {
 
 export type Ghl_GetContactsInput = {
   query?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Ghl_GetMessagesInput = {
+  conversationID: Scalars['String']['input'];
 };
 
 export type Ghl_SendMessageInput = {
@@ -1156,6 +1165,7 @@ export type Query = {
   gHLAccessesCount?: Maybe<Scalars['Int']['output']>;
   ghl_accessToken?: Maybe<Scalars['String']['output']>;
   ghl_getContacts?: Maybe<GhlContactList>;
+  ghl_getMessages?: Maybe<Scalars['String']['output']>;
   ghl_me?: Maybe<GhlMeReturn>;
   group?: Maybe<Group>;
   groupMember?: Maybe<GroupMember>;
@@ -1254,6 +1264,11 @@ export type QueryGHlAccessesCountArgs = {
 
 export type QueryGhl_GetContactsArgs = {
   input: Ghl_GetContactsInput;
+};
+
+
+export type QueryGhl_GetMessagesArgs = {
+  input: Ghl_GetMessagesInput;
 };
 
 
