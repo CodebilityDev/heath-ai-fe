@@ -1,18 +1,27 @@
-export const sidebarLinks = [
+export const sidebarLinks = (args: { groupID: string }) => [
   {
     category: "GHL Application",
     links: [
       {
-        name: "Welcome SMS Builder",
+        name: "Dashboard",
         icon: "/svgs/link1.svg",
-        to: "/app",
+        to: `/app/view/${args.groupID}`,
       },
-
       {
-        name: "SMS Chat Builder",
-        icon: "/svgs/link2.svg",
-        to: "/smschatbuilder",
+        name: "Welcome Messages",
+        icon: "/svgs/link1.svg",
+        to: `/app/view/${args.groupID}/welcome`,
       },
+      {
+        name: "Auto Reply",
+        icon: "/svgs/link2.svg",
+        to: `/app/view/${args.groupID}/autoreply`,
+      },
+    ],
+  },
+  {
+    category: "General Tools",
+    links: [
       {
         name: "Shareable Chatbot Page",
         icon: "/svgs/link2.svg",

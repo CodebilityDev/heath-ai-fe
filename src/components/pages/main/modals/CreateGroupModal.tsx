@@ -5,6 +5,7 @@ import { useRecoilState } from "recoil";
 import { OpenAiAPIKeyInterface } from "@/types/AppState";
 import { useQuery } from "@apollo/client";
 import {
+  CreateGroup,
   GetGroup,
   GetMe,
   UpdateAIKey,
@@ -16,14 +17,14 @@ import { toast } from "react-toastify";
 import { Switch } from "@/components/ui/switch";
 import { useParams } from "react-router-dom";
 
-const ApiKeyModal = ({
+const CreateGroupModal = ({
   open,
   onClose,
-  onConnect,
+  onCreate,
 }: {
   open: boolean;
   onClose: any;
-  onConnect: any;
+  onCreate: any;
 }) => {
   const { data: userData } = useQuery(GetMe);
 
@@ -47,44 +48,34 @@ const ApiKeyModal = ({
   }, [userData]);
 
   const update = async () => {
-    // if user already has an api key, update it
-    if (groupData?.group?.aiKey?.id) {
-      await apolloClient.mutate({
-        mutation: UpdateAIKey,
-        variables: {
-          where: {
-            id: groupData?.group?.aiKey?.id,
-          },
-          data: {
-            openapiKey: apiKey,
-          },
-        },
-      });
-    } else {
-      // if user doesn't have an api key, create one
-      await apolloClient.mutate({
-        mutation: UpdateGroup,
-        variables: {
-          where: {
-            id: groupData?.group?.id,
-          },
-          data: {
-            aiKey: {
-              create: {
-                openapiKey: apiKey,
+    // if user doesn't have an api key, create one
+    const resp = await apolloClient.mutate({
+      mutation: CreateGroup,
+      variables: {
+        data: {
+          name: apiKey,
+          members: {
+            create: [
+              {
+                user: {
+                  connect: {
+                    id: userData?.authenticatedItem?.id,
+                  },
+                },
+                access: 3,
               },
-            },
+            ],
           },
         },
-      });
+      },
+    });
 
-      toast.success("API Key added successfully");
+    toast.success("Group created successfully");
 
-      onConnect();
-    }
-
-    toast.success("API Key updated successfully");
-    onClose();
+    onCreate({
+      id: resp.data?.createGroup?.id,
+      name: apiKey,
+    });
   };
 
   return (
@@ -93,21 +84,21 @@ const ApiKeyModal = ({
         open ? "visible bg-black/20" : "invisible"
       }`}
     >
-      <div className="w-full p-8 max-w-2xl bg-white modal-content no-scrollbar">
+      <div className="w-full max-w-2xl p-8 bg-white modal-content no-scrollbar">
         <div className="flex flex-col gap-[30px]">
           <div className="w-full">
-            <p className="text-xl font-bold">Add OpenAI API Key</p>
+            <p className="text-xl font-bold">Create a new Group</p>
           </div>
           <div className="divider-x"></div>
           <div className="flex flex-col gap-[20px]">
             <div className="inline-form-container">
               <div className="inline-form-element">
-                <p className="mb-2 font-semibold">OpenAI API Key</p>
+                <p className="mb-2 font-semibold">Group Name</p>
                 <input
                   // type="password"
                   value={apiKey}
                   onChange={(e) => setApiKey(e.target.value)}
-                  placeholder="API"
+                  placeholder="Group Name"
                   className="form-input"
                 />
                 {/* <p className="mt-6 mb-2 font-semibold">Secret Key</p>
@@ -157,7 +148,7 @@ const ApiKeyModal = ({
               </div>
               <div>
                 <button className="btn-submit" onClick={update}>
-                  Connect
+                  Create
                 </button>
               </div>
             </div>
@@ -168,4 +159,4 @@ const ApiKeyModal = ({
   );
 };
 
-export default ApiKeyModal;
+export default CreateGroupModal;
