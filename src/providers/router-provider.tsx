@@ -12,58 +12,67 @@ import Landing from "@/pages/Landing";
 import ChatPage from "@/pages/ChatPage";
 import { BotEditor } from "@/pages/BotEditor";
 import ConversationChatBuilder from "@/pages/ConversationChatBuilder";
+import { GroupList } from "@/pages/GroupList";
+import { WaitParam } from "./ParamWaitProvider";
+import { Dashboard } from "@/pages/Dashboard";
+import { WelcomeMessageEditor } from "@/pages/WelcomeMessageEditor";
+import { AutoReplyEditor } from "@/pages/AutoReplyEditor";
+import { AppLayout } from "@/components/layout/AppLayout";
 
 const router = createBrowserRouter([
   {
     element: <MainLayout />,
     children: [
       {
-        path: "/",
+        path: "",
         element: <Landing />,
       },
       {
-        path: "/app",
-        element: (
-          <ProtectedPath>
-            <BotEditor />
-          </ProtectedPath>
-        ),
+        path: "app",
+        element: <ProtectedPath />,
+        children: [
+          {
+            path: "",
+            element: <GroupList />,
+          },
+          {
+            path: "view/:gid",
+            element: <AppLayout />,
+            children: [
+              {
+                path: "",
+                element: <Dashboard />,
+              },
+              {
+                path: "welcome",
+                element: <WelcomeMessageEditor />,
+              },
+              {
+                path: "autoreply",
+                element: <AutoReplyEditor />,
+              },
+            ],
+          },
+        ],
       },
       {
-        path: "/smschatbuilder",
-        element: (
-          <ProtectedPath>
-            <BotEditor />
-          </ProtectedPath>
-        ),
-      },
-      {
-        path: "/conversationalchatbuilder",
-        element: (
-          <ProtectedPath>
-            <ConversationChatBuilder />
-          </ProtectedPath>
-        ),
-      },
-
-      {
-        path: "/chat",
+        path: "chat",
         element: <ChatPage />,
       },
       {
-        path: "/sign-in",
+        path: "sign-in",
         element: <SignInPage />,
       },
       {
-        path: "/sign-up",
+        path: "sign-up",
         element: <SignUpPage />,
       },
       {
-        path: "/forgot-password",
+        path: "forgot-password",
         element: <ForgotPasswordPage />,
       },
       {
-        path: "/reset-password",
+        path: "reset-password",
         element: <ResetPasswordPage />,
       },
     ],

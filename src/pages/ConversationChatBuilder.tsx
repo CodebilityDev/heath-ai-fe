@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { DeleteIcon, EditIcon } from "lucide-react";
 import { useState } from "react";
-import { Sidebar } from "./BotEditor";
 import { SheetSidebar } from "@/components/common/SidebarSheet";
+import { Sidebar } from "../components/layout/AppSidebar";
 
 const ConversationChatBuilder = () => {
   return (
@@ -20,7 +20,7 @@ const ConversationChatBuilder = () => {
             </SheetSidebar>
           </span>
         </div>
-        <div className="form-container mt-8">
+        <div className="mt-8 form-container">
           <div className="form-content">
             <PrePromptEditor />
             TODO: Other Configuration Options for Chat Builder
@@ -47,7 +47,7 @@ const PrePromptEditor = () => {
       <div className="form-carrier-container">
         <div className={"w-full"}>
           <Textarea
-            className="w-full resize-none rounded-xl mb-4 h-32"
+            className="w-full h-32 mb-4 resize-none rounded-xl"
             rows={2}
             placeholder="Enter pre prompt"
             onChange={(e: any) => {
@@ -55,17 +55,17 @@ const PrePromptEditor = () => {
             }}
             value={textArea}
           />
-          <div className="w-full mb-4 flex gap-2 flex-wrap">
+          <div className="flex flex-wrap w-full gap-2 mb-4">
             {prePrompts.map((prePrompt: string, idx: number) => (
               <div
                 key={`prePrompt-${idx}`}
-                className="w-72 justify-between flex gap-x-1 items-center bg-primary text-white  px-4 rounded-lg overflow-hidden py-2"
+                className="flex items-center justify-between px-4 py-2 overflow-hidden text-white rounded-lg w-72 gap-x-1 bg-primary"
               >
                 <p className="truncate">{prePrompt}</p>
                 <div className="flex">
                   <Button
                     variant="ghost"
-                    className="p-0 h-8 w-8 hover:bg-transparent hover:text-green-300 rounded-full"
+                    className="w-8 h-8 p-0 rounded-full hover:bg-transparent hover:text-green-300"
                     onClick={() => {
                       setEditMode((prev) => ({
                         ...prev,
@@ -79,7 +79,7 @@ const PrePromptEditor = () => {
                   </Button>
                   <Button
                     variant="ghost"
-                    className="p-0 h-8 w-8 hover:bg-transparent hover:text-red-300  rounded-full"
+                    className="w-8 h-8 p-0 rounded-full hover:bg-transparent hover:text-red-300"
                     onClick={() => {
                       setPrePrompts(prePrompts.filter((_, i) => i !== idx));
                     }}

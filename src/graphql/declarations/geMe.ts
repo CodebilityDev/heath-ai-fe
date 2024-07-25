@@ -11,17 +11,55 @@ export const GetMe = graphql(`
         email
         role
         createdAt
-        ghlAccess {
-          id
-          locationId
-          refreshToken
-          scope
-        }
-        aiKey {
-          id
-          openapiKey
-        }
       }
+    }
+  }
+`);
+
+export const GetGroups = graphql(`
+  query Groups {
+    groups {
+      id
+      name
+      ghlAccess {
+        id
+      }
+    }
+  }
+`);
+
+export const GetGroup = graphql(`
+  query Group($where: GroupWhereUniqueInput!) {
+    group(where: $where) {
+      id
+      name
+      members {
+        id
+        user {
+          id
+          displayName
+          email
+        }
+        access
+      }
+      membersCount
+      botConfig {
+        id
+      }
+      ghlAccess {
+        id
+        locationId
+        refreshToken
+        scope
+      }
+      aiKey {
+        id
+        openapiKey
+      }
+      enable_globalWelcome
+      enable_globalAutoReply
+      enable_globalContactUpdate
+      contactConfigs
     }
   }
 `);
@@ -29,6 +67,25 @@ export const GetMe = graphql(`
 export const UpdateUser = graphql(`
   mutation UpdateUser($where: UserWhereUniqueInput!, $data: UserUpdateInput!) {
     updateUser(where: $where, data: $data) {
+      id
+    }
+  }
+`);
+
+export const CreateGroup = graphql(`
+  mutation CreateGroup($data: GroupCreateInput!) {
+    createGroup(data: $data) {
+      id
+    }
+  }
+`);
+
+export const UpdateGroup = graphql(`
+  mutation UpdateGroup(
+    $where: GroupWhereUniqueInput!
+    $data: GroupUpdateInput!
+  ) {
+    updateGroup(where: $where, data: $data) {
       id
     }
   }

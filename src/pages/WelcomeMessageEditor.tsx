@@ -4,7 +4,7 @@ import CheckButtons from "@/components/core/CheckButtons";
 import CheckBox from "@/components/core/CheckBox";
 import Select from "react-tailwindcss-select";
 import { useQuery } from "@apollo/client";
-import { GetGroup, GetMe } from "@/graphql/declarations/geMe";
+import { GetGroup, GetMe, UpdateGroup } from "@/graphql/declarations/geMe";
 import { AUTHSTORE } from "@/graphql/authStorage";
 import { BiSolidUserDetail } from "react-icons/bi";
 import { SelectValue } from "react-tailwindcss-select/dist/components/type";
@@ -92,6 +92,7 @@ function Content() {
   });
 
   const [toggleSwitch, setToggleSwitch] = useState(false);
+  const [toggleSwitch2, setToggleSwitch2] = useState(false);
   const { data: groupData } = useQuery(GetGroup, {
     variables: {
       where: {
@@ -218,54 +219,96 @@ function Content() {
       });
   };
 
-  const testWelcomeMessage = () => {
-    console.log(testConfig);
+  useEffect(() => {
+    setToggleSwitch(groupData?.group?.enable_globalWelcome ? true : false);
+    setToggleSwitch2(
+      groupData?.group?.enable_globalContactUpdate ? true : false
+    );
+  }, [groupData]);
+
+  const updateToggles = async () => {
+    await apolloClient
+      .mutate({
+        mutation: UpdateGroup,
+        variables: {
+          where: {
+            id: gid,
+          },
+          data: {
+            enable_globalWelcome: toggleSwitch,
+            enable_globalContactUpdate: toggleSwitch2,
+          },
+        },
+      })
+      .then(() => {
+        toast.success("Settings Updated Successfully");
+      });
   };
 
   return (
-    <div className="flex-1 h-screen overflow-y-auto no-scrollbar">
-      <div className="sticky top-0 left-0 z-50 flex justify-between w-full px-8 bg-white header-container">
-        <p className="text-2xl font-bold">
-          Federal<span className="text-2xl text-primary">Plans</span>
-        </p>
-        <span className="block lg:hidden">
-          <SheetSidebar>
-            <Sidebar className="flex border-none shadow-none" />
-          </SheetSidebar>
-        </span>
+    <>
+      <div className="max-w-screen-lg px-4 mx-auto mt-8">
+        <div className="p-4 bg-orange-100 rounded-xl">
+          <h2 className="text-3xl font-bold text-orange-500">
+            Welcome Message Builder
+          </h2>
+          <br />
+          <p>
+            This feature allows you to send welcome messages to newly created
+            contacts. Jump start the conversation by asking for the user's zip
+            code and show a health care plan recommendation.
+          </p>
+          <div className="flex mt-4 item-center gap-x-2">
+            <Switch
+              checked={toggleSwitch}
+              onCheckedChange={() => setToggleSwitch((prev) => !prev)}
+            />
+            {!toggleSwitch
+              ? "Enable Auto Welcome Message"
+              : "Now Replying to Welcome Messages"}
+          </div>
+          <div className="flex mt-4 item-center gap-x-2">
+            <Switch
+              checked={toggleSwitch2}
+              onCheckedChange={() => setToggleSwitch2((prev) => !prev)}
+            />
+            {!toggleSwitch2
+              ? "Send Welcome Message when Contact Updates"
+              : "Now Sending Message when Contact Updates"}
+          </div>
+          <Button
+            variant="outline"
+            className="w-full py-2 mt-4 font-bold bg-orange-100 hover:text-white hover:bg-primary"
+            onClick={updateToggles}
+          >
+            Update Settings
+          </Button>
+        </div>
+        <div className="p-2 mt-4">
+          {userLoading || loading ? (
+            <p className="text-xl font-bold animate-pulse">Loading...</p>
+          ) : (
+            <p className="text-xl font-bold">
+              BOT ID:{" "}
+              <span className="font-mono bg-gray-light">
+                {data?.botConfigs?.[0]?.id}
+              </span>
+            </p>
+          )}
+        </div>
       </div>
       <Tabs defaultValue="builder" className="w-full">
         <div className="flex justify-center mx-auto">
           <TabsList className="z-10 w-full h-auto p-2 bg-white rounded-none">
             <div className="p-1 mt-4 border rounded-md bg-primary-light">
-              <TabsTrigger value="builder">Builder</TabsTrigger>
-              <TabsTrigger value="testingChat">Testing Chat</TabsTrigger>
+              <TabsTrigger value="builder">Message Settings</TabsTrigger>
+              <TabsTrigger value="testingChat">Test/Send Message</TabsTrigger>
             </div>
           </TabsList>
         </div>
         <TabsContent value="builder">
           <form className="mt-8 form-container" onSubmit={handleSubmit}>
             <div className="form-content">
-              {userLoading || loading ? (
-                <p className="text-xl font-bold animate-pulse">Loading...</p>
-              ) : (
-                <p className="text-xl font-bold">
-                  BOT ID:{" "}
-                  <span className="font-mono bg-gray-light">
-                    {data?.botConfigs?.[0]?.id}
-                  </span>
-                </p>
-              )}
-              <div className="flex item-center gap-x-2">
-                <Switch
-                  checked={toggleSwitch}
-                  onCheckedChange={() => setToggleSwitch((prev) => !prev)}
-                />
-                {!toggleSwitch
-                  ? "Enable Auto Welcome Message"
-                  : "Enable Auto GPT Reply"}
-              </div>
-
               <div className="w-full">
                 <p className="form-label">{langSnippet.mission.label}</p>
                 <textarea
@@ -384,115 +427,113 @@ function Content() {
                       ))}
                     </div>
                   </div>
-
-                  <div className="w-full">
-                    <p className="form-label">
-                      {langSnippet.recommendedPlan.label}
-                    </p>
-                    <CheckButtons
-                      options={langSnippet.recommendedPlan.options}
-                      type="recommendedPlan"
-                      handleChange={(e: any, value: string) => {
-                        setConfig({
-                          ...configSet,
-                          presentationStrategy: value,
-                        });
-                      }}
-                      value={configSet?.presentationStrategy ?? ""}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <p className="form-label">
-                      {langSnippet.chatbotQuestion.label}
-                    </p>
-                    <input
-                      type="text"
-                      placeholder={langSnippet.chatbotQuestion.placeholder}
-                      className="form-input"
-                      onChange={(e) => {
-                        setConfig({
-                          ...configSet,
-                          specificQuestions: e.target.value,
-                        });
-                      }}
-                      value={configSet?.specificQuestions ?? ""}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <p className="form-label">{langSnippet.summary.label}</p>
-                    <input
-                      type="text"
-                      placeholder={langSnippet.summary.placeholder}
-                      className="form-input"
-                      onChange={(e) => {
-                        setConfig({
-                          ...configSet,
-                          summaryPrompt: e.target.value,
-                        });
-                      }}
-                      value={configSet?.summaryPrompt ?? ""}
-                    />
-                  </div>
-                  <div className="w-full">
-                    <p className="form-label">{langSnippet.exMessage.label}</p>
-                    <textarea
-                      rows={6}
-                      placeholder={langSnippet.exMessage.placeholder}
-                      className="form-input"
-                      onChange={(e) => {
-                        setConfig({
-                          ...configSet,
-                          welcomeMessage: e.target.value,
-                        });
-                      }}
-                      value={configSet?.welcomeMessage ?? ""}
-                    ></textarea>
-                  </div>
-                  <div className="w-full">
-                    <p className="form-label">
-                      {langSnippet.welcomeMessage.label}
-                    </p>
-                    <textarea
-                      rows={6}
-                      placeholder={langSnippet.welcomeMessage.placeholder}
-                      className="form-input"
-                      onChange={(e) => {
-                        setConfig({
-                          ...configSet,
-                          welcomeMessageFormat: e.target.value,
-                        });
-                      }}
-                      value={configSet?.welcomeMessageFormat ?? ""}
-                    ></textarea>
-                  </div>
-                  <div className="w-full">
-                    <p className="form-label">
-                      {langSnippet.noZipMessage.label}
-                    </p>
-                    <textarea
-                      rows={6}
-                      placeholder={langSnippet.noZipMessage.placeholder}
-                      className="form-input"
-                      onChange={(e) => {
-                        setConfig({
-                          ...configSet,
-                          noZipCodeMessage: e.target.value,
-                        });
-                      }}
-                      value={configSet?.noZipCodeMessage ?? ""}
-                    ></textarea>
-                  </div>
-                  <button
-                    type="submit"
-                    className="sticky w-full bottom-6 btn-submit"
-                    onClick={() => {}}
-                  >
-                    Save
-                  </button>
                 </div>
               </div> */}
+
+              <div className="w-full">
+                <p className="form-label">
+                  {langSnippet.recommendedPlan.label}
+                </p>
+                <CheckButtons
+                  options={langSnippet.recommendedPlan.options}
+                  type="recommendedPlan"
+                  handleChange={(e: any, value: string) => {
+                    setConfig({
+                      ...configSet,
+                      presentationStrategy: value,
+                    });
+                  }}
+                  value={configSet?.presentationStrategy ?? ""}
+                />
+              </div>
+              <div className="w-full">
+                <p className="form-label">
+                  {langSnippet.chatbotQuestion.label}
+                </p>
+                <input
+                  type="text"
+                  placeholder={langSnippet.chatbotQuestion.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      specificQuestions: e.target.value,
+                    });
+                  }}
+                  value={configSet?.specificQuestions ?? ""}
+                />
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.summary.label}</p>
+                <input
+                  type="text"
+                  placeholder={langSnippet.summary.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      summaryPrompt: e.target.value,
+                    });
+                  }}
+                  value={configSet?.summaryPrompt ?? ""}
+                />
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.exMessage.label}</p>
+                <textarea
+                  rows={6}
+                  placeholder={langSnippet.exMessage.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      welcomeMessage: e.target.value,
+                    });
+                  }}
+                  value={configSet?.welcomeMessage ?? ""}
+                ></textarea>
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.welcomeMessage.label}</p>
+                <textarea
+                  rows={6}
+                  placeholder={langSnippet.welcomeMessage.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      welcomeMessageFormat: e.target.value,
+                    });
+                  }}
+                  value={configSet?.welcomeMessageFormat ?? ""}
+                ></textarea>
+              </div>
+              <div className="w-full">
+                <p className="form-label">{langSnippet.noZipMessage.label}</p>
+                <textarea
+                  rows={6}
+                  placeholder={langSnippet.noZipMessage.placeholder}
+                  className="form-input"
+                  onChange={(e) => {
+                    setConfig({
+                      ...configSet,
+                      noZipCodeMessage: e.target.value,
+                    });
+                  }}
+                  value={configSet?.noZipCodeMessage ?? ""}
+                ></textarea>
+              </div>
+              <button
+                type="submit"
+                className="sticky w-full bottom-6 btn-submit"
+                onClick={() => {}}
+              >
+                Save
+              </button>
             </div>
           </form>
+        </TabsContent>
+        <TabsContent value="testingChat" className="">
           <form
             className="mt-8 form-container"
             onSubmit={(e) => {
@@ -500,7 +541,6 @@ function Content() {
             }}
           >
             <div className="form-content">
-              <div className="w-full h-1 bg-gray-light-100"></div>
               <p className="w-full p-2 pt-0 -mt-2 font-bold text-center">
                 Test Bot Sample
               </p>
@@ -607,25 +647,25 @@ function Content() {
               </div>
               <div className="divider-x"></div>
               {/* <div className="flex flex-col w-full">
-            <div className="relative flex flex-1 w-full">
-              <textarea
-                rows={1}
-                placeholder="Hi how may i help you, please enter..."
-                className="p-4 pl-12 w-full border rounded-[12px] border-primary focus:ring-primary h-40 focus:border-primary resize-none overflow-y-hidden"
-              />
-              <div className="absolute top-4 left-4">
-                <IconMessage />
+              <div className="relative flex flex-1 w-full">
+                <textarea
+                  rows={1}
+                  placeholder="Hi how may i help you, please enter..."
+                  className="p-4 pl-12 w-full border rounded-[12px] border-primary focus:ring-primary h-40 focus:border-primary resize-none overflow-y-hidden"
+                />
+                <div className="absolute top-4 left-4">
+                  <IconMessage />
+                </div>
               </div>
-            </div>
-            <div className="flex w-full gap-2 pt-2">
-              <button className="flex-1 btn-submit" onClick={sendMessage}>
-                Test welcome message
-              </button>
-              <button className="flex-1 btn-submit">
-                Save/Delete favourite format
-              </button>
-            </div>
-          </div> */}
+              <div className="flex w-full gap-2 pt-2">
+                <button className="flex-1 btn-submit" onClick={sendMessage}>
+                  Test welcome message
+                </button>
+                <button className="flex-1 btn-submit">
+                  Save/Delete favourite format
+                </button>
+              </div>
+            </div> */}
               <div className="divider-x"></div>
               <div className="form-submit-container justify-center mb-[150px]">
                 <div className="relative flex flex-1 w-full">
@@ -717,13 +757,6 @@ function Content() {
             </div>
           </form>
         </TabsContent>
-        <TabsContent value="testingChat" className="">
-          <AIContextProvider>
-            <div className="relative">
-              <ChatBot modelIDprop={data?.botConfigs?.[0]?.id} testingMode />
-            </div>
-          </AIContextProvider>
-        </TabsContent>
       </Tabs>
 
       <div className="footer-container">
@@ -743,15 +776,10 @@ function Content() {
         }}
         // onSave={onCarrierSave}
       />
-    </div>
+    </>
   );
 }
 
-export const BotEditor = () => {
-  return (
-    <div className="flex justify-end w-full">
-      <Sidebar className="w-[350px] hidden lg:flex" />
-      <Content />
-    </div>
-  );
+export const WelcomeMessageEditor = () => {
+  return <Content />;
 };

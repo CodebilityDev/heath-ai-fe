@@ -23,14 +23,14 @@ export type Scalars = {
 
 export type AiKey = {
   __typename?: 'AIKey';
+  group?: Maybe<Group>;
   id: Scalars['ID']['output'];
   openapiKey?: Maybe<Scalars['String']['output']>;
-  user?: Maybe<User>;
 };
 
 export type AiKeyCreateInput = {
+  group?: InputMaybe<GroupRelateToOneForCreateInput>;
   openapiKey?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<UserRelateToOneForCreateInput>;
 };
 
 export type AiKeyOrderByInput = {
@@ -55,17 +55,17 @@ export type AiKeyUpdateArgs = {
 };
 
 export type AiKeyUpdateInput = {
+  group?: InputMaybe<GroupRelateToOneForUpdateInput>;
   openapiKey?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<UserRelateToOneForUpdateInput>;
 };
 
 export type AiKeyWhereInput = {
   AND?: InputMaybe<Array<AiKeyWhereInput>>;
   NOT?: InputMaybe<Array<AiKeyWhereInput>>;
   OR?: InputMaybe<Array<AiKeyWhereInput>>;
+  group?: InputMaybe<GroupWhereInput>;
   id?: InputMaybe<IdFilter>;
   openapiKey?: InputMaybe<StringFilter>;
-  user?: InputMaybe<UserWhereInput>;
 };
 
 export type AiKeyWhereUniqueInput = {
@@ -74,9 +74,15 @@ export type AiKeyWhereUniqueInput = {
 
 export type AuthenticatedItem = User;
 
+export type BooleanFilter = {
+  equals?: InputMaybe<Scalars['Boolean']['input']>;
+  not?: InputMaybe<BooleanFilter>;
+};
+
 export type BotConfig = {
   __typename?: 'BotConfig';
   companyStatement?: Maybe<Scalars['String']['output']>;
+  group?: Maybe<Group>;
   healthInsuranceCarriers?: Maybe<Scalars['String']['output']>;
   id: Scalars['ID']['output'];
   name?: Maybe<Scalars['String']['output']>;
@@ -88,7 +94,6 @@ export type BotConfig = {
   specificQuestions?: Maybe<Scalars['String']['output']>;
   summaryPrompt?: Maybe<Scalars['String']['output']>;
   tonestyle?: Maybe<Scalars['String']['output']>;
-  user?: Maybe<User>;
   welcomeMessage?: Maybe<Scalars['String']['output']>;
   welcomeMessageFormat?: Maybe<Scalars['String']['output']>;
 };
@@ -109,6 +114,7 @@ export type BotConfigSessionsCountArgs = {
 
 export type BotConfigCreateInput = {
   companyStatement?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForCreateInput>;
   healthInsuranceCarriers?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   noZipCodeMessage?: InputMaybe<Scalars['String']['input']>;
@@ -118,7 +124,6 @@ export type BotConfigCreateInput = {
   specificQuestions?: InputMaybe<Scalars['String']['input']>;
   summaryPrompt?: InputMaybe<Scalars['String']['input']>;
   tonestyle?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<UserRelateToOneForCreateInput>;
   welcomeMessage?: InputMaybe<Scalars['String']['input']>;
   welcomeMessageFormat?: InputMaybe<Scalars['String']['input']>;
 };
@@ -156,6 +161,7 @@ export type BotConfigUpdateArgs = {
 
 export type BotConfigUpdateInput = {
   companyStatement?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForUpdateInput>;
   healthInsuranceCarriers?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
   noZipCodeMessage?: InputMaybe<Scalars['String']['input']>;
@@ -165,7 +171,6 @@ export type BotConfigUpdateInput = {
   specificQuestions?: InputMaybe<Scalars['String']['input']>;
   summaryPrompt?: InputMaybe<Scalars['String']['input']>;
   tonestyle?: InputMaybe<Scalars['String']['input']>;
-  user?: InputMaybe<UserRelateToOneForUpdateInput>;
   welcomeMessage?: InputMaybe<Scalars['String']['input']>;
   welcomeMessageFormat?: InputMaybe<Scalars['String']['input']>;
 };
@@ -175,6 +180,7 @@ export type BotConfigWhereInput = {
   NOT?: InputMaybe<Array<BotConfigWhereInput>>;
   OR?: InputMaybe<Array<BotConfigWhereInput>>;
   companyStatement?: InputMaybe<StringFilter>;
+  group?: InputMaybe<GroupWhereInput>;
   healthInsuranceCarriers?: InputMaybe<StringFilter>;
   id?: InputMaybe<IdFilter>;
   name?: InputMaybe<StringFilter>;
@@ -185,12 +191,72 @@ export type BotConfigWhereInput = {
   specificQuestions?: InputMaybe<StringFilter>;
   summaryPrompt?: InputMaybe<StringFilter>;
   tonestyle?: InputMaybe<StringFilter>;
-  user?: InputMaybe<UserWhereInput>;
   welcomeMessage?: InputMaybe<StringFilter>;
   welcomeMessageFormat?: InputMaybe<StringFilter>;
 };
 
 export type BotConfigWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type ChatConversationSession = {
+  __typename?: 'ChatConversationSession';
+  botConfig?: Maybe<ConversationBotConfig>;
+  id: Scalars['ID']['output'];
+  keywords?: Maybe<Scalars['String']['output']>;
+  sessionData?: Maybe<Scalars['JSON']['output']>;
+};
+
+export type ChatConversationSessionCreateInput = {
+  botConfig?: InputMaybe<ConversationBotConfigRelateToOneForCreateInput>;
+  keywords?: InputMaybe<Scalars['String']['input']>;
+  sessionData?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type ChatConversationSessionManyRelationFilter = {
+  every?: InputMaybe<ChatConversationSessionWhereInput>;
+  none?: InputMaybe<ChatConversationSessionWhereInput>;
+  some?: InputMaybe<ChatConversationSessionWhereInput>;
+};
+
+export type ChatConversationSessionOrderByInput = {
+  id?: InputMaybe<OrderDirection>;
+  keywords?: InputMaybe<OrderDirection>;
+};
+
+export type ChatConversationSessionRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<ChatConversationSessionWhereUniqueInput>>;
+  create?: InputMaybe<Array<ChatConversationSessionCreateInput>>;
+};
+
+export type ChatConversationSessionRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<ChatConversationSessionWhereUniqueInput>>;
+  create?: InputMaybe<Array<ChatConversationSessionCreateInput>>;
+  disconnect?: InputMaybe<Array<ChatConversationSessionWhereUniqueInput>>;
+  set?: InputMaybe<Array<ChatConversationSessionWhereUniqueInput>>;
+};
+
+export type ChatConversationSessionUpdateArgs = {
+  data: ChatConversationSessionUpdateInput;
+  where: ChatConversationSessionWhereUniqueInput;
+};
+
+export type ChatConversationSessionUpdateInput = {
+  botConfig?: InputMaybe<ConversationBotConfigRelateToOneForUpdateInput>;
+  keywords?: InputMaybe<Scalars['String']['input']>;
+  sessionData?: InputMaybe<Scalars['JSON']['input']>;
+};
+
+export type ChatConversationSessionWhereInput = {
+  AND?: InputMaybe<Array<ChatConversationSessionWhereInput>>;
+  NOT?: InputMaybe<Array<ChatConversationSessionWhereInput>>;
+  OR?: InputMaybe<Array<ChatConversationSessionWhereInput>>;
+  botConfig?: InputMaybe<ConversationBotConfigWhereInput>;
+  id?: InputMaybe<IdFilter>;
+  keywords?: InputMaybe<StringFilter>;
+};
+
+export type ChatConversationSessionWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -268,6 +334,126 @@ export type ClientItemAuthenticationWithPasswordSuccess = {
   sessionToken: Scalars['String']['output'];
 };
 
+export type ConversationBotConfig = {
+  __typename?: 'ConversationBotConfig';
+  companyStatement?: Maybe<Scalars['String']['output']>;
+  group?: Maybe<Group>;
+  healthInsuranceCarriers?: Maybe<Scalars['String']['output']>;
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  noZipCodeMessage?: Maybe<Scalars['String']['output']>;
+  presentationStrategy?: Maybe<Scalars['String']['output']>;
+  priorityPlan?: Maybe<Scalars['String']['output']>;
+  sessions?: Maybe<Array<ChatConversationSession>>;
+  sessionsCount?: Maybe<Scalars['Int']['output']>;
+  specificQuestions?: Maybe<Scalars['String']['output']>;
+  summaryPrompt?: Maybe<Scalars['String']['output']>;
+  tonestyle?: Maybe<Scalars['String']['output']>;
+  welcomeMessage?: Maybe<Scalars['String']['output']>;
+  welcomeMessageFormat?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type ConversationBotConfigSessionsArgs = {
+  cursor?: InputMaybe<ChatConversationSessionWhereUniqueInput>;
+  orderBy?: Array<ChatConversationSessionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ChatConversationSessionWhereInput;
+};
+
+
+export type ConversationBotConfigSessionsCountArgs = {
+  where?: ChatConversationSessionWhereInput;
+};
+
+export type ConversationBotConfigCreateInput = {
+  companyStatement?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForCreateInput>;
+  healthInsuranceCarriers?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  noZipCodeMessage?: InputMaybe<Scalars['String']['input']>;
+  presentationStrategy?: InputMaybe<Scalars['String']['input']>;
+  priorityPlan?: InputMaybe<Scalars['String']['input']>;
+  sessions?: InputMaybe<ChatConversationSessionRelateToManyForCreateInput>;
+  specificQuestions?: InputMaybe<Scalars['String']['input']>;
+  summaryPrompt?: InputMaybe<Scalars['String']['input']>;
+  tonestyle?: InputMaybe<Scalars['String']['input']>;
+  welcomeMessage?: InputMaybe<Scalars['String']['input']>;
+  welcomeMessageFormat?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ConversationBotConfigOrderByInput = {
+  companyStatement?: InputMaybe<OrderDirection>;
+  healthInsuranceCarriers?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  name?: InputMaybe<OrderDirection>;
+  noZipCodeMessage?: InputMaybe<OrderDirection>;
+  presentationStrategy?: InputMaybe<OrderDirection>;
+  priorityPlan?: InputMaybe<OrderDirection>;
+  specificQuestions?: InputMaybe<OrderDirection>;
+  summaryPrompt?: InputMaybe<OrderDirection>;
+  tonestyle?: InputMaybe<OrderDirection>;
+  welcomeMessage?: InputMaybe<OrderDirection>;
+  welcomeMessageFormat?: InputMaybe<OrderDirection>;
+};
+
+export type ConversationBotConfigRelateToOneForCreateInput = {
+  connect?: InputMaybe<ConversationBotConfigWhereUniqueInput>;
+  create?: InputMaybe<ConversationBotConfigCreateInput>;
+};
+
+export type ConversationBotConfigRelateToOneForUpdateInput = {
+  connect?: InputMaybe<ConversationBotConfigWhereUniqueInput>;
+  create?: InputMaybe<ConversationBotConfigCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type ConversationBotConfigUpdateArgs = {
+  data: ConversationBotConfigUpdateInput;
+  where: ConversationBotConfigWhereUniqueInput;
+};
+
+export type ConversationBotConfigUpdateInput = {
+  companyStatement?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForUpdateInput>;
+  healthInsuranceCarriers?: InputMaybe<Scalars['String']['input']>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  noZipCodeMessage?: InputMaybe<Scalars['String']['input']>;
+  presentationStrategy?: InputMaybe<Scalars['String']['input']>;
+  priorityPlan?: InputMaybe<Scalars['String']['input']>;
+  sessions?: InputMaybe<ChatConversationSessionRelateToManyForUpdateInput>;
+  specificQuestions?: InputMaybe<Scalars['String']['input']>;
+  summaryPrompt?: InputMaybe<Scalars['String']['input']>;
+  tonestyle?: InputMaybe<Scalars['String']['input']>;
+  welcomeMessage?: InputMaybe<Scalars['String']['input']>;
+  welcomeMessageFormat?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type ConversationBotConfigWhereInput = {
+  AND?: InputMaybe<Array<ConversationBotConfigWhereInput>>;
+  NOT?: InputMaybe<Array<ConversationBotConfigWhereInput>>;
+  OR?: InputMaybe<Array<ConversationBotConfigWhereInput>>;
+  companyStatement?: InputMaybe<StringFilter>;
+  group?: InputMaybe<GroupWhereInput>;
+  healthInsuranceCarriers?: InputMaybe<StringFilter>;
+  id?: InputMaybe<IdFilter>;
+  name?: InputMaybe<StringFilter>;
+  noZipCodeMessage?: InputMaybe<StringFilter>;
+  presentationStrategy?: InputMaybe<StringFilter>;
+  priorityPlan?: InputMaybe<StringFilter>;
+  sessions?: InputMaybe<ChatConversationSessionManyRelationFilter>;
+  specificQuestions?: InputMaybe<StringFilter>;
+  summaryPrompt?: InputMaybe<StringFilter>;
+  tonestyle?: InputMaybe<StringFilter>;
+  welcomeMessage?: InputMaybe<StringFilter>;
+  welcomeMessageFormat?: InputMaybe<StringFilter>;
+};
+
+export type ConversationBotConfigWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type CreateInitialUserInput = {
   adminPassword?: InputMaybe<Scalars['String']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
@@ -289,24 +475,24 @@ export type GhlAccess = {
   __typename?: 'GHLAccess';
   companyId?: Maybe<Scalars['String']['output']>;
   ghsUserId?: Maybe<Scalars['String']['output']>;
+  group?: Maybe<Group>;
   id: Scalars['ID']['output'];
   locationId?: Maybe<Scalars['String']['output']>;
   planId?: Maybe<Scalars['String']['output']>;
   refreshToken?: Maybe<Scalars['String']['output']>;
   scope?: Maybe<Scalars['String']['output']>;
   updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  user?: Maybe<User>;
 };
 
 export type GhlAccessCreateInput = {
   companyId?: InputMaybe<Scalars['String']['input']>;
   ghsUserId?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForCreateInput>;
   locationId?: InputMaybe<Scalars['String']['input']>;
   planId?: InputMaybe<Scalars['String']['input']>;
   refreshToken?: InputMaybe<Scalars['String']['input']>;
   scope?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  user?: InputMaybe<UserRelateToOneForCreateInput>;
 };
 
 export type GhlAccessOrderByInput = {
@@ -339,12 +525,12 @@ export type GhlAccessUpdateArgs = {
 export type GhlAccessUpdateInput = {
   companyId?: InputMaybe<Scalars['String']['input']>;
   ghsUserId?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForUpdateInput>;
   locationId?: InputMaybe<Scalars['String']['input']>;
   planId?: InputMaybe<Scalars['String']['input']>;
   refreshToken?: InputMaybe<Scalars['String']['input']>;
   scope?: InputMaybe<Scalars['String']['input']>;
   updatedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  user?: InputMaybe<UserRelateToOneForUpdateInput>;
 };
 
 export type GhlAccessWhereInput = {
@@ -353,13 +539,13 @@ export type GhlAccessWhereInput = {
   OR?: InputMaybe<Array<GhlAccessWhereInput>>;
   companyId?: InputMaybe<StringFilter>;
   ghsUserId?: InputMaybe<StringFilter>;
+  group?: InputMaybe<GroupWhereInput>;
   id?: InputMaybe<IdFilter>;
   locationId?: InputMaybe<StringFilter>;
   planId?: InputMaybe<StringFilter>;
   refreshToken?: InputMaybe<StringFilter>;
   scope?: InputMaybe<StringFilter>;
   updatedAt?: InputMaybe<DateTimeNullableFilter>;
-  user?: InputMaybe<UserWhereInput>;
 };
 
 export type GhlAccessWhereUniqueInput = {
@@ -389,6 +575,7 @@ export type GhlContactList = {
 export type GhlMeReturn = {
   __typename?: 'GHLMeReturn';
   address: Scalars['String']['output'];
+  business: GhlMeReturnBusiness;
   country: Scalars['String']['output'];
   email: Scalars['String']['output'];
   firstName: Scalars['String']['output'];
@@ -399,6 +586,19 @@ export type GhlMeReturn = {
   state: Scalars['String']['output'];
 };
 
+export type GhlMeReturnBusiness = {
+  __typename?: 'GHLMeReturnBusiness';
+  address: Scalars['String']['output'];
+  city: Scalars['String']['output'];
+  country: Scalars['String']['output'];
+  logoUrl: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+  postalCode: Scalars['String']['output'];
+  state: Scalars['String']['output'];
+  timezone: Scalars['String']['output'];
+  website: Scalars['String']['output'];
+};
+
 export type GhlMessageReturn = {
   __typename?: 'GHLMessageReturn';
   contactID: Scalars['String']['output'];
@@ -406,12 +606,22 @@ export type GhlMessageReturn = {
   thread: Scalars['String']['output'];
 };
 
+export type Ghl_AccessTokenInput = {
+  groupID: Scalars['String']['input'];
+};
+
 export type Ghl_GetContactsInput = {
+  groupID: Scalars['String']['input'];
   query?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Ghl_GetMessagesInput = {
   conversationID: Scalars['String']['input'];
+  groupID: Scalars['String']['input'];
+};
+
+export type Ghl_MeInput = {
+  groupID: Scalars['String']['input'];
 };
 
 export type Ghl_SendMessageInput = {
@@ -422,6 +632,7 @@ export type Ghl_SendMessageInput = {
   dob?: InputMaybe<Scalars['String']['input']>;
   first_name?: InputMaybe<Scalars['String']['input']>;
   gender?: InputMaybe<Scalars['String']['input']>;
+  groupID: Scalars['String']['input'];
   has_tax_dependents?: InputMaybe<Scalars['String']['input']>;
   how_many_people_in_your_household_need_to_be_on_the_plan?: InputMaybe<Scalars['String']['input']>;
   last_name?: InputMaybe<Scalars['String']['input']>;
@@ -436,10 +647,34 @@ export type Ghl_SendMessageInput = {
 
 export type Group = {
   __typename?: 'Group';
+  aiKey?: Maybe<AiKey>;
+  aiLogs?: Maybe<Array<GroupAiLog>>;
+  aiLogsCount?: Maybe<Scalars['Int']['output']>;
+  botConfig?: Maybe<BotConfig>;
+  contactConfigs?: Maybe<Scalars['JSON']['output']>;
+  conversationBotConfig?: Maybe<ConversationBotConfig>;
+  enable_globalAutoReply?: Maybe<Scalars['Boolean']['output']>;
+  enable_globalContactUpdate?: Maybe<Scalars['Boolean']['output']>;
+  enable_globalWelcome?: Maybe<Scalars['Boolean']['output']>;
+  ghlAccess?: Maybe<GhlAccess>;
   id: Scalars['ID']['output'];
   members?: Maybe<Array<GroupMember>>;
   membersCount?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+};
+
+
+export type GroupAiLogsArgs = {
+  cursor?: InputMaybe<GroupAiLogWhereUniqueInput>;
+  orderBy?: Array<GroupAiLogOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: GroupAiLogWhereInput;
+};
+
+
+export type GroupAiLogsCountArgs = {
+  where?: GroupAiLogWhereInput;
 };
 
 
@@ -456,7 +691,107 @@ export type GroupMembersCountArgs = {
   where?: GroupMemberWhereInput;
 };
 
+export type GroupAiLog = {
+  __typename?: 'GroupAILog';
+  contactID?: Maybe<Scalars['String']['output']>;
+  contactName?: Maybe<Scalars['String']['output']>;
+  group?: Maybe<Group>;
+  id: Scalars['ID']['output'];
+  locationID?: Maybe<Scalars['String']['output']>;
+  locationName?: Maybe<Scalars['String']['output']>;
+  log?: Maybe<Scalars['JSON']['output']>;
+  modelID?: Maybe<Scalars['String']['output']>;
+  status?: Maybe<Scalars['String']['output']>;
+  type?: Maybe<Scalars['String']['output']>;
+};
+
+export type GroupAiLogCreateInput = {
+  contactID?: InputMaybe<Scalars['String']['input']>;
+  contactName?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForCreateInput>;
+  locationID?: InputMaybe<Scalars['String']['input']>;
+  locationName?: InputMaybe<Scalars['String']['input']>;
+  log?: InputMaybe<Scalars['JSON']['input']>;
+  modelID?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GroupAiLogManyRelationFilter = {
+  every?: InputMaybe<GroupAiLogWhereInput>;
+  none?: InputMaybe<GroupAiLogWhereInput>;
+  some?: InputMaybe<GroupAiLogWhereInput>;
+};
+
+export type GroupAiLogOrderByInput = {
+  contactID?: InputMaybe<OrderDirection>;
+  contactName?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  locationID?: InputMaybe<OrderDirection>;
+  locationName?: InputMaybe<OrderDirection>;
+  modelID?: InputMaybe<OrderDirection>;
+  status?: InputMaybe<OrderDirection>;
+  type?: InputMaybe<OrderDirection>;
+};
+
+export type GroupAiLogRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<GroupAiLogWhereUniqueInput>>;
+  create?: InputMaybe<Array<GroupAiLogCreateInput>>;
+};
+
+export type GroupAiLogRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<GroupAiLogWhereUniqueInput>>;
+  create?: InputMaybe<Array<GroupAiLogCreateInput>>;
+  disconnect?: InputMaybe<Array<GroupAiLogWhereUniqueInput>>;
+  set?: InputMaybe<Array<GroupAiLogWhereUniqueInput>>;
+};
+
+export type GroupAiLogUpdateArgs = {
+  data: GroupAiLogUpdateInput;
+  where: GroupAiLogWhereUniqueInput;
+};
+
+export type GroupAiLogUpdateInput = {
+  contactID?: InputMaybe<Scalars['String']['input']>;
+  contactName?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForUpdateInput>;
+  locationID?: InputMaybe<Scalars['String']['input']>;
+  locationName?: InputMaybe<Scalars['String']['input']>;
+  log?: InputMaybe<Scalars['JSON']['input']>;
+  modelID?: InputMaybe<Scalars['String']['input']>;
+  status?: InputMaybe<Scalars['String']['input']>;
+  type?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type GroupAiLogWhereInput = {
+  AND?: InputMaybe<Array<GroupAiLogWhereInput>>;
+  NOT?: InputMaybe<Array<GroupAiLogWhereInput>>;
+  OR?: InputMaybe<Array<GroupAiLogWhereInput>>;
+  contactID?: InputMaybe<StringFilter>;
+  contactName?: InputMaybe<StringFilter>;
+  group?: InputMaybe<GroupWhereInput>;
+  id?: InputMaybe<IdFilter>;
+  locationID?: InputMaybe<StringFilter>;
+  locationName?: InputMaybe<StringFilter>;
+  modelID?: InputMaybe<StringFilter>;
+  status?: InputMaybe<StringFilter>;
+  type?: InputMaybe<StringFilter>;
+};
+
+export type GroupAiLogWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type GroupCreateInput = {
+  aiKey?: InputMaybe<AiKeyRelateToOneForCreateInput>;
+  aiLogs?: InputMaybe<GroupAiLogRelateToManyForCreateInput>;
+  botConfig?: InputMaybe<BotConfigRelateToOneForCreateInput>;
+  contactConfigs?: InputMaybe<Scalars['JSON']['input']>;
+  conversationBotConfig?: InputMaybe<ConversationBotConfigRelateToOneForCreateInput>;
+  enable_globalAutoReply?: InputMaybe<Scalars['Boolean']['input']>;
+  enable_globalContactUpdate?: InputMaybe<Scalars['Boolean']['input']>;
+  enable_globalWelcome?: InputMaybe<Scalars['Boolean']['input']>;
+  ghlAccess?: InputMaybe<GhlAccessRelateToOneForCreateInput>;
   members?: InputMaybe<GroupMemberRelateToManyForCreateInput>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
@@ -524,6 +859,9 @@ export type GroupMemberWhereUniqueInput = {
 };
 
 export type GroupOrderByInput = {
+  enable_globalAutoReply?: InputMaybe<OrderDirection>;
+  enable_globalContactUpdate?: InputMaybe<OrderDirection>;
+  enable_globalWelcome?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
 };
@@ -545,6 +883,15 @@ export type GroupUpdateArgs = {
 };
 
 export type GroupUpdateInput = {
+  aiKey?: InputMaybe<AiKeyRelateToOneForUpdateInput>;
+  aiLogs?: InputMaybe<GroupAiLogRelateToManyForUpdateInput>;
+  botConfig?: InputMaybe<BotConfigRelateToOneForUpdateInput>;
+  contactConfigs?: InputMaybe<Scalars['JSON']['input']>;
+  conversationBotConfig?: InputMaybe<ConversationBotConfigRelateToOneForUpdateInput>;
+  enable_globalAutoReply?: InputMaybe<Scalars['Boolean']['input']>;
+  enable_globalContactUpdate?: InputMaybe<Scalars['Boolean']['input']>;
+  enable_globalWelcome?: InputMaybe<Scalars['Boolean']['input']>;
+  ghlAccess?: InputMaybe<GhlAccessRelateToOneForUpdateInput>;
   members?: InputMaybe<GroupMemberRelateToManyForUpdateInput>;
   name?: InputMaybe<Scalars['String']['input']>;
 };
@@ -553,6 +900,14 @@ export type GroupWhereInput = {
   AND?: InputMaybe<Array<GroupWhereInput>>;
   NOT?: InputMaybe<Array<GroupWhereInput>>;
   OR?: InputMaybe<Array<GroupWhereInput>>;
+  aiKey?: InputMaybe<AiKeyWhereInput>;
+  aiLogs?: InputMaybe<GroupAiLogManyRelationFilter>;
+  botConfig?: InputMaybe<BotConfigWhereInput>;
+  conversationBotConfig?: InputMaybe<ConversationBotConfigWhereInput>;
+  enable_globalAutoReply?: InputMaybe<BooleanFilter>;
+  enable_globalContactUpdate?: InputMaybe<BooleanFilter>;
+  enable_globalWelcome?: InputMaybe<BooleanFilter>;
+  ghlAccess?: InputMaybe<GhlAccessWhereInput>;
   id?: InputMaybe<IdFilter>;
   members?: InputMaybe<GroupMemberManyRelationFilter>;
   name?: InputMaybe<StringFilter>;
@@ -738,11 +1093,17 @@ export type Mutation = {
   createAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   createBotConfig?: Maybe<BotConfig>;
   createBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  createChatConversationSession?: Maybe<ChatConversationSession>;
+  createChatConversationSessions?: Maybe<Array<Maybe<ChatConversationSession>>>;
   createChatSession?: Maybe<ChatSession>;
   createChatSessions?: Maybe<Array<Maybe<ChatSession>>>;
+  createConversationBotConfig?: Maybe<ConversationBotConfig>;
+  createConversationBotConfigs?: Maybe<Array<Maybe<ConversationBotConfig>>>;
   createGHLAccess?: Maybe<GhlAccess>;
   createGHLAccesses?: Maybe<Array<Maybe<GhlAccess>>>;
   createGroup?: Maybe<Group>;
+  createGroupAILog?: Maybe<GroupAiLog>;
+  createGroupAILogs?: Maybe<Array<Maybe<GroupAiLog>>>;
   createGroupMember?: Maybe<GroupMember>;
   createGroupMembers?: Maybe<Array<Maybe<GroupMember>>>;
   createGroups?: Maybe<Array<Maybe<Group>>>;
@@ -757,11 +1118,17 @@ export type Mutation = {
   deleteAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   deleteBotConfig?: Maybe<BotConfig>;
   deleteBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  deleteChatConversationSession?: Maybe<ChatConversationSession>;
+  deleteChatConversationSessions?: Maybe<Array<Maybe<ChatConversationSession>>>;
   deleteChatSession?: Maybe<ChatSession>;
   deleteChatSessions?: Maybe<Array<Maybe<ChatSession>>>;
+  deleteConversationBotConfig?: Maybe<ConversationBotConfig>;
+  deleteConversationBotConfigs?: Maybe<Array<Maybe<ConversationBotConfig>>>;
   deleteGHLAccess?: Maybe<GhlAccess>;
   deleteGHLAccesses?: Maybe<Array<Maybe<GhlAccess>>>;
   deleteGroup?: Maybe<Group>;
+  deleteGroupAILog?: Maybe<GroupAiLog>;
+  deleteGroupAILogs?: Maybe<Array<Maybe<GroupAiLog>>>;
   deleteGroupMember?: Maybe<GroupMember>;
   deleteGroupMembers?: Maybe<Array<Maybe<GroupMember>>>;
   deleteGroups?: Maybe<Array<Maybe<Group>>>;
@@ -777,11 +1144,17 @@ export type Mutation = {
   updateAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   updateBotConfig?: Maybe<BotConfig>;
   updateBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  updateChatConversationSession?: Maybe<ChatConversationSession>;
+  updateChatConversationSessions?: Maybe<Array<Maybe<ChatConversationSession>>>;
   updateChatSession?: Maybe<ChatSession>;
   updateChatSessions?: Maybe<Array<Maybe<ChatSession>>>;
+  updateConversationBotConfig?: Maybe<ConversationBotConfig>;
+  updateConversationBotConfigs?: Maybe<Array<Maybe<ConversationBotConfig>>>;
   updateGHLAccess?: Maybe<GhlAccess>;
   updateGHLAccesses?: Maybe<Array<Maybe<GhlAccess>>>;
   updateGroup?: Maybe<Group>;
+  updateGroupAILog?: Maybe<GroupAiLog>;
+  updateGroupAILogs?: Maybe<Array<Maybe<GroupAiLog>>>;
   updateGroupMember?: Maybe<GroupMember>;
   updateGroupMembers?: Maybe<Array<Maybe<GroupMember>>>;
   updateGroups?: Maybe<Array<Maybe<Group>>>;
@@ -851,6 +1224,16 @@ export type MutationCreateBotConfigsArgs = {
 };
 
 
+export type MutationCreateChatConversationSessionArgs = {
+  data: ChatConversationSessionCreateInput;
+};
+
+
+export type MutationCreateChatConversationSessionsArgs = {
+  data: Array<ChatConversationSessionCreateInput>;
+};
+
+
 export type MutationCreateChatSessionArgs = {
   data: ChatSessionCreateInput;
 };
@@ -858,6 +1241,16 @@ export type MutationCreateChatSessionArgs = {
 
 export type MutationCreateChatSessionsArgs = {
   data: Array<ChatSessionCreateInput>;
+};
+
+
+export type MutationCreateConversationBotConfigArgs = {
+  data: ConversationBotConfigCreateInput;
+};
+
+
+export type MutationCreateConversationBotConfigsArgs = {
+  data: Array<ConversationBotConfigCreateInput>;
 };
 
 
@@ -873,6 +1266,16 @@ export type MutationCreateGhlAccessesArgs = {
 
 export type MutationCreateGroupArgs = {
   data: GroupCreateInput;
+};
+
+
+export type MutationCreateGroupAiLogArgs = {
+  data: GroupAiLogCreateInput;
+};
+
+
+export type MutationCreateGroupAiLogsArgs = {
+  data: Array<GroupAiLogCreateInput>;
 };
 
 
@@ -946,6 +1349,16 @@ export type MutationDeleteBotConfigsArgs = {
 };
 
 
+export type MutationDeleteChatConversationSessionArgs = {
+  where: ChatConversationSessionWhereUniqueInput;
+};
+
+
+export type MutationDeleteChatConversationSessionsArgs = {
+  where: Array<ChatConversationSessionWhereUniqueInput>;
+};
+
+
 export type MutationDeleteChatSessionArgs = {
   where: ChatSessionWhereUniqueInput;
 };
@@ -953,6 +1366,16 @@ export type MutationDeleteChatSessionArgs = {
 
 export type MutationDeleteChatSessionsArgs = {
   where: Array<ChatSessionWhereUniqueInput>;
+};
+
+
+export type MutationDeleteConversationBotConfigArgs = {
+  where: ConversationBotConfigWhereUniqueInput;
+};
+
+
+export type MutationDeleteConversationBotConfigsArgs = {
+  where: Array<ConversationBotConfigWhereUniqueInput>;
 };
 
 
@@ -968,6 +1391,16 @@ export type MutationDeleteGhlAccessesArgs = {
 
 export type MutationDeleteGroupArgs = {
   where: GroupWhereUniqueInput;
+};
+
+
+export type MutationDeleteGroupAiLogArgs = {
+  where: GroupAiLogWhereUniqueInput;
+};
+
+
+export type MutationDeleteGroupAiLogsArgs = {
+  where: Array<GroupAiLogWhereUniqueInput>;
 };
 
 
@@ -1043,6 +1476,17 @@ export type MutationUpdateBotConfigsArgs = {
 };
 
 
+export type MutationUpdateChatConversationSessionArgs = {
+  data: ChatConversationSessionUpdateInput;
+  where: ChatConversationSessionWhereUniqueInput;
+};
+
+
+export type MutationUpdateChatConversationSessionsArgs = {
+  data: Array<ChatConversationSessionUpdateArgs>;
+};
+
+
 export type MutationUpdateChatSessionArgs = {
   data: ChatSessionUpdateInput;
   where: ChatSessionWhereUniqueInput;
@@ -1051,6 +1495,17 @@ export type MutationUpdateChatSessionArgs = {
 
 export type MutationUpdateChatSessionsArgs = {
   data: Array<ChatSessionUpdateArgs>;
+};
+
+
+export type MutationUpdateConversationBotConfigArgs = {
+  data: ConversationBotConfigUpdateInput;
+  where: ConversationBotConfigWhereUniqueInput;
+};
+
+
+export type MutationUpdateConversationBotConfigsArgs = {
+  data: Array<ConversationBotConfigUpdateArgs>;
 };
 
 
@@ -1068,6 +1523,17 @@ export type MutationUpdateGhlAccessesArgs = {
 export type MutationUpdateGroupArgs = {
   data: GroupUpdateInput;
   where: GroupWhereUniqueInput;
+};
+
+
+export type MutationUpdateGroupAiLogArgs = {
+  data: GroupAiLogUpdateInput;
+  where: GroupAiLogWhereUniqueInput;
+};
+
+
+export type MutationUpdateGroupAiLogsArgs = {
+  data: Array<GroupAiLogUpdateArgs>;
 };
 
 
@@ -1157,9 +1623,15 @@ export type Query = {
   botConfig?: Maybe<BotConfig>;
   botConfigs?: Maybe<Array<BotConfig>>;
   botConfigsCount?: Maybe<Scalars['Int']['output']>;
+  chatConversationSession?: Maybe<ChatConversationSession>;
+  chatConversationSessions?: Maybe<Array<ChatConversationSession>>;
+  chatConversationSessionsCount?: Maybe<Scalars['Int']['output']>;
   chatSession?: Maybe<ChatSession>;
   chatSessions?: Maybe<Array<ChatSession>>;
   chatSessionsCount?: Maybe<Scalars['Int']['output']>;
+  conversationBotConfig?: Maybe<ConversationBotConfig>;
+  conversationBotConfigs?: Maybe<Array<ConversationBotConfig>>;
+  conversationBotConfigsCount?: Maybe<Scalars['Int']['output']>;
   gHLAccess?: Maybe<GhlAccess>;
   gHLAccesses?: Maybe<Array<GhlAccess>>;
   gHLAccessesCount?: Maybe<Scalars['Int']['output']>;
@@ -1168,6 +1640,9 @@ export type Query = {
   ghl_getMessages?: Maybe<Scalars['String']['output']>;
   ghl_me?: Maybe<GhlMeReturn>;
   group?: Maybe<Group>;
+  groupAILog?: Maybe<GroupAiLog>;
+  groupAILogs?: Maybe<Array<GroupAiLog>>;
+  groupAILogsCount?: Maybe<Scalars['Int']['output']>;
   groupMember?: Maybe<GroupMember>;
   groupMembers?: Maybe<Array<GroupMember>>;
   groupMembersCount?: Maybe<Scalars['Int']['output']>;
@@ -1224,6 +1699,25 @@ export type QueryBotConfigsCountArgs = {
 };
 
 
+export type QueryChatConversationSessionArgs = {
+  where: ChatConversationSessionWhereUniqueInput;
+};
+
+
+export type QueryChatConversationSessionsArgs = {
+  cursor?: InputMaybe<ChatConversationSessionWhereUniqueInput>;
+  orderBy?: Array<ChatConversationSessionOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ChatConversationSessionWhereInput;
+};
+
+
+export type QueryChatConversationSessionsCountArgs = {
+  where?: ChatConversationSessionWhereInput;
+};
+
+
 export type QueryChatSessionArgs = {
   where: ChatSessionWhereUniqueInput;
 };
@@ -1240,6 +1734,25 @@ export type QueryChatSessionsArgs = {
 
 export type QueryChatSessionsCountArgs = {
   where?: ChatSessionWhereInput;
+};
+
+
+export type QueryConversationBotConfigArgs = {
+  where: ConversationBotConfigWhereUniqueInput;
+};
+
+
+export type QueryConversationBotConfigsArgs = {
+  cursor?: InputMaybe<ConversationBotConfigWhereUniqueInput>;
+  orderBy?: Array<ConversationBotConfigOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: ConversationBotConfigWhereInput;
+};
+
+
+export type QueryConversationBotConfigsCountArgs = {
+  where?: ConversationBotConfigWhereInput;
 };
 
 
@@ -1262,6 +1775,11 @@ export type QueryGHlAccessesCountArgs = {
 };
 
 
+export type QueryGhl_AccessTokenArgs = {
+  input: Ghl_AccessTokenInput;
+};
+
+
 export type QueryGhl_GetContactsArgs = {
   input: Ghl_GetContactsInput;
 };
@@ -1272,8 +1790,32 @@ export type QueryGhl_GetMessagesArgs = {
 };
 
 
+export type QueryGhl_MeArgs = {
+  input: Ghl_MeInput;
+};
+
+
 export type QueryGroupArgs = {
   where: GroupWhereUniqueInput;
+};
+
+
+export type QueryGroupAiLogArgs = {
+  where: GroupAiLogWhereUniqueInput;
+};
+
+
+export type QueryGroupAiLogsArgs = {
+  cursor?: InputMaybe<GroupAiLogWhereUniqueInput>;
+  orderBy?: Array<GroupAiLogOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: GroupAiLogWhereInput;
+};
+
+
+export type QueryGroupAiLogsCountArgs = {
+  where?: GroupAiLogWhereInput;
 };
 
 
@@ -1526,13 +2068,10 @@ export type StringFilter = {
 export type User = {
   __typename?: 'User';
   adminPassword?: Maybe<PasswordState>;
-  aiKey?: Maybe<AiKey>;
   avatar?: Maybe<ImageFieldOutput>;
-  botConfig?: Maybe<BotConfig>;
   createdAt?: Maybe<Scalars['DateTime']['output']>;
   displayName?: Maybe<Scalars['String']['output']>;
   email?: Maybe<Scalars['String']['output']>;
-  ghlAccess?: Maybe<GhlAccess>;
   groups?: Maybe<Array<GroupMember>>;
   groupsCount?: Maybe<Scalars['Int']['output']>;
   id: Scalars['ID']['output'];
@@ -1570,12 +2109,9 @@ export type UserAuthenticationWithPasswordSuccess = {
 
 export type UserCreateInput = {
   adminPassword?: InputMaybe<Scalars['String']['input']>;
-  aiKey?: InputMaybe<AiKeyRelateToOneForCreateInput>;
   avatar?: InputMaybe<ImageFieldInput>;
-  botConfig?: InputMaybe<BotConfigRelateToOneForCreateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  ghlAccess?: InputMaybe<GhlAccessRelateToOneForCreateInput>;
   groups?: InputMaybe<GroupMemberRelateToManyForCreateInput>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1629,12 +2165,9 @@ export type UserUpdateArgs = {
 
 export type UserUpdateInput = {
   adminPassword?: InputMaybe<Scalars['String']['input']>;
-  aiKey?: InputMaybe<AiKeyRelateToOneForUpdateInput>;
   avatar?: InputMaybe<ImageFieldInput>;
-  botConfig?: InputMaybe<BotConfigRelateToOneForUpdateInput>;
   createdAt?: InputMaybe<Scalars['DateTime']['input']>;
   email?: InputMaybe<Scalars['String']['input']>;
-  ghlAccess?: InputMaybe<GhlAccessRelateToOneForUpdateInput>;
   groups?: InputMaybe<GroupMemberRelateToManyForUpdateInput>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   name?: InputMaybe<Scalars['String']['input']>;
@@ -1646,11 +2179,8 @@ export type UserWhereInput = {
   NOT?: InputMaybe<Array<UserWhereInput>>;
   OR?: InputMaybe<Array<UserWhereInput>>;
   adminPassword?: InputMaybe<PasswordFilter>;
-  aiKey?: InputMaybe<AiKeyWhereInput>;
-  botConfig?: InputMaybe<BotConfigWhereInput>;
   createdAt?: InputMaybe<DateTimeNullableFilter>;
   email?: InputMaybe<StringFilter>;
-  ghlAccess?: InputMaybe<GhlAccessWhereInput>;
   groups?: InputMaybe<GroupMemberManyRelationFilter>;
   id?: InputMaybe<IdFilter>;
   lastName?: InputMaybe<StringFilter>;
@@ -1733,10 +2263,51 @@ export type DeleteBotConfigMutationVariables = Exact<{
 
 export type DeleteBotConfigMutation = { __typename?: 'Mutation', deleteBotConfig?: { __typename?: 'BotConfig', id: string } | null };
 
+export type ConversationBotConfigQueryVariables = Exact<{
+  where: ConversationBotConfigWhereUniqueInput;
+}>;
+
+
+export type ConversationBotConfigQuery = { __typename?: 'Query', conversationBotConfig?: { __typename?: 'ConversationBotConfig', id: string, name?: string | null, companyStatement?: string | null, tonestyle?: string | null, priorityPlan?: string | null, healthInsuranceCarriers?: string | null, presentationStrategy?: string | null, specificQuestions?: string | null, summaryPrompt?: string | null, welcomeMessage?: string | null, welcomeMessageFormat?: string | null, noZipCodeMessage?: string | null } | null };
+
+export type ConversationBotConfigsQueryVariables = Exact<{
+  where: ConversationBotConfigWhereInput;
+}>;
+
+
+export type ConversationBotConfigsQuery = { __typename?: 'Query', conversationBotConfigs?: Array<{ __typename?: 'ConversationBotConfig', id: string, name?: string | null, companyStatement?: string | null, tonestyle?: string | null, priorityPlan?: string | null, healthInsuranceCarriers?: string | null, presentationStrategy?: string | null, specificQuestions?: string | null, summaryPrompt?: string | null, welcomeMessage?: string | null, welcomeMessageFormat?: string | null, noZipCodeMessage?: string | null }> | null };
+
+export type CreateConversationBotConfigMutationVariables = Exact<{
+  data: ConversationBotConfigCreateInput;
+}>;
+
+
+export type CreateConversationBotConfigMutation = { __typename?: 'Mutation', createConversationBotConfig?: { __typename?: 'ConversationBotConfig', id: string } | null };
+
+export type UpdateConversationBotConfigMutationVariables = Exact<{
+  where: ConversationBotConfigWhereUniqueInput;
+  data: ConversationBotConfigUpdateInput;
+}>;
+
+
+export type UpdateConversationBotConfigMutation = { __typename?: 'Mutation', updateConversationBotConfig?: { __typename?: 'ConversationBotConfig', id: string } | null };
+
 export type UserQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, name?: string | null, lastName?: string | null, displayName?: string | null, email?: string | null, role?: UserRoleType | null, createdAt?: any | null, ghlAccess?: { __typename?: 'GHLAccess', id: string, locationId?: string | null, refreshToken?: string | null, scope?: string | null } | null, aiKey?: { __typename?: 'AIKey', id: string, openapiKey?: string | null } | null } | null };
+export type UserQuery = { __typename?: 'Query', authenticatedItem?: { __typename?: 'User', id: string, name?: string | null, lastName?: string | null, displayName?: string | null, email?: string | null, role?: UserRoleType | null, createdAt?: any | null } | null };
+
+export type GroupsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GroupsQuery = { __typename?: 'Query', groups?: Array<{ __typename?: 'Group', id: string, name?: string | null, ghlAccess?: { __typename?: 'GHLAccess', id: string } | null }> | null };
+
+export type GroupQueryVariables = Exact<{
+  where: GroupWhereUniqueInput;
+}>;
+
+
+export type GroupQuery = { __typename?: 'Query', group?: { __typename?: 'Group', id: string, name?: string | null, membersCount?: number | null, enable_globalWelcome?: boolean | null, enable_globalAutoReply?: boolean | null, enable_globalContactUpdate?: boolean | null, contactConfigs?: any | null, members?: Array<{ __typename?: 'GroupMember', id: string, access?: number | null, user?: { __typename?: 'User', id: string, displayName?: string | null, email?: string | null } | null }> | null, botConfig?: { __typename?: 'BotConfig', id: string } | null, ghlAccess?: { __typename?: 'GHLAccess', id: string, locationId?: string | null, refreshToken?: string | null, scope?: string | null } | null, aiKey?: { __typename?: 'AIKey', id: string, openapiKey?: string | null } | null } | null };
 
 export type UpdateUserMutationVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -1746,6 +2317,21 @@ export type UpdateUserMutationVariables = Exact<{
 
 export type UpdateUserMutation = { __typename?: 'Mutation', updateUser?: { __typename?: 'User', id: string } | null };
 
+export type CreateGroupMutationVariables = Exact<{
+  data: GroupCreateInput;
+}>;
+
+
+export type CreateGroupMutation = { __typename?: 'Mutation', createGroup?: { __typename?: 'Group', id: string } | null };
+
+export type UpdateGroupMutationVariables = Exact<{
+  where: GroupWhereUniqueInput;
+  data: GroupUpdateInput;
+}>;
+
+
+export type UpdateGroupMutation = { __typename?: 'Mutation', updateGroup?: { __typename?: 'Group', id: string } | null };
+
 export type UpdateAiKeyMutationVariables = Exact<{
   where: AiKeyWhereUniqueInput;
   data: AiKeyUpdateInput;
@@ -1754,10 +2340,12 @@ export type UpdateAiKeyMutationVariables = Exact<{
 
 export type UpdateAiKeyMutation = { __typename?: 'Mutation', updateAIKey?: { __typename?: 'AIKey', id: string } | null };
 
-export type Ghl_MeQueryVariables = Exact<{ [key: string]: never; }>;
+export type Ghl_MeQueryVariables = Exact<{
+  input: Ghl_MeInput;
+}>;
 
 
-export type Ghl_MeQuery = { __typename?: 'Query', ghl_me?: { __typename?: 'GHLMeReturn', name: string, email: string, firstName: string, lastName: string, phone: string, address: string, state: string, country: string, postalCode: string } | null };
+export type Ghl_MeQuery = { __typename?: 'Query', ghl_me?: { __typename?: 'GHLMeReturn', name: string, email: string, firstName: string, lastName: string, phone: string, address: string, state: string, country: string, postalCode: string, business: { __typename?: 'GHLMeReturnBusiness', name: string, address: string, city: string, state: string, country: string, postalCode: string, website: string, timezone: string, logoUrl: string } } | null };
 
 export type Ghl_GetContactsQueryVariables = Exact<{
   input: Ghl_GetContactsInput;
@@ -1790,10 +2378,18 @@ export const BotConfigsDocument = {"kind":"Document","definitions":[{"kind":"Ope
 export const CreateBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateBotConfigMutation, CreateBotConfigMutationVariables>;
 export const UpdateBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateBotConfigMutation, UpdateBotConfigMutationVariables>;
 export const DeleteBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"BotConfigWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteBotConfigMutation, DeleteBotConfigMutationVariables>;
-export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}},{"kind":"Field","name":{"kind":"Name","value":"ghlAccess"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"scope"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aiKey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"openapiKey"}}]}}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
+export const ConversationBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ConversationBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ConversationBotConfigWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"conversationBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"companyStatement"}},{"kind":"Field","name":{"kind":"Name","value":"tonestyle"}},{"kind":"Field","name":{"kind":"Name","value":"priorityPlan"}},{"kind":"Field","name":{"kind":"Name","value":"healthInsuranceCarriers"}},{"kind":"Field","name":{"kind":"Name","value":"presentationStrategy"}},{"kind":"Field","name":{"kind":"Name","value":"specificQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"summaryPrompt"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessage"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessageFormat"}},{"kind":"Field","name":{"kind":"Name","value":"noZipCodeMessage"}}]}}]}}]} as unknown as DocumentNode<ConversationBotConfigQuery, ConversationBotConfigQueryVariables>;
+export const ConversationBotConfigsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ConversationBotConfigs"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ConversationBotConfigWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"conversationBotConfigs"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"companyStatement"}},{"kind":"Field","name":{"kind":"Name","value":"tonestyle"}},{"kind":"Field","name":{"kind":"Name","value":"priorityPlan"}},{"kind":"Field","name":{"kind":"Name","value":"healthInsuranceCarriers"}},{"kind":"Field","name":{"kind":"Name","value":"presentationStrategy"}},{"kind":"Field","name":{"kind":"Name","value":"specificQuestions"}},{"kind":"Field","name":{"kind":"Name","value":"summaryPrompt"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessage"}},{"kind":"Field","name":{"kind":"Name","value":"welcomeMessageFormat"}},{"kind":"Field","name":{"kind":"Name","value":"noZipCodeMessage"}}]}}]}}]} as unknown as DocumentNode<ConversationBotConfigsQuery, ConversationBotConfigsQueryVariables>;
+export const CreateConversationBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateConversationBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ConversationBotConfigCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createConversationBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateConversationBotConfigMutation, CreateConversationBotConfigMutationVariables>;
+export const UpdateConversationBotConfigDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateConversationBotConfig"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ConversationBotConfigWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ConversationBotConfigUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateConversationBotConfig"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateConversationBotConfigMutation, UpdateConversationBotConfigMutationVariables>;
+export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
+export const GroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Groups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ghlAccess"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GroupsQuery, GroupsQueryVariables>;
+export const GroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Group"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"members"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"access"}}]}},{"kind":"Field","name":{"kind":"Name","value":"membersCount"}},{"kind":"Field","name":{"kind":"Name","value":"botConfig"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ghlAccess"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"scope"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aiKey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"openapiKey"}}]}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalWelcome"}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalAutoReply"}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalContactUpdate"}},{"kind":"Field","name":{"kind":"Name","value":"contactConfigs"}}]}}]}}]} as unknown as DocumentNode<GroupQuery, GroupQueryVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
+export const CreateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateGroupMutation, CreateGroupMutationVariables>;
+export const UpdateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateGroupMutation, UpdateGroupMutationVariables>;
 export const UpdateAiKeyDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateAIKey"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AIKeyWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"AIKeyUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateAIKey"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateAiKeyMutation, UpdateAiKeyMutationVariables>;
-export const Ghl_MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Ghl_me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_me"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"state"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}}]}}]}}]} as unknown as DocumentNode<Ghl_MeQuery, Ghl_MeQueryVariables>;
+export const Ghl_MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Ghl_me"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_meInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_me"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"state"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}},{"kind":"Field","name":{"kind":"Name","value":"business"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"state"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}}]}}]}}]}}]} as unknown as DocumentNode<Ghl_MeQuery, Ghl_MeQueryVariables>;
 export const Ghl_GetContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ghl_getContacts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_getContactsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_getContacts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"source"}},{"kind":"Field","name":{"kind":"Name","value":"dateAdded"}},{"kind":"Field","name":{"kind":"Name","value":"businessId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"contactName"}}]}}]}}]}}]} as unknown as DocumentNode<Ghl_GetContactsQuery, Ghl_GetContactsQueryVariables>;
 export const Ghl_SendMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Ghl_sendMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_sendMessageInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_sendMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"contactID"}},{"kind":"Field","name":{"kind":"Name","value":"thread"}}]}}]}}]} as unknown as DocumentNode<Ghl_SendMessageMutation, Ghl_SendMessageMutationVariables>;
 export const ChatSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatSession"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChatSessionWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chatSession"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionData"}}]}}]}}]} as unknown as DocumentNode<ChatSessionQuery, ChatSessionQueryVariables>;

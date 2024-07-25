@@ -1,8 +1,8 @@
 import { graphql } from "../generated";
 
 export const GetGHL = graphql(`
-  query Ghl_me {
-    ghl_me {
+  query Ghl_me($input: Ghl_meInput!) {
+    ghl_me(input: $input) {
       name
       email
       firstName
@@ -12,6 +12,17 @@ export const GetGHL = graphql(`
       state
       country
       postalCode
+      business {
+        name
+        address
+        city
+        state
+        country
+        postalCode
+        website
+        timezone
+        logoUrl
+      }
     }
   }
 `);
