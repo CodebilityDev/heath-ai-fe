@@ -6,6 +6,10 @@ import { useRecoilState } from "recoil";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import useDebounce from "@/hooks/useDebounce";
 import { MdClose } from "react-icons/md";
+import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
+import { twMerge } from "tailwind-merge";
+import { CiBoxList } from "react-icons/ci";
 
 const CarrierModal = ({
   open,
@@ -18,7 +22,7 @@ const CarrierModal = ({
   open: boolean;
   onClose: any;
   className: string;
-  options: string[];
+  options: any;
   state: any;
   setState: any;
 }) => {
@@ -26,11 +30,22 @@ const CarrierModal = ({
   const [search, setSearch] = useState<string>("");
   const debouncedValue = useDebounce<string>(search, 500);
 
+  const [category, setCategory] = useState<"Popular" | "Others">("Popular");
+
   const searchedOptions = useMemo(() => {
-    return options.filter((option: string) =>
-      option.toLowerCase().includes(debouncedValue.toLowerCase())
-    );
-  }, [debouncedValue]);
+    const categorizedResults: any = {};
+
+    options.forEach((option: any) => {
+      const filteredCarriers = option.carriers.filter((carrier: string) =>
+        carrier.toLowerCase().includes(debouncedValue.toLowerCase())
+      );
+      if (filteredCarriers.length > 0) {
+        categorizedResults[option.name] = filteredCarriers;
+      }
+    });
+
+    return categorizedResults[category];
+  }, [debouncedValue, category]);
 
   const handleSearch = (event: any) => {
     setSearch(event.target.value);
@@ -42,10 +57,13 @@ const CarrierModal = ({
 
   const handleCheckBox = (event: any, value: string, type: string) => {
     if (type == "selectAll") {
-      if (carriers.length == options.length) {
+      if (
+        carriers.length ===
+        options[0].carriers.length + options[1].carriers.length
+      ) {
         setCarriers([]);
       } else {
-        setCarriers([...options]);
+        setCarriers([...options[0].carriers, ...options[1].carriers]);
       }
     } else if (type == "carriers") {
       let idx = carriers.findIndex((carrier: string) => carrier == value);
@@ -92,13 +110,37 @@ const CarrierModal = ({
                   <div className="absolute top-[50%] translate-y-[-50%] left-2">
                     <IconSearch />
                   </div>
+
                   <CheckBox
                     label="Select All"
-                    checked={carriers.length == options.length}
+                    checked={
+                      carriers.length ===
+                      options[0].carriers.length + options[1].carriers.length
+                    }
                     type="selectAll"
                     handleChange={handleCheckBox}
                   />
                 </div>
+              </div>
+              <div className="border border-primary rounded-md self-start overflow-hidden">
+                {options.length > 0 &&
+                  options.map((option: any, idx: number) => {
+                    const Icon = option.name === "Others" ? CiBoxList : Star;
+                    return (
+                      <Button
+                        key={`button-${idx}`}
+                        className={twMerge(
+                          "rounded-none",
+                          category == option.name && "text-primary"
+                        )}
+                        variant="ghost"
+                        onClick={() => setCategory(option.name)}
+                      >
+                        <Icon className="mr-2 size-4" />
+                        {option.name}
+                      </Button>
+                    );
+                  })}
               </div>
               <ScrollArea className="h-[15rem] rounded-md my-4 ">
                 <div className="grid w-full grid-cols-2 gap-4">
