@@ -37,6 +37,11 @@ const documents = {
     "\n  query ghl_getContacts($input: Ghl_getContactsInput!) {\n    ghl_getContacts(input: $input) {\n      contacts {\n        id\n        locationId\n        email\n        timezone\n        country\n        source\n        dateAdded\n        businessId\n        firstName\n        lastName\n        contactName\n      }\n    }\n  }\n": types.Ghl_GetContactsDocument,
     "\n  mutation Ghl_sendMessage($input: Ghl_sendMessageInput!) {\n    ghl_sendMessage(input: $input) {\n      message\n      contactID\n      thread\n    }\n  }\n": types.Ghl_SendMessageDocument,
     "\n  query ChatSession($where: ChatSessionWhereUniqueInput!) {\n    chatSession(where: $where) {\n      sessionData\n    }\n  }\n": types.ChatSessionDocument,
+    "\n  query Snippet($where: SnippetWhereUniqueInput!) {\n    snippet(where: $where) {\n      id\n      name\n      tags\n      content\n      comment\n    }\n  }\n": types.SnippetDocument,
+    "\n  query Snippets($where: SnippetWhereInput!) {\n    snippets(where: $where) {\n      id\n      name\n      tags\n      content\n      comment\n    }\n  }\n": types.SnippetsDocument,
+    "\n  mutation CreateSnippet($data: SnippetCreateInput!) {\n    createSnippet(data: $data) {\n      id\n    }\n  }\n": types.CreateSnippetDocument,
+    "\n  mutation UpdateSnippet(\n    $where: SnippetWhereUniqueInput!\n    $data: SnippetUpdateInput!\n  ) {\n    updateSnippet(where: $where, data: $data) {\n      id\n    }\n  }\n": types.UpdateSnippetDocument,
+    "\n  mutation DeleteSnippet($where: SnippetWhereUniqueInput!) {\n    deleteSnippet(where: $where) {\n      id\n    }\n  }\n": types.DeleteSnippetDocument,
 };
 
 /**
@@ -149,6 +154,26 @@ export function graphql(source: "\n  mutation Ghl_sendMessage($input: Ghl_sendMe
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  query ChatSession($where: ChatSessionWhereUniqueInput!) {\n    chatSession(where: $where) {\n      sessionData\n    }\n  }\n"): (typeof documents)["\n  query ChatSession($where: ChatSessionWhereUniqueInput!) {\n    chatSession(where: $where) {\n      sessionData\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Snippet($where: SnippetWhereUniqueInput!) {\n    snippet(where: $where) {\n      id\n      name\n      tags\n      content\n      comment\n    }\n  }\n"): (typeof documents)["\n  query Snippet($where: SnippetWhereUniqueInput!) {\n    snippet(where: $where) {\n      id\n      name\n      tags\n      content\n      comment\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  query Snippets($where: SnippetWhereInput!) {\n    snippets(where: $where) {\n      id\n      name\n      tags\n      content\n      comment\n    }\n  }\n"): (typeof documents)["\n  query Snippets($where: SnippetWhereInput!) {\n    snippets(where: $where) {\n      id\n      name\n      tags\n      content\n      comment\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation CreateSnippet($data: SnippetCreateInput!) {\n    createSnippet(data: $data) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation CreateSnippet($data: SnippetCreateInput!) {\n    createSnippet(data: $data) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation UpdateSnippet(\n    $where: SnippetWhereUniqueInput!\n    $data: SnippetUpdateInput!\n  ) {\n    updateSnippet(where: $where, data: $data) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateSnippet(\n    $where: SnippetWhereUniqueInput!\n    $data: SnippetUpdateInput!\n  ) {\n    updateSnippet(where: $where, data: $data) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation DeleteSnippet($where: SnippetWhereUniqueInput!) {\n    deleteSnippet(where: $where) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation DeleteSnippet($where: SnippetWhereUniqueInput!) {\n    deleteSnippet(where: $where) {\n      id\n    }\n  }\n"];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};

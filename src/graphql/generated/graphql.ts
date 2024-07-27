@@ -661,6 +661,8 @@ export type Group = {
   members?: Maybe<Array<GroupMember>>;
   membersCount?: Maybe<Scalars['Int']['output']>;
   name?: Maybe<Scalars['String']['output']>;
+  snippets?: Maybe<Array<Snippet>>;
+  snippetsCount?: Maybe<Scalars['Int']['output']>;
 };
 
 
@@ -689,6 +691,20 @@ export type GroupMembersArgs = {
 
 export type GroupMembersCountArgs = {
   where?: GroupMemberWhereInput;
+};
+
+
+export type GroupSnippetsArgs = {
+  cursor?: InputMaybe<SnippetWhereUniqueInput>;
+  orderBy?: Array<SnippetOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: SnippetWhereInput;
+};
+
+
+export type GroupSnippetsCountArgs = {
+  where?: SnippetWhereInput;
 };
 
 export type GroupAiLog = {
@@ -794,6 +810,7 @@ export type GroupCreateInput = {
   ghlAccess?: InputMaybe<GhlAccessRelateToOneForCreateInput>;
   members?: InputMaybe<GroupMemberRelateToManyForCreateInput>;
   name?: InputMaybe<Scalars['String']['input']>;
+  snippets?: InputMaybe<SnippetRelateToManyForCreateInput>;
 };
 
 export type GroupMember = {
@@ -894,6 +911,7 @@ export type GroupUpdateInput = {
   ghlAccess?: InputMaybe<GhlAccessRelateToOneForUpdateInput>;
   members?: InputMaybe<GroupMemberRelateToManyForUpdateInput>;
   name?: InputMaybe<Scalars['String']['input']>;
+  snippets?: InputMaybe<SnippetRelateToManyForUpdateInput>;
 };
 
 export type GroupWhereInput = {
@@ -911,6 +929,7 @@ export type GroupWhereInput = {
   id?: InputMaybe<IdFilter>;
   members?: InputMaybe<GroupMemberManyRelationFilter>;
   name?: InputMaybe<StringFilter>;
+  snippets?: InputMaybe<SnippetManyRelationFilter>;
 };
 
 export type GroupWhereUniqueInput = {
@@ -1112,6 +1131,8 @@ export type Mutation = {
   createServerErrors?: Maybe<Array<Maybe<ServerError>>>;
   createServerLog?: Maybe<ServerLog>;
   createServerLogs?: Maybe<Array<Maybe<ServerLog>>>;
+  createSnippet?: Maybe<Snippet>;
+  createSnippets?: Maybe<Array<Maybe<Snippet>>>;
   createUser?: Maybe<User>;
   createUsers?: Maybe<Array<Maybe<User>>>;
   deleteAIKey?: Maybe<AiKey>;
@@ -1136,6 +1157,8 @@ export type Mutation = {
   deleteServerErrors?: Maybe<Array<Maybe<ServerError>>>;
   deleteServerLog?: Maybe<ServerLog>;
   deleteServerLogs?: Maybe<Array<Maybe<ServerLog>>>;
+  deleteSnippet?: Maybe<Snippet>;
+  deleteSnippets?: Maybe<Array<Maybe<Snippet>>>;
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
   endSession: Scalars['Boolean']['output'];
@@ -1162,6 +1185,8 @@ export type Mutation = {
   updateServerErrors?: Maybe<Array<Maybe<ServerError>>>;
   updateServerLog?: Maybe<ServerLog>;
   updateServerLogs?: Maybe<Array<Maybe<ServerLog>>>;
+  updateSnippet?: Maybe<Snippet>;
+  updateSnippets?: Maybe<Array<Maybe<Snippet>>>;
   updateUser?: Maybe<User>;
   updateUsers?: Maybe<Array<Maybe<User>>>;
 };
@@ -1319,6 +1344,16 @@ export type MutationCreateServerLogsArgs = {
 };
 
 
+export type MutationCreateSnippetArgs = {
+  data: SnippetCreateInput;
+};
+
+
+export type MutationCreateSnippetsArgs = {
+  data: Array<SnippetCreateInput>;
+};
+
+
 export type MutationCreateUserArgs = {
   data: UserCreateInput;
 };
@@ -1436,6 +1471,16 @@ export type MutationDeleteServerLogArgs = {
 
 export type MutationDeleteServerLogsArgs = {
   where: Array<ServerLogWhereUniqueInput>;
+};
+
+
+export type MutationDeleteSnippetArgs = {
+  where: SnippetWhereUniqueInput;
+};
+
+
+export type MutationDeleteSnippetsArgs = {
+  where: Array<SnippetWhereUniqueInput>;
 };
 
 
@@ -1575,6 +1620,17 @@ export type MutationUpdateServerLogsArgs = {
 };
 
 
+export type MutationUpdateSnippetArgs = {
+  data: SnippetUpdateInput;
+  where: SnippetWhereUniqueInput;
+};
+
+
+export type MutationUpdateSnippetsArgs = {
+  data: Array<SnippetUpdateArgs>;
+};
+
+
 export type MutationUpdateUserArgs = {
   data: UserUpdateInput;
   where: UserWhereUniqueInput;
@@ -1655,6 +1711,9 @@ export type Query = {
   serverLog?: Maybe<ServerLog>;
   serverLogs?: Maybe<Array<ServerLog>>;
   serverLogsCount?: Maybe<Scalars['Int']['output']>;
+  snippet?: Maybe<Snippet>;
+  snippets?: Maybe<Array<Snippet>>;
+  snippetsCount?: Maybe<Scalars['Int']['output']>;
   user?: Maybe<User>;
   users?: Maybe<Array<User>>;
   usersCount?: Maybe<Scalars['Int']['output']>;
@@ -1890,6 +1949,25 @@ export type QueryServerLogsCountArgs = {
 };
 
 
+export type QuerySnippetArgs = {
+  where: SnippetWhereUniqueInput;
+};
+
+
+export type QuerySnippetsArgs = {
+  cursor?: InputMaybe<SnippetWhereUniqueInput>;
+  orderBy?: Array<SnippetOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: SnippetWhereInput;
+};
+
+
+export type QuerySnippetsCountArgs = {
+  where?: SnippetWhereInput;
+};
+
+
 export type QueryUserArgs = {
   where: UserWhereUniqueInput;
 };
@@ -2047,6 +2125,79 @@ export type ServerLogWhereInput = {
 };
 
 export type ServerLogWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
+export type Snippet = {
+  __typename?: 'Snippet';
+  comment?: Maybe<Scalars['String']['output']>;
+  content?: Maybe<Scalars['String']['output']>;
+  group?: Maybe<Group>;
+  id: Scalars['ID']['output'];
+  name?: Maybe<Scalars['String']['output']>;
+  tags?: Maybe<Scalars['String']['output']>;
+};
+
+export type SnippetCreateInput = {
+  comment?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForCreateInput>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SnippetManyRelationFilter = {
+  every?: InputMaybe<SnippetWhereInput>;
+  none?: InputMaybe<SnippetWhereInput>;
+  some?: InputMaybe<SnippetWhereInput>;
+};
+
+export type SnippetOrderByInput = {
+  comment?: InputMaybe<OrderDirection>;
+  content?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  name?: InputMaybe<OrderDirection>;
+  tags?: InputMaybe<OrderDirection>;
+};
+
+export type SnippetRelateToManyForCreateInput = {
+  connect?: InputMaybe<Array<SnippetWhereUniqueInput>>;
+  create?: InputMaybe<Array<SnippetCreateInput>>;
+};
+
+export type SnippetRelateToManyForUpdateInput = {
+  connect?: InputMaybe<Array<SnippetWhereUniqueInput>>;
+  create?: InputMaybe<Array<SnippetCreateInput>>;
+  disconnect?: InputMaybe<Array<SnippetWhereUniqueInput>>;
+  set?: InputMaybe<Array<SnippetWhereUniqueInput>>;
+};
+
+export type SnippetUpdateArgs = {
+  data: SnippetUpdateInput;
+  where: SnippetWhereUniqueInput;
+};
+
+export type SnippetUpdateInput = {
+  comment?: InputMaybe<Scalars['String']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForUpdateInput>;
+  name?: InputMaybe<Scalars['String']['input']>;
+  tags?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type SnippetWhereInput = {
+  AND?: InputMaybe<Array<SnippetWhereInput>>;
+  NOT?: InputMaybe<Array<SnippetWhereInput>>;
+  OR?: InputMaybe<Array<SnippetWhereInput>>;
+  comment?: InputMaybe<StringFilter>;
+  content?: InputMaybe<StringFilter>;
+  group?: InputMaybe<GroupWhereInput>;
+  id?: InputMaybe<IdFilter>;
+  name?: InputMaybe<StringFilter>;
+  tags?: InputMaybe<StringFilter>;
+};
+
+export type SnippetWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
@@ -2368,6 +2519,42 @@ export type ChatSessionQueryVariables = Exact<{
 
 export type ChatSessionQuery = { __typename?: 'Query', chatSession?: { __typename?: 'ChatSession', sessionData?: any | null } | null };
 
+export type SnippetQueryVariables = Exact<{
+  where: SnippetWhereUniqueInput;
+}>;
+
+
+export type SnippetQuery = { __typename?: 'Query', snippet?: { __typename?: 'Snippet', id: string, name?: string | null, tags?: string | null, content?: string | null, comment?: string | null } | null };
+
+export type SnippetsQueryVariables = Exact<{
+  where: SnippetWhereInput;
+}>;
+
+
+export type SnippetsQuery = { __typename?: 'Query', snippets?: Array<{ __typename?: 'Snippet', id: string, name?: string | null, tags?: string | null, content?: string | null, comment?: string | null }> | null };
+
+export type CreateSnippetMutationVariables = Exact<{
+  data: SnippetCreateInput;
+}>;
+
+
+export type CreateSnippetMutation = { __typename?: 'Mutation', createSnippet?: { __typename?: 'Snippet', id: string } | null };
+
+export type UpdateSnippetMutationVariables = Exact<{
+  where: SnippetWhereUniqueInput;
+  data: SnippetUpdateInput;
+}>;
+
+
+export type UpdateSnippetMutation = { __typename?: 'Mutation', updateSnippet?: { __typename?: 'Snippet', id: string } | null };
+
+export type DeleteSnippetMutationVariables = Exact<{
+  where: SnippetWhereUniqueInput;
+}>;
+
+
+export type DeleteSnippetMutation = { __typename?: 'Mutation', deleteSnippet?: { __typename?: 'Snippet', id: string } | null };
+
 
 export const LoginDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Login"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authclient_login"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"ClientItemAuthenticationWithPasswordSuccess"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionToken"}}]}}]}}]}}]} as unknown as DocumentNode<LoginMutation, LoginMutationVariables>;
 export const RegisterDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Register"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"email"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"password"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"firstName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"lastName"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authclient_register"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"email"},"value":{"kind":"Variable","name":{"kind":"Name","value":"email"}}},{"kind":"Argument","name":{"kind":"Name","value":"password"},"value":{"kind":"Variable","name":{"kind":"Name","value":"password"}}},{"kind":"Argument","name":{"kind":"Name","value":"firstName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"firstName"}}},{"kind":"Argument","name":{"kind":"Name","value":"lastName"},"value":{"kind":"Variable","name":{"kind":"Name","value":"lastName"}}}]}]}}]} as unknown as DocumentNode<RegisterMutation, RegisterMutationVariables>;
@@ -2393,3 +2580,8 @@ export const Ghl_MeDocument = {"kind":"Document","definitions":[{"kind":"Operati
 export const Ghl_GetContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ghl_getContacts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_getContactsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_getContacts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"source"}},{"kind":"Field","name":{"kind":"Name","value":"dateAdded"}},{"kind":"Field","name":{"kind":"Name","value":"businessId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"contactName"}}]}}]}}]}}]} as unknown as DocumentNode<Ghl_GetContactsQuery, Ghl_GetContactsQueryVariables>;
 export const Ghl_SendMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Ghl_sendMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_sendMessageInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_sendMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"contactID"}},{"kind":"Field","name":{"kind":"Name","value":"thread"}}]}}]}}]} as unknown as DocumentNode<Ghl_SendMessageMutation, Ghl_SendMessageMutationVariables>;
 export const ChatSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatSession"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChatSessionWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chatSession"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionData"}}]}}]}}]} as unknown as DocumentNode<ChatSessionQuery, ChatSessionQueryVariables>;
+export const SnippetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Snippet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SnippetWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"snippet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"comment"}}]}}]}}]} as unknown as DocumentNode<SnippetQuery, SnippetQueryVariables>;
+export const SnippetsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Snippets"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SnippetWhereInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"snippets"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"tags"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"comment"}}]}}]}}]} as unknown as DocumentNode<SnippetsQuery, SnippetsQueryVariables>;
+export const CreateSnippetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateSnippet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SnippetCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createSnippet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateSnippetMutation, CreateSnippetMutationVariables>;
+export const UpdateSnippetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateSnippet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SnippetWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SnippetUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateSnippet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateSnippetMutation, UpdateSnippetMutationVariables>;
+export const DeleteSnippetDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"DeleteSnippet"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"SnippetWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"deleteSnippet"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<DeleteSnippetMutation, DeleteSnippetMutationVariables>;
