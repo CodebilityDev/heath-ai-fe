@@ -1,8 +1,19 @@
+import { apolloClient } from "@/graphql/client";
+import { ListSnippets } from "@/graphql/declarations/snippets";
 import { ConfigInterface } from "@/types/Setting";
-import { createContext, useCallback, useContext, useState } from "react";
+import { useQuery } from "@apollo/client";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+import { useParams } from "react-router-dom";
 export interface TemplateInterface {
+  id: string;
   name: string;
-  config: ConfigInterface;
+  config: string;
 }
 
 type TemplateContextType = {
@@ -21,20 +32,35 @@ export const TemplateContext = createContext<TemplateContextType | undefined>(
 );
 
 export const TemplateContextProvider = ({ children }: any) => {
-  const [template, setTemplate] = useState<TemplateInterface[] | []>([
-    {
-      name: "Default",
-      config: {
-        companyStatement: "wew",
+  const { gid } = useParams();
+
+  const [template, setTemplate] = useState<TemplateInterface[] | []>([]);
+
+  const { data: templateData } = useQuery(ListSnippets, {
+    variables: {
+      where: {
+        group: {
+          id: {
+            equals: gid,
+          },
+        },
       },
     },
-    {
-      name: "New Template",
-      config: {
-        companyStatement: "wew",
-      },
-    },
-  ]);
+    skip: !gid,
+  });
+
+  useEffect(() => {
+    if (templateData) {
+      setTemplate(
+        templateData.snippets?.map((snippet: any) => ({
+          id: snippet.id,
+          name: snippet.name,
+          config: snippet.content,
+        })) || []
+      );
+    }
+  }, [templateData]);
+
   const [activeTemplate, setActiveTemplate] =
     useState<TemplateInterface | null>(null);
 
