@@ -17,6 +17,9 @@ import { BiSolidUserDetail } from "react-icons/bi";
 import { FaSignOutAlt } from "react-icons/fa";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import TemplateList from "../common/TemplateList";
+import { useTemplateContext } from "@/providers/Template-Provider";
 
 export function Sidebar({ className }: { className?: string }) {
   let { gid } = useParams();
@@ -33,6 +36,9 @@ export function Sidebar({ className }: { className?: string }) {
   const [healthSherpaModal, setHealthSherpaModal] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  // set and use template
+  const { setTemplate, template } = useTemplateContext();
 
   const { data: groupData } = useQuery(GetGroup, {
     variables: {
@@ -66,7 +72,7 @@ export function Sidebar({ className }: { className?: string }) {
           className
         )}
       >
-        <div className="px-2 pb-6 md:px-8">
+        <div className="px-2 pb-4 md:px-8">
           <h1 className="text-lg font-bold">Agency Information</h1>
           <div className="flex p-2 mt-6 border shadow-md bg-primary-light rounded-xl">
             <div className="flex items-center flex-1 overflow-hidden gap-x-2">
@@ -189,71 +195,95 @@ export function Sidebar({ className }: { className?: string }) {
           </div>
         </div>
         {/*   ( */}
-
-        <ScrollArea className="px-2 md:px-8">
-          {sidebarLinks({
-            groupID: gid || "",
-          }).map(({ category, links }, categoryIndex) => (
-            <>
-              {category === "Settings" && (
-                <hr className="h-px mt-12 border-0 bg-gray dark:bg-gray-700" />
-              )}
-              <div
-                className={twMerge(
-                  "mt-8 flex flex-col",
-                  category === "Settings" && "mt-2",
-                  categoryIndex === 0 && "mt-0"
-                )}
-                key={`category-${categoryIndex}`}
-              >
-                <p className="mb-2 text-base text-black/60">{category}</p>
-                <div className="space-y-2">
-                  {links.map(({ name, icon, to, type }, linkIndex) => (
-                    <NavigationButtons
-                      type={(type as any) || undefined}
-                      linkProps={{
-                        to,
-                        pathname,
-                      }}
-                      onClick={() => {
-                        if (type === "btn") {
-                          if (name === "Health sherpa excel exports") {
-                            setHealthSherpaModal(true);
-                          } else if (name === "Open AI Keys") {
-                            setApiKeyModal(true);
-                          } else if (
-                            name === "Shareable Chatbot Page" &&
-                            !loading
-                          ) {
-                            window.open("/chat?id=" + botID, "_blank");
-                          }
-                        }
-                      }}
-                      disabled={
-                        type === "btn" &&
-                        name === "Shareable Chatbot Page" &&
-                        loading
-                      }
-                      key={`link-${categoryIndex}-${linkIndex}`}
+        <Tabs
+          defaultValue="navigation"
+          className="w-full flex-1 overflow-hidden flex flex-col"
+        >
+          <div className="flex">
+            <TabsList className="mx-auto">
+              <TabsTrigger value="navigation">Navigation</TabsTrigger>
+              <TabsTrigger value="templates">Templates</TabsTrigger>
+            </TabsList>
+          </div>
+          <ScrollArea className="mt-4 md:px-6 border-t">
+            <TabsContent
+              value="navigation"
+              className="mt-0 h-full overflow-hidden flex flex-col flex-1"
+            >
+              <div className="py-4">
+                {sidebarLinks({
+                  groupID: gid || "",
+                }).map(({ category, links }, categoryIndex) => (
+                  <>
+                    {category === "Settings" && (
+                      <hr className="h-px mt-12 border-0 bg-gray dark:bg-gray-700" />
+                    )}
+                    <div
+                      className={twMerge(
+                        "mt-8 flex flex-col",
+                        category === "Settings" && "mt-2",
+                        categoryIndex === 0 && "mt-0"
+                      )}
+                      key={`category-${categoryIndex}`}
                     >
-                      <img src={icon} alt="svg1" className="mr-2" />
-                      <p
-                        className={twMerge(
-                          "text-sm",
-                          pathname === to && "text-primary font-bold"
-                        )}
-                      >
-                        {name === "Shareable Chatbot Page" && loading
-                          ? "Loading Chatbot Link"
-                          : name}
-                      </p>
-                    </NavigationButtons>
-                  ))}
-                </div>
+                      <p className="mb-2 text-base text-black/60">{category}</p>
+                      <div className="space-y-2">
+                        {links.map(({ name, icon, to, type }, linkIndex) => (
+                          <NavigationButtons
+                            type={(type as any) || undefined}
+                            linkProps={{
+                              to,
+                              pathname,
+                            }}
+                            onClick={() => {
+                              if (type === "btn") {
+                                if (name === "Health sherpa excel exports") {
+                                  setHealthSherpaModal(true);
+                                } else if (name === "Open AI Keys") {
+                                  setApiKeyModal(true);
+                                } else if (
+                                  name === "Shareable Chatbot Page" &&
+                                  !loading
+                                ) {
+                                  window.open("/chat?id=" + botID, "_blank");
+                                }
+                              }
+                            }}
+                            disabled={
+                              type === "btn" &&
+                              name === "Shareable Chatbot Page" &&
+                              loading
+                            }
+                            key={`link-${categoryIndex}-${linkIndex}`}
+                          >
+                            <img src={icon} alt="svg1" className="mr-2" />
+                            <p
+                              className={twMerge(
+                                "text-sm",
+                                pathname === to && "text-primary font-bold"
+                              )}
+                            >
+                              {name === "Shareable Chatbot Page" && loading
+                                ? "Loading Chatbot Link"
+                                : name}
+                            </p>
+                          </NavigationButtons>
+                        ))}
+                      </div>
+                    </div>
+                  </>
+                ))}
               </div>
-            </>
-          ))}
-        </ScrollArea>
+            </TabsContent>
+          </ScrollArea>
+          <TabsContent
+            value="templates"
+            className="mt-0 h-full overflow-hidden flex flex-col flex-1"
+          >
+            <TemplateList templates={template} />
+          </TabsContent>
+        </Tabs>
+
         <div className="flex flex-col gap-2 px-2 pt-4 border-t-2 md:px-8">
           <p className="">
             <span className="text-xs">Current Group:</span> <br />

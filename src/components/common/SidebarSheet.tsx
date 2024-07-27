@@ -30,7 +30,7 @@ export function SheetSidebar({
       </SheetTrigger>
       <SheetContent
         className={twMerge(
-          "overflow-hidden p-0 px-4 w-full sm:w-auto",
+          "overflow-hidden p-0 px-4 w-full sm:w-sm",
           sheetContentClassName
         )}
         side="left"
