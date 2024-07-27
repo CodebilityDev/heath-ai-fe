@@ -19,6 +19,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TemplateList from "../common/TemplateList";
+import { useTemplateContext } from "@/providers/Template-Provider";
 
 export function Sidebar({ className }: { className?: string }) {
   let { gid } = useParams();
@@ -35,6 +36,9 @@ export function Sidebar({ className }: { className?: string }) {
   const [healthSherpaModal, setHealthSherpaModal] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
+
+  // set and use template
+  const { setTemplate, template } = useTemplateContext();
 
   const { data: groupData } = useQuery(GetGroup, {
     variables: {
@@ -276,7 +280,7 @@ export function Sidebar({ className }: { className?: string }) {
             value="templates"
             className="mt-0 h-full overflow-hidden flex flex-col flex-1"
           >
-            <TemplateList />
+            <TemplateList templates={template} />
           </TabsContent>
         </Tabs>
 
