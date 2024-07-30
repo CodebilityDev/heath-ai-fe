@@ -46,3 +46,11 @@ export const signUpSchema = z
     message: "Password don't match",
     path: ["confirmPassword"],
   });
+
+export const generalSettingsSchema = z.object({
+  agentName: z.string().min(1, { message: "Required" }),
+  dnd: z.boolean(),
+  ssn: z.boolean(),
+  profanity: z.boolean(),
+  availabilityTime: z.string(),
+});

@@ -17,6 +17,16 @@ export const sidebarLinks = (args: { groupID: string }) => [
         icon: "/svgs/link2.svg",
         to: `/app/view/${args.groupID}/autoreply`,
       },
+      {
+        name: "General Setiings",
+        icon: "/svgs/link2.svg",
+        to: `/app/view/${args.groupID}/general-settings`,
+      },
+      {
+        name: "Custom Fields",
+        icon: "/svgs/link2.svg",
+        to: `/app/view/${args.groupID}/custom-fields`,
+      },
     ],
   },
   {
@@ -36,7 +46,7 @@ export const sidebarLinks = (args: { groupID: string }) => [
       {
         name: "Conversational Chat Builder",
         icon: "/svgs/link3.svg",
-        to: "/conversationalchatbuilder",
+        to: `/app/view/${args.groupID}/conversationalchatbuilder`,
       },
       {
         name: "Insights",

@@ -1,4 +1,8 @@
-import { signInSchema, signUpSchema } from "@/types/FormTypes";
+import {
+  generalSettingsSchema,
+  signInSchema,
+  signUpSchema,
+} from "@/types/FormTypes";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -21,9 +25,21 @@ const useFormProvider = () => {
     },
   });
 
+  const generalSettingsForm = useForm<z.infer<typeof generalSettingsSchema>>({
+    resolver: zodResolver(generalSettingsSchema),
+    defaultValues: {
+      agentName: "",
+      dnd: false,
+      ssn: false,
+      profanity: false,
+      availabilityTime: "",
+    },
+  });
+
   return {
     signInForm,
     signUpForm,
+    generalSettingsForm,
   };
 };
 
