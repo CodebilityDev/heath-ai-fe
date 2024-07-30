@@ -18,6 +18,8 @@ import { Dashboard } from "@/pages/Dashboard";
 import { WelcomeMessageEditor } from "@/pages/WelcomeMessageEditor";
 import { AutoReplyEditor } from "@/pages/AutoReplyEditor";
 import { AppLayout } from "@/components/layout/AppLayout";
+import GeneralSettingsPage from "@/pages/GeneralSettings";
+import CustomFieldsPage from "@/pages/CustomFields";
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,7 @@ const router = createBrowserRouter([
             path: "",
             element: <GroupList />,
           },
+
           {
             path: "view/:gid",
             element: <AppLayout />,
@@ -50,6 +53,18 @@ const router = createBrowserRouter([
               {
                 path: "autoreply",
                 element: <AutoReplyEditor />,
+              },
+              {
+                path: "general-settings",
+                element: <GeneralSettingsPage />,
+              },
+              {
+                path: "custom-fields",
+                element: <CustomFieldsPage />,
+              },
+              {
+                path: "conversationalchatbuilder",
+                element: <ConversationChatBuilder />,
               },
             ],
           },
