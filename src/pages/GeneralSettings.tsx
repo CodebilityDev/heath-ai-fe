@@ -46,7 +46,7 @@ const GeneralSettingsPage = () => {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(processSubmit)}
-        className="flex flex-col items-center w-full max-w-2xl py-8 mx-auto space-y-4"
+        className="flex px-8 md:px-0 flex-col items-center w-full max-w-2xl py-8 mx-auto space-y-4"
       >
         <FormField
           control={form.control}
