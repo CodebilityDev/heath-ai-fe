@@ -20,6 +20,7 @@ import { AutoReplyEditor } from "@/pages/AutoReplyEditor";
 import { AppLayout } from "@/components/layout/AppLayout";
 import GeneralSettingsPage from "@/pages/GeneralSettings";
 import CustomFieldsPage from "@/pages/CustomFields";
+import QueuedMessagePage from "@/pages/QueuedMessages";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
               {
                 path: "custom-fields",
                 element: <CustomFieldsPage />,
+              },
+              {
+                path: "queued-messages",
+                element: <QueuedMessagePage />,
               },
               {
                 path: "conversationalchatbuilder",
