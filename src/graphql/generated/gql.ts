@@ -26,6 +26,9 @@ const documents = {
     "\n  query ConversationBotConfigs($where: ConversationBotConfigWhereInput!) {\n    conversationBotConfigs(where: $where) {\n      id\n      name\n      companyStatement\n      tonestyle\n      priorityPlan\n      healthInsuranceCarriers\n      presentationStrategy\n      specificQuestions\n      summaryPrompt\n      welcomeMessage\n      welcomeMessageFormat\n      noZipCodeMessage\n    }\n  }\n": types.ConversationBotConfigsDocument,
     "\n  mutation CreateConversationBotConfig(\n    $data: ConversationBotConfigCreateInput!\n  ) {\n    createConversationBotConfig(data: $data) {\n      id\n    }\n  }\n": types.CreateConversationBotConfigDocument,
     "\n  mutation UpdateConversationBotConfig(\n    $where: ConversationBotConfigWhereUniqueInput!\n    $data: ConversationBotConfigUpdateInput!\n  ) {\n    updateConversationBotConfig(where: $where, data: $data) {\n      id\n    }\n  }\n": types.UpdateConversationBotConfigDocument,
+    "\nquery GetCustomFields($input: Ghl_getCustomFieldsInput!) {\n  ghl_getCustomFields(input: $input) {\n    customFields {\n      id\n      name\n      fieldKey\n      placeholder\n      dataType\n      position\n      picklistOptions\n      picklistImageOptions\n      isAllowedCustomOption\n      isMultiFileAllowed\n      maxFileLimit\n      locationId\n      model\n    }\n  }\n}\n": types.GetCustomFieldsDocument,
+    "\nmutation ModifyCustomFields($input: Ghl_setCustomFieldsInput!) {\n  ghl_setCustomFields(input: $input)\n}\n": types.ModifyCustomFieldsDocument,
+    "\nmutation Ghl_breakCustomFieldsCache($input: Ghl_breakCustomFieldsCacheInput!) {\n  ghl_breakCustomFieldsCache(input: $input)\n}\n": types.Ghl_BreakCustomFieldsCacheDocument,
     "\n  query User {\n    authenticatedItem {\n      ... on User {\n        id\n        name\n        lastName\n        displayName\n        email\n        role\n        createdAt\n      }\n    }\n  }\n": types.UserDocument,
     "\n  query Groups {\n    groups {\n      id\n      name\n      ghlAccess {\n        id\n      }\n    }\n  }\n": types.GroupsDocument,
     "\n  query Group($where: GroupWhereUniqueInput!) {\n    group(where: $where) {\n      id\n      name\n      members {\n        id\n        user {\n          id\n          displayName\n          email\n        }\n        access\n      }\n      membersCount\n      botConfig {\n        id\n      }\n      ghlAccess {\n        id\n        locationId\n        refreshToken\n        scope\n      }\n      aiKey {\n        id\n        openapiKey\n      }\n      enable_globalWelcome\n      enable_globalAutoReply\n      enable_globalContactUpdate\n      contactConfigs\n      enable_botIsAssistant\n      botAssistantName\n      check_dndNotice\n      dndNoticeMessage\n      enable_noSSN\n      enable_checkProfanity\n      availability_enabled\n      availability_start\n      availability_end\n    }\n  }\n": types.GroupDocument,
@@ -112,6 +115,18 @@ export function graphql(source: "\n  mutation CreateConversationBotConfig(\n    
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation UpdateConversationBotConfig(\n    $where: ConversationBotConfigWhereUniqueInput!\n    $data: ConversationBotConfigUpdateInput!\n  ) {\n    updateConversationBotConfig(where: $where, data: $data) {\n      id\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateConversationBotConfig(\n    $where: ConversationBotConfigWhereUniqueInput!\n    $data: ConversationBotConfigUpdateInput!\n  ) {\n    updateConversationBotConfig(where: $where, data: $data) {\n      id\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nquery GetCustomFields($input: Ghl_getCustomFieldsInput!) {\n  ghl_getCustomFields(input: $input) {\n    customFields {\n      id\n      name\n      fieldKey\n      placeholder\n      dataType\n      position\n      picklistOptions\n      picklistImageOptions\n      isAllowedCustomOption\n      isMultiFileAllowed\n      maxFileLimit\n      locationId\n      model\n    }\n  }\n}\n"): (typeof documents)["\nquery GetCustomFields($input: Ghl_getCustomFieldsInput!) {\n  ghl_getCustomFields(input: $input) {\n    customFields {\n      id\n      name\n      fieldKey\n      placeholder\n      dataType\n      position\n      picklistOptions\n      picklistImageOptions\n      isAllowedCustomOption\n      isMultiFileAllowed\n      maxFileLimit\n      locationId\n      model\n    }\n  }\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nmutation ModifyCustomFields($input: Ghl_setCustomFieldsInput!) {\n  ghl_setCustomFields(input: $input)\n}\n"): (typeof documents)["\nmutation ModifyCustomFields($input: Ghl_setCustomFieldsInput!) {\n  ghl_setCustomFields(input: $input)\n}\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\nmutation Ghl_breakCustomFieldsCache($input: Ghl_breakCustomFieldsCacheInput!) {\n  ghl_breakCustomFieldsCache(input: $input)\n}\n"): (typeof documents)["\nmutation Ghl_breakCustomFieldsCache($input: Ghl_breakCustomFieldsCacheInput!) {\n  ghl_breakCustomFieldsCache(input: $input)\n}\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
