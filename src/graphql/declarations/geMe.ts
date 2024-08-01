@@ -69,6 +69,7 @@ export const GetGroup = graphql(`
       availability_enabled
       availability_start
       availability_end
+      user_contextFields
     }
   }
 `);

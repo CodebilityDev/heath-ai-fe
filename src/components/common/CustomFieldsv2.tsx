@@ -97,8 +97,8 @@ const CustomFields = () => {
   const [onContext, setOnContext] = useState<string[]>([]);
 
   useEffect(() => {
-    if (groupData?.group?.contactConfigs) {
-      setOnContext(groupData?.group?.contactConfigs ?? []);
+    if (groupData?.group?.user_contextFields) {
+      setOnContext(groupData?.group?.user_contextFields ?? []);
     }
   }, [groupData]);
 
