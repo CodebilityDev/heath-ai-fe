@@ -60,6 +60,15 @@ export const GetGroup = graphql(`
       enable_globalAutoReply
       enable_globalContactUpdate
       contactConfigs
+      enable_botIsAssistant
+      botAssistantName
+      check_dndNotice
+      dndNoticeMessage
+      enable_noSSN
+      enable_checkProfanity
+      availability_enabled
+      availability_start
+      availability_end
     }
   }
 `);

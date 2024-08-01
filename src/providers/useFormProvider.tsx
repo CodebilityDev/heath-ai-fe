@@ -29,10 +29,14 @@ const useFormProvider = () => {
     resolver: zodResolver(generalSettingsSchema),
     defaultValues: {
       agentName: "",
-      dnd: false,
-      ssn: false,
-      profanity: false,
-      availabilityTime: "",
+      agentNameCustom: false,
+      availabilityTimeEnd: "17:00:00",
+      availabilityTimeStart: "09:00:00",
+      sendDNDReminder: false,
+      dndReminderMessage: "",
+      noSSN: false,
+      profanityStop: false,
+      sendOnlyOnAvailableTime: false,
     },
   });
 
