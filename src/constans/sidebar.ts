@@ -8,11 +8,6 @@ export const sidebarLinks = (args: { groupID: string }) => [
         to: `/app/view/${args.groupID}`,
       },
       {
-        name: "General Settings",
-        icon: "/svgs/link2.svg",
-        to: `/app/view/${args.groupID}/general-settings`,
-      },
-      {
         name: "Welcome Messages",
         icon: "/svgs/link1.svg",
         to: `/app/view/${args.groupID}/welcome`,
@@ -21,6 +16,21 @@ export const sidebarLinks = (args: { groupID: string }) => [
         name: "Auto Reply",
         icon: "/svgs/link1.svg",
         to: `/app/view/${args.groupID}/autoreply`,
+      },
+    ],
+  },
+  {
+    category: "Bot Settings",
+    links: [
+      {
+        name: "General Settings",
+        icon: "/svgs/link2.svg",
+        to: `/app/view/${args.groupID}/general-settings`,
+      },
+      {
+        name: "Queued Messages",
+        icon: "/svgs/link2.svg",
+        to: `/app/view/${args.groupID}/queued-messages`,
       },
       {
         name: "Custom Fields",
