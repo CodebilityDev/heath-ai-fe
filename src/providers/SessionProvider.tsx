@@ -4,13 +4,13 @@ const useSessionProvider = () => {
   const [sessionId, setSessionId] = useState<string>("");
 
   useEffect(() => {
-    const storedSessionId = localStorage.getItem("sessionId");
+    // const storedSessionId = localStorage.getItem("sessionId");
 
-    if (storedSessionId) {
-      setSessionId(storedSessionId);
-    } else {
-      generateNewSessionId();
-    }
+    // if (storedSessionId) {
+    // setSessionId(storedSessionId);
+    // } else {
+    generateNewSessionId();
+    // }
   }, []);
 
   const generateNewSessionId = () => {
