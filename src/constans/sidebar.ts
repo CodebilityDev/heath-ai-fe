@@ -8,19 +8,19 @@ export const sidebarLinks = (args: { groupID: string }) => [
         to: `/app/view/${args.groupID}`,
       },
       {
+        name: "General Settings",
+        icon: "/svgs/link2.svg",
+        to: `/app/view/${args.groupID}/general-settings`,
+      },
+      {
         name: "Welcome Messages",
         icon: "/svgs/link1.svg",
         to: `/app/view/${args.groupID}/welcome`,
       },
       {
         name: "Auto Reply",
-        icon: "/svgs/link2.svg",
+        icon: "/svgs/link1.svg",
         to: `/app/view/${args.groupID}/autoreply`,
-      },
-      {
-        name: "General Setiings",
-        icon: "/svgs/link2.svg",
-        to: `/app/view/${args.groupID}/general-settings`,
       },
       {
         name: "Custom Fields",

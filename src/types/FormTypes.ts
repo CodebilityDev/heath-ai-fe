@@ -48,9 +48,13 @@ export const signUpSchema = z
   });
 
 export const generalSettingsSchema = z.object({
-  agentName: z.string().min(1, { message: "Required" }),
-  dnd: z.boolean(),
-  ssn: z.boolean(),
-  profanity: z.boolean(),
-  availabilityTime: z.string(),
+  agentNameCustom: z.boolean(),
+  agentName: z.string(),
+  sendDNDReminder: z.boolean(),
+  dndReminderMessage: z.string(),
+  noSSN: z.boolean(),
+  profanityStop: z.boolean(),
+  sendOnlyOnAvailableTime: z.boolean(),
+  availabilityTimeStart: z.string(),
+  availabilityTimeEnd: z.string(),
 });
