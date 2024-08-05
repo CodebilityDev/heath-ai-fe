@@ -4,7 +4,7 @@ import Container from "../core/Container";
 
 const Header = () => {
   return (
-    <div className="flex w-full h-16">
+    <header className="flex w-full h-16 sticky top-0 bg-white z-50">
       <Container className="flex items-center justify-between px-4 ">
         <img src="/images/logo.png" alt="logo" width={150} className="" />
         <div className="hidden gap-x-8 lg:flex">
@@ -35,7 +35,7 @@ const Header = () => {
           Go To Dashboard
         </Button>
       </Container>
-    </div>
+    </header>
   );
 };
 
