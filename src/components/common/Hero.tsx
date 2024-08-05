@@ -33,7 +33,9 @@ const Hero = () => {
     },
   ];
   return (
-    <main className="min-h-[calc(100vh-4rem)] bg-gradient-to-b from-[#624ff62a] to-[#624ff615]">
+    // min-h-[calc(100vh-4rem]
+    // bg-gradient-to-b from-[#624ff62a] to-[#624ff615]
+    <main className="">
       <Container className="px-4">
         <div className="mt-8">
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 items-center">
