@@ -12,7 +12,7 @@ function BrandingPage() {
                 </div>
                 <div className='w-full inline-flex items-center'>
                     <p className="mr-4">Upload Company Logo</p>
-                    <div className="flex flex-col items-center justify-center">
+                    <div className="flex flex-col items-center justify-center cusor-pointer">
                         <label htmlFor="dropzone-file" className="flex flex-col items-center justify-center bg-[#E6ECFF] border border-primary border-dashed rounded-full w-[100px] h-[100px] cursor-pointer">
                             <PiUploadSimple
                                 size={20}
