@@ -7,6 +7,7 @@ interface UploadBoxProps {
     mode: 'square' | 'circle'
     id?: string
     key?: number
+    onFileChange?: any
 }
 
 function UploadBox(props: UploadBoxProps) {

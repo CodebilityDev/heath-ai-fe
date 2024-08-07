@@ -1,13 +1,9 @@
 import UploadBox from "@/components/core/UploadBox"
 
-interface LifeStyleImage {
-    url: string
-    id: string
-}
-
 interface ImagePackProps {
-    images: LifeStyleImage[]
+    images: string[]
     title: string
+    onChange?: any
 }
 
 function ImagePack(props: ImagePackProps) {
@@ -16,12 +12,11 @@ function ImagePack(props: ImagePackProps) {
             <p className="form-label">{props.title}</p>
             <div className="w-full flex flex-wrap gap-[36px] rounded-[12px] border border-dashed border-primary p-8">
                 {
-                    props.images.map((image: LifeStyleImage, idx: number) => {
+                    props.images.map((imageUrl: string, idx: number) => {
                         return (
                             <UploadBox
                                 title=""
-                                url={image.url}
-                                id={image.id}
+                                url={imageUrl}
                                 mode="circle"
                                 key={idx}
                             />

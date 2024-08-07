@@ -1,6 +1,7 @@
 interface ColorPickerProps {
     color: string,
-    title: string
+    title: string,
+    onChange?: any
 }
 
 function ColorPicker(props: ColorPickerProps) {
