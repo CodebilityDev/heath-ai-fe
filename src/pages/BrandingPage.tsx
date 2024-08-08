@@ -4,7 +4,11 @@ import UploadBox from "@/components/core/UploadBox";
 import ColorPicker from "@/components/core/ColorPicker";
 import ImagePack from "@/components/core/ImagePack";
 import { useParams } from 'react-router-dom';
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import {
+    CreateBrandingSetting as CREATE_BRANDING_SETTING,
+    UpdateBrandingSetting as UPDATE_BRANDING_SETTING
+} from '@/graphql/declarations/brandingSetting'
 interface BrandingSettingType {
     id: string
     companyName: string;
@@ -15,42 +19,44 @@ interface BrandingSettingType {
     companyMotto: string;
     companyDescription: string;
     logoPhotoUrl: string;
-    lifestylePhotoUrl: string[];
+    lifestylePhotoUrls: string[];
     bannerLogoPhotoUrl: string;
     colorPalette1: string;
     colorPalette1Contrast: string;
     colorPalette2: string;
     colorPalette2Contrast: string;
+    group?: any,
+    __typename?: string
 }
 
-const images = [
-    {
-        url: "https://avatars.githubusercontent.com/u/66856556?v=4",
-        id: "no"
-    }
-]
+const defaultBrandingSetting: BrandingSettingType = {
+    id: '',
+    companyName: '',
+    companyPhone: '',
+    companyEmail: '',
+    companyAddress: '',
+    companyWebsite: '',
+    companyMotto: '',
+    companyDescription: '',
+    logoPhotoUrl: '',
+    lifestylePhotoUrls: [],
+    bannerLogoPhotoUrl: '',
+    colorPalette1: '',
+    colorPalette1Contrast: '',
+    colorPalette2: '',
+    colorPalette2Contrast: '',
+    group: {},
+    __typename: ''
+}
 
 function BrandingPage() {
 
     const { gid } = useParams();
 
-    const [brandingSetting, setBrandingSetting] = useState<BrandingSettingType>({
-        id: '',
-        companyName: '',
-        companyPhone: '',
-        companyEmail: '',
-        companyAddress: '',
-        companyWebsite: '',
-        companyMotto: '',
-        companyDescription: '',
-        logoPhotoUrl: '',
-        lifestylePhotoUrl: [],
-        bannerLogoPhotoUrl: '',
-        colorPalette1: '',
-        colorPalette1Contrast: '',
-        colorPalette2: '',
-        colorPalette2Contrast: '',
-    })
+    const [brandingSetting, setBrandingSetting] = useState<BrandingSettingType>({ ...defaultBrandingSetting })
+
+    const [CreateBrandingSetting, createBrandingResult] = useMutation(CREATE_BRANDING_SETTING)
+    const [UpdateBrandingSetting, updateBrandingResult] = useMutation(UPDATE_BRANDING_SETTING)
 
     const handleBrandingSettingChange = (data: string | number | string[], prop: string) => {
         setBrandingSetting((prev: typeof brandingSetting) => ({
@@ -59,8 +65,53 @@ function BrandingPage() {
         }));
     };
 
+    const createBrandingSetting = () => {
+        const { id, group, __typename, ...brandingSettingData } = brandingSetting
+
+        CreateBrandingSetting({
+            variables: {
+                data: {
+                    ...brandingSettingData,
+                    group: {
+                        connect: {
+                            id: gid
+                        }
+                    }
+                }
+            }
+        }).then(({ data }: any) => {
+            if (data.createBranding) {
+                setBrandingSetting({ ...data.createBranding })
+            }
+        }).catch((err: any) => {
+            console.log('error ====>', err)
+        })
+    }
+
     const updateBrandingSetting = () => {
         //action to update branding setting.
+        const { id, group, __typename, ...brandingSettingData } = brandingSetting
+        UpdateBrandingSetting({
+            variables: {
+                data: {
+                    ...brandingSettingData,
+                    group: {
+                        connect: {
+                            id: gid
+                        }
+                    }
+                },
+                where: {
+                    id: id
+                }
+            }
+        }).then(({ data }: any) => {
+            if (data.updateBranding) {
+                setBrandingSetting({ ...data.updateBranding })
+            }
+        }).catch((err: any) => {
+            console.log('error ====>', err)
+        })
     }
 
     useEffect(() => {
@@ -78,18 +129,22 @@ function BrandingPage() {
                 <div className="inline-form-container">
                     <div className="inline-form-element">
                         <UploadBox
+                            id="logoPhotoUrl"
                             title="Upload Company Logo"
                             mode="circle"
                             url={brandingSetting.logoPhotoUrl}
-                            onFileChange={(url: string) => handleBrandingSettingChange(url, 'logoPhotoUrl')}
+                            onFileUpload={(url: string) => handleBrandingSettingChange(url, 'logoPhotoUrl')}
+                            onImageRemove={(url: string) => handleBrandingSettingChange('', 'logoPhotoUrl')}
                         />
                     </div>
                     <div className="inline-form-element">
                         <UploadBox
+                            id="bannerLogoPhotoUrl"
                             title="Upload Company Banner"
                             mode="square"
                             url={brandingSetting.bannerLogoPhotoUrl}
-                            onFileChange={(url: string) => handleBrandingSettingChange(url, 'bannerLogoPhotoUrl')}
+                            onFileUpload={(url: string) => handleBrandingSettingChange(url, "bannerLogoPhotoUrl")}
+                            onImageRemove={(url: string) => handleBrandingSettingChange('', 'bannerLogoPhotoUrl')}
                         />
                     </div>
                 </div>
@@ -193,15 +248,15 @@ function BrandingPage() {
                 </div>
                 <ImagePack
                     title="Lifestyle Photos"
-                    images={brandingSetting.lifestylePhotoUrl}
-                    onChange={(images: string[]) => handleBrandingSettingChange(images, 'lifestylePhotoUrl')}
+                    images={brandingSetting.lifestylePhotoUrls}
+                    onImagePackChange={(images: string[]) => handleBrandingSettingChange(images, 'lifestylePhotoUrls')}
                 />
                 <Button
                     variant="outline"
                     className="w-full sticky bottom-8 py-2 font-bold hover:text-white hover:bg-primary mb-8"
-                    onClick={updateBrandingSetting}
+                    onClick={brandingSetting.id === '' ? createBrandingSetting : updateBrandingSetting}
                 >
-                    Update Branding Setting
+                    {brandingSetting.id === '' ? 'Create Branding Setting' : 'Update Branding Setting'}
                 </Button>
             </div>
         </div>

@@ -1,12 +1,29 @@
 import UploadBox from "@/components/core/UploadBox"
+import { Proportions } from "lucide-react"
 
 interface ImagePackProps {
     images: string[]
     title: string
-    onChange?: any
+    onImagePackChange?: any
 }
 
+
 function ImagePack(props: ImagePackProps) {
+
+    const addImageToLifestyleBox = (url: string) => {
+        props.onImagePackChange([...props.images, url]);
+    }
+
+    const removeImage = (url: string) => {
+        let images = props.images
+        let idx = images.findIndex((image) => image === url)
+        console.log('url log', url, props.images, idx)
+        if (idx != -1) {
+            images.splice(idx, 1)
+            props.onImagePackChange([...images])
+        }
+    }
+
     return (
         <div className="w-full">
             <p className="form-label">{props.title}</p>
@@ -15,20 +32,24 @@ function ImagePack(props: ImagePackProps) {
                     props.images.map((imageUrl: string, idx: number) => {
                         return (
                             <UploadBox
+                                id={`-${String(idx)}`}
                                 title=""
                                 url={imageUrl}
                                 mode="circle"
                                 key={idx}
+                                onFileUpload={(url: string) => { }}
+                                onImageRemove={(url: string) => removeImage(url)}
                             />
                         )
                     })
                 }
                 <UploadBox
+                    id={`-default-${props.images.length}`}
                     title=""
                     url=""
                     mode="circle"
-                    id=""
-                    key={-1}
+                    onFileUpload={(url: string) => addImageToLifestyleBox(url)}
+                    onImageRemove={(url: string) => { }}
                 />
             </div>
         </div>
