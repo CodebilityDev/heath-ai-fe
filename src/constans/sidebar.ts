@@ -48,6 +48,11 @@ export const sidebarLinks = (args: { groupID: string }) => [
         to: "",
         type: "btn",
       },
+      {
+        name: "White Labeling",
+        icon: "/svgs/link2.svg",
+        to: `/app/view/${args.groupID}/whitelabeling`,
+      },
     ],
   },
   {

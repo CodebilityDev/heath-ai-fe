@@ -77,7 +77,7 @@ export function Sidebar({ className }: { className?: string }) {
           <div className="flex p-2 mt-6 border shadow-md bg-primary-light rounded-xl">
             <div className="flex items-center flex-1 overflow-hidden gap-x-2">
               <AvatarIcon />
-              <div className="flex flex-col overflow-hidden">
+              <div className="flex flex-col overflow-hidden w-full">
                 <p className="text-xs truncate rounded-md md:text-base">
                   {userData?.authenticatedItem?.email ?? (
                     <Skeleton className="h-4 mb-2 w-52 bg-gray-light" />

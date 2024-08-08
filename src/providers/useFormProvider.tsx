@@ -1,4 +1,6 @@
 import {
+  analyticsSchema,
+  brandingSchema,
   generalSettingsSchema,
   signInSchema,
   signUpSchema,
@@ -40,10 +42,32 @@ const useFormProvider = () => {
     },
   });
 
+  const analyticsForm = useForm<z.infer<typeof analyticsSchema>>({
+    resolver: zodResolver(analyticsSchema),
+    defaultValues: {
+      imageUrl: "",
+      baseUrl: "https://www.healthsharpa.com/?_agent_id=mycaexpress",
+      source: "",
+      medium: "",
+      campaigningName: "",
+      language: "English",
+    },
+  });
+
+  const brandingForm = useForm<z.infer<typeof brandingSchema>>({
+    resolver: zodResolver(brandingSchema),
+    defaultValues: {
+      campaigningName: "",
+      companyPhone: "",
+    },
+  });
+
   return {
     signInForm,
     signUpForm,
     generalSettingsForm,
+    analyticsForm,
+    brandingForm,
   };
 };
 
