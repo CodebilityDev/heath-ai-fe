@@ -58,3 +58,17 @@ export const generalSettingsSchema = z.object({
   availabilityTimeStart: z.string(),
   availabilityTimeEnd: z.string(),
 });
+
+export const analyticsSchema = z.object({
+  imageUrl: z.string(),
+  baseUrl: z.string(),
+  source: z.string(),
+  medium: z.string(),
+  campaigningName: z.string(),
+  language: z.string(),
+});
+
+export const brandingSchema = z.object({
+  campaigningName: z.string(),
+  companyPhone: z.string(),
+});

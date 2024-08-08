@@ -39,6 +39,7 @@ const documents = {
     "\n  query Ghl_me($input: Ghl_meInput!) {\n    ghl_me(input: $input) {\n      name\n      email\n      firstName\n      lastName\n      phone\n      address\n      state\n      country\n      postalCode\n      business {\n        name\n        address\n        city\n        state\n        country\n        postalCode\n        website\n        timezone\n        logoUrl\n      }\n    }\n  }\n": types.Ghl_MeDocument,
     "\n  query ghl_getContacts($input: Ghl_getContactsInput!) {\n    ghl_getContacts(input: $input) {\n      contacts {\n        id\n        locationId\n        email\n        timezone\n        country\n        source\n        dateAdded\n        businessId\n        firstName\n        lastName\n        contactName\n      }\n    }\n  }\n": types.Ghl_GetContactsDocument,
     "\n  mutation Ghl_sendMessage($input: Ghl_sendMessageInput!) {\n    ghl_sendMessage(input: $input) {\n      message\n      contactID\n      thread\n    }\n  }\n": types.Ghl_SendMessageDocument,
+    "\n  mutation File_generateUploadURL($input: File_generateUploadURLInput!) {\n    file_generateUploadURL(input: $input) {\n      getURL\n      putURL\n    }\n  }\n": types.File_GenerateUploadUrlDocument,
     "\nquery GetPendingQueue($input: Queue_getPendingMessagesInput!) {\n  queue_getPendingMessages(input: $input) {\n    queue {\n      id\n      data {\n        groupID\n        groupName\n        contactID\n        contactName\n        type\n        message\n        offTimeConfig {\n          timezone\n        }\n        forceSend\n      }\n      delay\n      delayString\n    }\n  }\n}\n": types.GetPendingQueueDocument,
     "\nmutation CancelPendingQueue($input: Queue_deletePendingMessageInput!) {\n  queue_deletePendingMessage(input: $input) {\n    queue {\n      id\n    }\n  }\n}\n": types.CancelPendingQueueDocument,
     "\n  query ChatSession($where: ChatSessionWhereUniqueInput!) {\n    chatSession(where: $where) {\n      sessionData\n    }\n  }\n": types.ChatSessionDocument,
@@ -167,6 +168,10 @@ export function graphql(source: "\n  query ghl_getContacts($input: Ghl_getContac
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(source: "\n  mutation Ghl_sendMessage($input: Ghl_sendMessageInput!) {\n    ghl_sendMessage(input: $input) {\n      message\n      contactID\n      thread\n    }\n  }\n"): (typeof documents)["\n  mutation Ghl_sendMessage($input: Ghl_sendMessageInput!) {\n    ghl_sendMessage(input: $input) {\n      message\n      contactID\n      thread\n    }\n  }\n"];
+/**
+ * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function graphql(source: "\n  mutation File_generateUploadURL($input: File_generateUploadURLInput!) {\n    file_generateUploadURL(input: $input) {\n      getURL\n      putURL\n    }\n  }\n"): (typeof documents)["\n  mutation File_generateUploadURL($input: File_generateUploadURLInput!) {\n    file_generateUploadURL(input: $input) {\n      getURL\n      putURL\n    }\n  }\n"];
 /**
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
