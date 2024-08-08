@@ -25,6 +25,8 @@ interface BrandingSettingType {
     colorPalette1Contrast: string;
     colorPalette2: string;
     colorPalette2Contrast: string;
+    backgroundColor: string;
+    textColor: string;
     group?: any,
     __typename?: string
 }
@@ -45,6 +47,8 @@ const defaultBrandingSetting: BrandingSettingType = {
     colorPalette1Contrast: '',
     colorPalette2: '',
     colorPalette2Contrast: '',
+    backgroundColor: '',
+    textColor: '',
     group: {},
     __typename: ''
 }
@@ -244,6 +248,18 @@ function BrandingPage() {
                         title="Color Palette2 Contrast"
                         color={brandingSetting.colorPalette2Contrast}
                         onChange={(color: string) => handleBrandingSettingChange(color, 'colorPalette2Contrast')}
+                    />
+                </div>
+                <div className="inline-form-container">
+                    <ColorPicker
+                        title="Background Color"
+                        color={brandingSetting.backgroundColor}
+                        onChange={(color: string) => handleBrandingSettingChange(color, 'backgroundColor')}
+                    />
+                    <ColorPicker
+                        title="Text Color"
+                        color={brandingSetting.textColor}
+                        onChange={(color: string) => handleBrandingSettingChange(color, 'textColor')}
                     />
                 </div>
                 <ImagePack
