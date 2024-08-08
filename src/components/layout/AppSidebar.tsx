@@ -321,7 +321,7 @@ export function Sidebar({ className }: { className?: string }) {
       <ApiKeyModal
         open={apiKeyModal}
         onClose={() => setApiKeyModal(false)}
-        onConnect={() => {}}
+        onConnect={() => { }}
       />
       {/* <HealthSherpaExcelExplore
         open={healthSherpaModal}

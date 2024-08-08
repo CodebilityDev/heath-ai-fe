@@ -71,7 +71,7 @@ export const sidebarLinks = (args: { groupID: string }) => [
       {
         name: "Branding",
         icon: "/svgs/link6.svg",
-        to: "",
+        to: `/app/view/${args.groupID}/branding`,
       },
     ],
   },
