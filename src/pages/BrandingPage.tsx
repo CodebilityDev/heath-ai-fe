@@ -7,28 +7,29 @@ import { useParams } from 'react-router-dom';
 import { useQuery, useMutation } from "@apollo/client";
 import {
     CreateBrandingSetting as CREATE_BRANDING_SETTING,
-    UpdateBrandingSetting as UPDATE_BRANDING_SETTING
+    UpdateBrandingSetting as UPDATE_BRANDING_SETTING,
+    GetBrandingSetting as GET_BRANDING_SETTING
 } from '@/graphql/declarations/brandingSetting'
 interface BrandingSettingType {
-    id: string
-    companyName: string;
-    companyPhone: string;
-    companyEmail: string;
-    companyAddress: string;
-    companyWebsite: string;
-    companyMotto: string;
-    companyDescription: string;
-    logoPhotoUrl: string;
-    lifestylePhotoUrls: string[];
-    bannerLogoPhotoUrl: string;
-    colorPalette1: string;
-    colorPalette1Contrast: string;
-    colorPalette2: string;
-    colorPalette2Contrast: string;
-    backgroundColor: string;
-    textColor: string;
-    group?: any,
-    __typename?: string
+    id?: string | null;
+    companyName?: string | null;
+    companyPhone?: string | null;
+    companyEmail?: string | null;
+    companyAddress?: string | null;
+    companyWebsite?: string | null;
+    companyMotto?: string | null;
+    companyDescription?: string | null;
+    logoPhotoUrl?: string | null;
+    lifestylePhotoUrls?: string[] | null;
+    bannerLogoPhotoUrl?: string | null;
+    colorPalette1?: string | null;
+    colorPalette1Contrast?: string | null;
+    colorPalette2?: string | null;
+    colorPalette2Contrast?: string | null;
+    backgroundColor?: string | null;
+    textColor?: string | null;
+    group?: any | null,
+    __typename?: string | null
 }
 
 const defaultBrandingSetting: BrandingSettingType = {
@@ -118,9 +119,21 @@ function BrandingPage() {
         })
     }
 
+    const { data: branding } = useQuery(GET_BRANDING_SETTING, {
+        variables: {
+            where: {
+                id: gid
+            },
+        },
+        skip: !gid,
+    });
+
     useEffect(() => {
-        //action to get the branding setting.
-    }, [])
+        if (branding?.group?.branding) {
+            const brandingData = branding?.group?.branding
+            setBrandingSetting({ ...brandingData })
+        }
+    }, [branding])
 
     return (
         <div className="mx-auto mt-8 flex items-center justify-center p-1">
@@ -159,7 +172,7 @@ function BrandingPage() {
                             type="text"
                             placeholder="Please input company name"
                             className="form-input"
-                            value={brandingSetting.companyName}
+                            value={brandingSetting.companyName || ''}
                             onChange={(e: any) => handleBrandingSettingChange(e.target.value, 'companyName')}
                         />
                     </div>
@@ -169,7 +182,7 @@ function BrandingPage() {
                             type="text"
                             placeholder="(916) 800-0000"
                             className="form-input"
-                            value={brandingSetting.companyPhone}
+                            value={brandingSetting.companyPhone || ''}
                             onChange={(e: any) => handleBrandingSettingChange(e.target.value, 'companyPhone')}
                         />
                     </div>
@@ -181,7 +194,7 @@ function BrandingPage() {
                             type="text"
                             placeholder="user@example.com"
                             className="form-input"
-                            value={brandingSetting.companyEmail}
+                            value={brandingSetting.companyEmail || ''}
                             onChange={(e: any) => handleBrandingSettingChange(e.target.value, 'companyEmail')}
                         />
                     </div>
@@ -191,7 +204,7 @@ function BrandingPage() {
                             type="text"
                             placeholder="NY, York Shire"
                             className="form-input"
-                            value={brandingSetting.companyAddress}
+                            value={brandingSetting.companyAddress || ''}
                             onChange={(e: any) => handleBrandingSettingChange(e.target.value, 'companyAddress')}
                         />
                     </div>
@@ -202,7 +215,7 @@ function BrandingPage() {
                         type="text"
                         placeholder="https://federal.org"
                         className="form-input"
-                        value={brandingSetting.companyWebsite}
+                        value={brandingSetting.companyWebsite || ''}
                         onChange={(e: any) => handleBrandingSettingChange(e.target.value, 'companyWebsite')}
                     />
                 </div>
@@ -212,7 +225,7 @@ function BrandingPage() {
                         rows={6}
                         placeholder="Please input company motto"
                         className="form-input"
-                        value={brandingSetting.companyMotto}
+                        value={brandingSetting.companyMotto || ''}
                         onChange={(e: any) => handleBrandingSettingChange(e.target.value, 'companyMotto')}
                     ></textarea>
                 </div>
@@ -222,49 +235,49 @@ function BrandingPage() {
                         rows={6}
                         placeholder="Please input company motto"
                         className="form-input"
-                        value={brandingSetting.companyDescription}
+                        value={brandingSetting.companyDescription || ''}
                         onChange={(e: any) => handleBrandingSettingChange(e.target.value, 'companyDescription')}
                     ></textarea>
                 </div>
                 <div className="inline-form-container">
                     <ColorPicker
                         title="Color Palette1"
-                        color={brandingSetting.colorPalette1}
+                        color={brandingSetting.colorPalette1 || ''}
                         onChange={(color: string) => handleBrandingSettingChange(color, 'colorPalette1')}
                     />
                     <ColorPicker
                         title="Color Palette1 Contrast"
-                        color={brandingSetting.colorPalette1Contrast}
+                        color={brandingSetting.colorPalette1Contrast || ''}
                         onChange={(color: string) => handleBrandingSettingChange(color, 'colorPalette1Contrast')}
                     />
                 </div>
                 <div className="inline-form-container">
                     <ColorPicker
                         title="Color Palette2"
-                        color={brandingSetting.colorPalette2}
+                        color={brandingSetting.colorPalette2 || ''}
                         onChange={(color: string) => handleBrandingSettingChange(color, 'colorPalette2')}
                     />
                     <ColorPicker
                         title="Color Palette2 Contrast"
-                        color={brandingSetting.colorPalette2Contrast}
+                        color={brandingSetting.colorPalette2Contrast || ''}
                         onChange={(color: string) => handleBrandingSettingChange(color, 'colorPalette2Contrast')}
                     />
                 </div>
                 <div className="inline-form-container">
                     <ColorPicker
                         title="Background Color"
-                        color={brandingSetting.backgroundColor}
+                        color={brandingSetting.backgroundColor || ''}
                         onChange={(color: string) => handleBrandingSettingChange(color, 'backgroundColor')}
                     />
                     <ColorPicker
                         title="Text Color"
-                        color={brandingSetting.textColor}
+                        color={brandingSetting.textColor || ''}
                         onChange={(color: string) => handleBrandingSettingChange(color, 'textColor')}
                     />
                 </div>
                 <ImagePack
                     title="Lifestyle Photos"
-                    images={brandingSetting.lifestylePhotoUrls}
+                    images={brandingSetting.lifestylePhotoUrls || []}
                     onImagePackChange={(images: string[]) => handleBrandingSettingChange(images, 'lifestylePhotoUrls')}
                 />
                 <Button

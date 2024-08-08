@@ -56,8 +56,9 @@ export const DeleteBrandingSetting = graphql(`
 `)
 
 export const GetBrandingSetting = graphql(`
-    query Branding($where: BrandingWhereUniqueInput!) {
-        branding(where: $where) {
+query GetBrandingSetting($where: GroupWhereUniqueInput!) {
+    group(where: $where) {
+      branding {
         id
         companyName
         companyMotto
@@ -73,6 +74,9 @@ export const GetBrandingSetting = graphql(`
         colorPalette1Contrast
         colorPalette2
         colorPalette2Contrast
-        }
+        backgroundColor
+        textColor
+      }
     }
+  }
 `)

@@ -6,7 +6,7 @@ import { FileUpload as FILE_UPLOAD } from '@/graphql/declarations/fileUpload'
 import axios from 'axios'
 interface UploadBoxProps {
     title: string,
-    url: string,
+    url?: string | null,
     mode: 'square' | 'circle'
     id?: string
     onFileUpload: any
@@ -65,8 +65,8 @@ function UploadBox(props: UploadBoxProps) {
                         :
                         <>
                             <div className="relative w-full h-full rounded-full" onMouseEnter={(e: any) => toggleRemoveIcon(e, true)} onMouseLeave={(e: any) => toggleRemoveIcon(e, false)}>
-                                <img src={props.url} alt="no image" className={`${props.mode === 'circle' ? 'rounded-full w-full h-full' : 'h-full w-auto'}`} />
-                                {showRemoveIcon && <div className="flex items-center justify-center w-full h-full absolute top-0 left-0 rounded-full hover:bg-[#202020] hover:opacity-50 hover:z-100" onClick={(e: any) => removeImage(e, props.url)}>
+                                <img src={props.url || ''} alt="no image" className={`${props.mode === 'circle' ? 'rounded-full w-full h-full' : 'h-full w-auto'}`} />
+                                {showRemoveIcon && <div className="flex items-center justify-center w-full h-full absolute top-0 left-0 rounded-full hover:bg-[#202020] hover:opacity-50 hover:z-100" onClick={(e: any) => removeImage(e, props.url || '')}>
                                     <IoIosRemoveCircleOutline
                                         color="#FFFFFF"
                                         size="25"
