@@ -46,6 +46,8 @@ const GeneralSettingsPage = () => {
         availability_enabled,
         availability_start,
         availability_end,
+        enable_activeSurvey,
+        enable_profileBuilder,
       } = groupData.group!;
       form.setValue("agentNameCustom", enable_botIsAssistant || false);
       form.setValue("agentName", botAssistantName ?? "");
@@ -62,6 +64,8 @@ const GeneralSettingsPage = () => {
         "availabilityTimeEnd",
         `${availability_end || "17"}:00`.padStart(5, "0")
       );
+      form.setValue("profileBuilder", enable_profileBuilder || false);
+      form.setValue("activeSurvey", enable_activeSurvey || false);
     }
   }, [groupData]);
 
@@ -100,6 +104,8 @@ const GeneralSettingsPage = () => {
           availability_enabled: formData.sendOnlyOnAvailableTime,
           availability_start: Number(hourStart),
           availability_end: Number(hourEnd),
+          enable_activeSurvey: formData.activeSurvey,
+          enable_profileBuilder: formData.profileBuilder,
         },
       },
     });
