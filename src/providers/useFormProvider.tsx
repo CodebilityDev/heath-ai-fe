@@ -39,6 +39,8 @@ const useFormProvider = () => {
       noSSN: false,
       profanityStop: false,
       sendOnlyOnAvailableTime: false,
+      profileBuilder: false,
+      activeSurvey: false,
     },
   });
 

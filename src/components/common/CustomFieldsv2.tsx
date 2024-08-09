@@ -73,11 +73,39 @@ const InsuranceFields: {
     dataType: "TEXT",
   },
   {
-    name: "Is Interested For CostDiscount",
+    name: "Is Interested For Cost Discount",
     dataType: "TEXT",
   },
   {
     name: "Husband/Spouse Name",
+    dataType: "TEXT",
+  },
+  {
+    name: "Yearly Salary",
+    dataType: "TEXT",
+  },
+  {
+    name: "Is Smoker",
+    dataType: "TEXT",
+  },
+  {
+    name: "How Many Dependents",
+    dataType: "TEXT",
+  },
+  {
+    name: "Suggested Plan",
+    dataType: "TEXT",
+  },
+  {
+    name: "Medicine Taken",
+    dataType: "TEXT",
+  },
+  {
+    name: "Preferred Providers (Doctor/Hospital)",
+    dataType: "TEXT",
+  },
+  {
+    name: "Previous Insurance",
     dataType: "TEXT",
   },
 ];

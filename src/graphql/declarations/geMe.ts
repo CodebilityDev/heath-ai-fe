@@ -70,6 +70,8 @@ export const GetGroup = graphql(`
       availability_start
       availability_end
       user_contextFields
+      enable_profileBuilder
+      enable_activeSurvey
     }
   }
 `);

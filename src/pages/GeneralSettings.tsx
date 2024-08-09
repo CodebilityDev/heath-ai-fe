@@ -46,6 +46,8 @@ const GeneralSettingsPage = () => {
         availability_enabled,
         availability_start,
         availability_end,
+        enable_activeSurvey,
+        enable_profileBuilder,
       } = groupData.group!;
       form.setValue("agentNameCustom", enable_botIsAssistant || false);
       form.setValue("agentName", botAssistantName ?? "");
@@ -62,6 +64,8 @@ const GeneralSettingsPage = () => {
         "availabilityTimeEnd",
         `${availability_end || "17"}:00`.padStart(5, "0")
       );
+      form.setValue("profileBuilder", enable_profileBuilder || false);
+      form.setValue("activeSurvey", enable_activeSurvey || false);
     }
   }, [groupData]);
 
@@ -100,6 +104,8 @@ const GeneralSettingsPage = () => {
           availability_enabled: formData.sendOnlyOnAvailableTime,
           availability_start: Number(hourStart),
           availability_end: Number(hourEnd),
+          enable_activeSurvey: formData.activeSurvey,
+          enable_profileBuilder: formData.profileBuilder,
         },
       },
     });
@@ -201,6 +207,49 @@ const GeneralSettingsPage = () => {
             if User disabled messages by sending 'STOP'. User can re-enable and
             receive messages again by sending a 'START'.
           </p>
+        </div>
+
+        <div className="p-4 rounded-md bg-slate-100 w-full flex flex-col gap-4">
+          <h3 className="font-bold">Active Profiling</h3>
+          <FormField
+            control={form.control}
+            name="profileBuilder"
+            render={({ field }) => (
+              <FormItem className="w-full flex gap-x-2 items-center">
+                <FormControl>
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="!mt-0">
+                  Update GHL Profile Info based on conversation
+                </FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="activeSurvey"
+            render={({ field }) => (
+              <FormItem className="w-full flex gap-x-2 items-center">
+                <FormControl className="">
+                  <Switch
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <FormLabel className="!mt-0">
+                  Explicitly Ask for User's Information after ChatGPT Provides
+                  an Insurance Plan (Check Custom Fields for the fields to be
+                  extracted)
+                </FormLabel>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
         <div className="p-4 rounded-md bg-slate-100 w-full flex flex-col gap-4">
           <h3 className="font-bold">AI Behavior</h3>

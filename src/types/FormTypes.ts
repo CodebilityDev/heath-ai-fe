@@ -57,6 +57,9 @@ export const generalSettingsSchema = z.object({
   sendOnlyOnAvailableTime: z.boolean(),
   availabilityTimeStart: z.string(),
   availabilityTimeEnd: z.string(),
+  sendOnlyOnAvailableDays: z.boolean(),
+  profileBuilder: z.boolean(),
+  activeSurvey: z.boolean(),
 });
 
 export const analyticsSchema = z.object({

@@ -72,6 +72,92 @@ export type AiKeyWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type Analytic = {
+  __typename?: 'Analytic';
+  direct_link?: Maybe<Scalars['String']['output']>;
+  generated_marketing_url?: Maybe<Scalars['String']['output']>;
+  google_analytics_id?: Maybe<Scalars['String']['output']>;
+  group?: Maybe<Group>;
+  id: Scalars['ID']['output'];
+  utm_baseurl?: Maybe<Scalars['String']['output']>;
+  utm_campaign?: Maybe<Scalars['String']['output']>;
+  utm_language?: Maybe<Scalars['String']['output']>;
+  utm_medium?: Maybe<Scalars['String']['output']>;
+  utm_source?: Maybe<Scalars['String']['output']>;
+};
+
+export type AnalyticCreateInput = {
+  direct_link?: InputMaybe<Scalars['String']['input']>;
+  generated_marketing_url?: InputMaybe<Scalars['String']['input']>;
+  google_analytics_id?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForCreateInput>;
+  utm_baseurl?: InputMaybe<Scalars['String']['input']>;
+  utm_campaign?: InputMaybe<Scalars['String']['input']>;
+  utm_language?: InputMaybe<Scalars['String']['input']>;
+  utm_medium?: InputMaybe<Scalars['String']['input']>;
+  utm_source?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AnalyticOrderByInput = {
+  direct_link?: InputMaybe<OrderDirection>;
+  generated_marketing_url?: InputMaybe<OrderDirection>;
+  google_analytics_id?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  utm_baseurl?: InputMaybe<OrderDirection>;
+  utm_campaign?: InputMaybe<OrderDirection>;
+  utm_language?: InputMaybe<OrderDirection>;
+  utm_medium?: InputMaybe<OrderDirection>;
+  utm_source?: InputMaybe<OrderDirection>;
+};
+
+export type AnalyticRelateToOneForCreateInput = {
+  connect?: InputMaybe<AnalyticWhereUniqueInput>;
+  create?: InputMaybe<AnalyticCreateInput>;
+};
+
+export type AnalyticRelateToOneForUpdateInput = {
+  connect?: InputMaybe<AnalyticWhereUniqueInput>;
+  create?: InputMaybe<AnalyticCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type AnalyticUpdateArgs = {
+  data: AnalyticUpdateInput;
+  where: AnalyticWhereUniqueInput;
+};
+
+export type AnalyticUpdateInput = {
+  direct_link?: InputMaybe<Scalars['String']['input']>;
+  generated_marketing_url?: InputMaybe<Scalars['String']['input']>;
+  google_analytics_id?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForUpdateInput>;
+  utm_baseurl?: InputMaybe<Scalars['String']['input']>;
+  utm_campaign?: InputMaybe<Scalars['String']['input']>;
+  utm_language?: InputMaybe<Scalars['String']['input']>;
+  utm_medium?: InputMaybe<Scalars['String']['input']>;
+  utm_source?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AnalyticWhereInput = {
+  AND?: InputMaybe<Array<AnalyticWhereInput>>;
+  NOT?: InputMaybe<Array<AnalyticWhereInput>>;
+  OR?: InputMaybe<Array<AnalyticWhereInput>>;
+  direct_link?: InputMaybe<StringFilter>;
+  generated_marketing_url?: InputMaybe<StringFilter>;
+  google_analytics_id?: InputMaybe<StringFilter>;
+  group?: InputMaybe<GroupWhereInput>;
+  id?: InputMaybe<IdFilter>;
+  utm_baseurl?: InputMaybe<StringFilter>;
+  utm_campaign?: InputMaybe<StringFilter>;
+  utm_language?: InputMaybe<StringFilter>;
+  utm_medium?: InputMaybe<StringFilter>;
+  utm_source?: InputMaybe<StringFilter>;
+};
+
+export type AnalyticWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type AuthenticatedItem = User;
 
 export type BooleanFilter = {
@@ -828,6 +914,7 @@ export type Group = {
   aiKey?: Maybe<AiKey>;
   aiLogs?: Maybe<Array<GroupAiLog>>;
   aiLogsCount?: Maybe<Scalars['Int']['output']>;
+  analytic?: Maybe<Analytic>;
   availability_enabled?: Maybe<Scalars['Boolean']['output']>;
   availability_end?: Maybe<Scalars['Int']['output']>;
   availability_start?: Maybe<Scalars['Int']['output']>;
@@ -997,6 +1084,7 @@ export type GroupCreateInput = {
   agent_lastName?: InputMaybe<Scalars['String']['input']>;
   aiKey?: InputMaybe<AiKeyRelateToOneForCreateInput>;
   aiLogs?: InputMaybe<GroupAiLogRelateToManyForCreateInput>;
+  analytic?: InputMaybe<AnalyticRelateToOneForCreateInput>;
   availability_enabled?: InputMaybe<Scalars['Boolean']['input']>;
   availability_end?: InputMaybe<Scalars['Int']['input']>;
   availability_start?: InputMaybe<Scalars['Int']['input']>;
@@ -1132,6 +1220,7 @@ export type GroupUpdateInput = {
   agent_lastName?: InputMaybe<Scalars['String']['input']>;
   aiKey?: InputMaybe<AiKeyRelateToOneForUpdateInput>;
   aiLogs?: InputMaybe<GroupAiLogRelateToManyForUpdateInput>;
+  analytic?: InputMaybe<AnalyticRelateToOneForUpdateInput>;
   availability_enabled?: InputMaybe<Scalars['Boolean']['input']>;
   availability_end?: InputMaybe<Scalars['Int']['input']>;
   availability_start?: InputMaybe<Scalars['Int']['input']>;
@@ -1168,6 +1257,7 @@ export type GroupWhereInput = {
   agent_lastName?: InputMaybe<StringFilter>;
   aiKey?: InputMaybe<AiKeyWhereInput>;
   aiLogs?: InputMaybe<GroupAiLogManyRelationFilter>;
+  analytic?: InputMaybe<AnalyticWhereInput>;
   availability_enabled?: InputMaybe<BooleanFilter>;
   availability_end?: InputMaybe<IntNullableFilter>;
   availability_start?: InputMaybe<IntNullableFilter>;
@@ -1372,6 +1462,8 @@ export type Mutation = {
   authenticateUserWithPassword?: Maybe<UserAuthenticationWithPasswordResult>;
   createAIKey?: Maybe<AiKey>;
   createAIKeys?: Maybe<Array<Maybe<AiKey>>>;
+  createAnalytic?: Maybe<Analytic>;
+  createAnalytics?: Maybe<Array<Maybe<Analytic>>>;
   createBotConfig?: Maybe<BotConfig>;
   createBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
   createBranding?: Maybe<Branding>;
@@ -1401,6 +1493,8 @@ export type Mutation = {
   createUsers?: Maybe<Array<Maybe<User>>>;
   deleteAIKey?: Maybe<AiKey>;
   deleteAIKeys?: Maybe<Array<Maybe<AiKey>>>;
+  deleteAnalytic?: Maybe<Analytic>;
+  deleteAnalytics?: Maybe<Array<Maybe<Analytic>>>;
   deleteBotConfig?: Maybe<BotConfig>;
   deleteBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
   deleteBranding?: Maybe<Branding>;
@@ -1435,6 +1529,8 @@ export type Mutation = {
   queue_deletePendingMessage?: Maybe<QueuePendingMessages>;
   updateAIKey?: Maybe<AiKey>;
   updateAIKeys?: Maybe<Array<Maybe<AiKey>>>;
+  updateAnalytic?: Maybe<Analytic>;
+  updateAnalytics?: Maybe<Array<Maybe<Analytic>>>;
   updateBotConfig?: Maybe<BotConfig>;
   updateBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
   updateBranding?: Maybe<Branding>;
@@ -1508,6 +1604,16 @@ export type MutationCreateAiKeyArgs = {
 
 export type MutationCreateAiKeysArgs = {
   data: Array<AiKeyCreateInput>;
+};
+
+
+export type MutationCreateAnalyticArgs = {
+  data: AnalyticCreateInput;
+};
+
+
+export type MutationCreateAnalyticsArgs = {
+  data: Array<AnalyticCreateInput>;
 };
 
 
@@ -1653,6 +1759,16 @@ export type MutationDeleteAiKeyArgs = {
 
 export type MutationDeleteAiKeysArgs = {
   where: Array<AiKeyWhereUniqueInput>;
+};
+
+
+export type MutationDeleteAnalyticArgs = {
+  where: AnalyticWhereUniqueInput;
+};
+
+
+export type MutationDeleteAnalyticsArgs = {
+  where: Array<AnalyticWhereUniqueInput>;
 };
 
 
@@ -1819,6 +1935,17 @@ export type MutationUpdateAiKeyArgs = {
 
 export type MutationUpdateAiKeysArgs = {
   data: Array<AiKeyUpdateArgs>;
+};
+
+
+export type MutationUpdateAnalyticArgs = {
+  data: AnalyticUpdateInput;
+  where: AnalyticWhereUniqueInput;
+};
+
+
+export type MutationUpdateAnalyticsArgs = {
+  data: Array<AnalyticUpdateArgs>;
 };
 
 
@@ -1998,6 +2125,9 @@ export type Query = {
   aIKey?: Maybe<AiKey>;
   aIKeys?: Maybe<Array<AiKey>>;
   aIKeysCount?: Maybe<Scalars['Int']['output']>;
+  analytic?: Maybe<Analytic>;
+  analytics?: Maybe<Array<Analytic>>;
+  analyticsCount?: Maybe<Scalars['Int']['output']>;
   authenticatedItem?: Maybe<AuthenticatedItem>;
   botConfig?: Maybe<BotConfig>;
   botConfigs?: Maybe<Array<BotConfig>>;
@@ -2064,6 +2194,25 @@ export type QueryAiKeysArgs = {
 
 export type QueryAiKeysCountArgs = {
   where?: AiKeyWhereInput;
+};
+
+
+export type QueryAnalyticArgs = {
+  where: AnalyticWhereUniqueInput;
+};
+
+
+export type QueryAnalyticsArgs = {
+  cursor?: InputMaybe<AnalyticWhereUniqueInput>;
+  orderBy?: Array<AnalyticOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: AnalyticWhereInput;
+};
+
+
+export type QueryAnalyticsCountArgs = {
+  where?: AnalyticWhereInput;
 };
 
 
@@ -2875,7 +3024,7 @@ export type GroupQueryVariables = Exact<{
 }>;
 
 
-export type GroupQuery = { __typename?: 'Query', group?: { __typename?: 'Group', id: string, name?: string | null, membersCount?: number | null, enable_globalWelcome?: boolean | null, enable_globalAutoReply?: boolean | null, enable_globalContactUpdate?: boolean | null, contactConfigs?: any | null, enable_botIsAssistant?: boolean | null, botAssistantName?: string | null, check_dndNotice?: boolean | null, dndNoticeMessage?: string | null, enable_noSSN?: boolean | null, enable_checkProfanity?: boolean | null, availability_enabled?: boolean | null, availability_start?: number | null, availability_end?: number | null, user_contextFields?: any | null, members?: Array<{ __typename?: 'GroupMember', id: string, access?: number | null, user?: { __typename?: 'User', id: string, displayName?: string | null, email?: string | null } | null }> | null, botConfig?: { __typename?: 'BotConfig', id: string } | null, ghlAccess?: { __typename?: 'GHLAccess', id: string, locationId?: string | null, refreshToken?: string | null, scope?: string | null } | null, aiKey?: { __typename?: 'AIKey', id: string, openapiKey?: string | null } | null } | null };
+export type GroupQuery = { __typename?: 'Query', group?: { __typename?: 'Group', id: string, name?: string | null, membersCount?: number | null, enable_globalWelcome?: boolean | null, enable_globalAutoReply?: boolean | null, enable_globalContactUpdate?: boolean | null, contactConfigs?: any | null, enable_botIsAssistant?: boolean | null, botAssistantName?: string | null, check_dndNotice?: boolean | null, dndNoticeMessage?: string | null, enable_noSSN?: boolean | null, enable_checkProfanity?: boolean | null, availability_enabled?: boolean | null, availability_start?: number | null, availability_end?: number | null, user_contextFields?: any | null, enable_profileBuilder?: boolean | null, enable_activeSurvey?: boolean | null, members?: Array<{ __typename?: 'GroupMember', id: string, access?: number | null, user?: { __typename?: 'User', id: string, displayName?: string | null, email?: string | null } | null }> | null, botConfig?: { __typename?: 'BotConfig', id: string } | null, ghlAccess?: { __typename?: 'GHLAccess', id: string, locationId?: string | null, refreshToken?: string | null, scope?: string | null } | null, aiKey?: { __typename?: 'AIKey', id: string, openapiKey?: string | null } | null } | null };
 
 export type UpdateUserMutationVariables = Exact<{
   where: UserWhereUniqueInput;
@@ -3012,7 +3161,7 @@ export const ModifyCustomFieldsDocument = {"kind":"Document","definitions":[{"ki
 export const Ghl_BreakCustomFieldsCacheDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Ghl_breakCustomFieldsCache"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_breakCustomFieldsCacheInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_breakCustomFieldsCache"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}]}]}}]} as unknown as DocumentNode<Ghl_BreakCustomFieldsCacheMutation, Ghl_BreakCustomFieldsCacheMutationVariables>;
 export const UserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"User"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"authenticatedItem"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"InlineFragment","typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"role"}},{"kind":"Field","name":{"kind":"Name","value":"createdAt"}}]}}]}}]}}]} as unknown as DocumentNode<UserQuery, UserQueryVariables>;
 export const GroupsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Groups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groups"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"ghlAccess"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<GroupsQuery, GroupsQueryVariables>;
-export const GroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Group"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"members"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"access"}}]}},{"kind":"Field","name":{"kind":"Name","value":"membersCount"}},{"kind":"Field","name":{"kind":"Name","value":"botConfig"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ghlAccess"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"scope"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aiKey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"openapiKey"}}]}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalWelcome"}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalAutoReply"}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalContactUpdate"}},{"kind":"Field","name":{"kind":"Name","value":"contactConfigs"}},{"kind":"Field","name":{"kind":"Name","value":"enable_botIsAssistant"}},{"kind":"Field","name":{"kind":"Name","value":"botAssistantName"}},{"kind":"Field","name":{"kind":"Name","value":"check_dndNotice"}},{"kind":"Field","name":{"kind":"Name","value":"dndNoticeMessage"}},{"kind":"Field","name":{"kind":"Name","value":"enable_noSSN"}},{"kind":"Field","name":{"kind":"Name","value":"enable_checkProfanity"}},{"kind":"Field","name":{"kind":"Name","value":"availability_enabled"}},{"kind":"Field","name":{"kind":"Name","value":"availability_start"}},{"kind":"Field","name":{"kind":"Name","value":"availability_end"}},{"kind":"Field","name":{"kind":"Name","value":"user_contextFields"}}]}}]}}]} as unknown as DocumentNode<GroupQuery, GroupQueryVariables>;
+export const GroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Group"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"group"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"members"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"user"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"displayName"}},{"kind":"Field","name":{"kind":"Name","value":"email"}}]}},{"kind":"Field","name":{"kind":"Name","value":"access"}}]}},{"kind":"Field","name":{"kind":"Name","value":"membersCount"}},{"kind":"Field","name":{"kind":"Name","value":"botConfig"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}},{"kind":"Field","name":{"kind":"Name","value":"ghlAccess"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"refreshToken"}},{"kind":"Field","name":{"kind":"Name","value":"scope"}}]}},{"kind":"Field","name":{"kind":"Name","value":"aiKey"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"openapiKey"}}]}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalWelcome"}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalAutoReply"}},{"kind":"Field","name":{"kind":"Name","value":"enable_globalContactUpdate"}},{"kind":"Field","name":{"kind":"Name","value":"contactConfigs"}},{"kind":"Field","name":{"kind":"Name","value":"enable_botIsAssistant"}},{"kind":"Field","name":{"kind":"Name","value":"botAssistantName"}},{"kind":"Field","name":{"kind":"Name","value":"check_dndNotice"}},{"kind":"Field","name":{"kind":"Name","value":"dndNoticeMessage"}},{"kind":"Field","name":{"kind":"Name","value":"enable_noSSN"}},{"kind":"Field","name":{"kind":"Name","value":"enable_checkProfanity"}},{"kind":"Field","name":{"kind":"Name","value":"availability_enabled"}},{"kind":"Field","name":{"kind":"Name","value":"availability_start"}},{"kind":"Field","name":{"kind":"Name","value":"availability_end"}},{"kind":"Field","name":{"kind":"Name","value":"user_contextFields"}},{"kind":"Field","name":{"kind":"Name","value":"enable_profileBuilder"}},{"kind":"Field","name":{"kind":"Name","value":"enable_activeSurvey"}}]}}]}}]} as unknown as DocumentNode<GroupQuery, GroupQueryVariables>;
 export const UpdateUserDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateUser"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"UserUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateUser"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateUserMutation, UpdateUserMutationVariables>;
 export const CreateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupCreateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<CreateGroupMutation, CreateGroupMutationVariables>;
 export const UpdateGroupDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateGroup"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupWhereUniqueInput"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"data"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"GroupUpdateInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateGroup"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}},{"kind":"Argument","name":{"kind":"Name","value":"data"},"value":{"kind":"Variable","name":{"kind":"Name","value":"data"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]} as unknown as DocumentNode<UpdateGroupMutation, UpdateGroupMutationVariables>;
