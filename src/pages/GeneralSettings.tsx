@@ -72,7 +72,7 @@ const GeneralSettingsPage = () => {
   const processSubmit = async (
     formData: z.infer<typeof generalSettingsSchema>
   ) => {
-    // console.log(formData);
+    console.log(formData);
     /**
      * agentNameCustom: z.ZodBoolean;
     agentName: z.ZodString;
@@ -352,6 +352,11 @@ const GeneralSettingsPage = () => {
         <Button
           className="py-3 w-full text-white bg-primary rounded-xl"
           type="submit"
+          onClick={(e) => {
+            e.preventDefault();
+            console.log();
+            processSubmit(form.getValues());
+          }}
         >
           Save
         </Button>
