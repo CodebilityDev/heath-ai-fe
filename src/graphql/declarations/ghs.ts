@@ -56,3 +56,12 @@ export const Ghl_sendMessage = graphql(`
     }
   }
 `);
+
+export const File_generateUploadURL = graphql(`
+  mutation File_generateUploadURL($input: File_generateUploadURLInput!) {
+    file_generateUploadURL(input: $input) {
+      getURL
+      putURL
+    }
+  }
+`);

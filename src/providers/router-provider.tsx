@@ -21,6 +21,7 @@ import { AppLayout } from "@/components/layout/AppLayout";
 import GeneralSettingsPage from "@/pages/GeneralSettings";
 import CustomFieldsPage from "@/pages/CustomFields";
 import QueuedMessagePage from "@/pages/QueuedMessages";
+import WhiteLabeling from "@/pages/WhiteLabeling";
 
 const router = createBrowserRouter([
   {
@@ -70,6 +71,10 @@ const router = createBrowserRouter([
               {
                 path: "conversationalchatbuilder",
                 element: <ConversationChatBuilder />,
+              },
+              {
+                path: "whitelabeling",
+                element: <WhiteLabeling />,
               },
             ],
           },

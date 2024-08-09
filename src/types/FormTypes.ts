@@ -61,3 +61,17 @@ export const generalSettingsSchema = z.object({
   profileBuilder: z.boolean(),
   activeSurvey: z.boolean(),
 });
+
+export const analyticsSchema = z.object({
+  imageUrl: z.string(),
+  baseUrl: z.string(),
+  source: z.string(),
+  medium: z.string(),
+  campaigningName: z.string(),
+  language: z.string(),
+});
+
+export const brandingSchema = z.object({
+  campaigningName: z.string(),
+  companyPhone: z.string(),
+});

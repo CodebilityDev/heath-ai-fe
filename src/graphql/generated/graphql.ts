@@ -199,6 +199,130 @@ export type BotConfigWhereUniqueInput = {
   id?: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type Branding = {
+  __typename?: 'Branding';
+  backgroundColor?: Maybe<Scalars['String']['output']>;
+  bannerLogoPhotoUrl?: Maybe<Scalars['String']['output']>;
+  colorPalette1?: Maybe<Scalars['String']['output']>;
+  colorPalette1Contrast?: Maybe<Scalars['String']['output']>;
+  colorPalette2?: Maybe<Scalars['String']['output']>;
+  colorPalette2Contrast?: Maybe<Scalars['String']['output']>;
+  companyAddress?: Maybe<Scalars['String']['output']>;
+  companyDescription?: Maybe<Scalars['String']['output']>;
+  companyEmail?: Maybe<Scalars['String']['output']>;
+  companyMotto?: Maybe<Scalars['String']['output']>;
+  companyName?: Maybe<Scalars['String']['output']>;
+  companyPhone?: Maybe<Scalars['String']['output']>;
+  companyWebsite?: Maybe<Scalars['String']['output']>;
+  group?: Maybe<Group>;
+  id: Scalars['ID']['output'];
+  lifestylePhotoUrls?: Maybe<Scalars['JSON']['output']>;
+  logoPhotoUrl?: Maybe<Scalars['String']['output']>;
+  textColor?: Maybe<Scalars['String']['output']>;
+};
+
+export type BrandingCreateInput = {
+  backgroundColor?: InputMaybe<Scalars['String']['input']>;
+  bannerLogoPhotoUrl?: InputMaybe<Scalars['String']['input']>;
+  colorPalette1?: InputMaybe<Scalars['String']['input']>;
+  colorPalette1Contrast?: InputMaybe<Scalars['String']['input']>;
+  colorPalette2?: InputMaybe<Scalars['String']['input']>;
+  colorPalette2Contrast?: InputMaybe<Scalars['String']['input']>;
+  companyAddress?: InputMaybe<Scalars['String']['input']>;
+  companyDescription?: InputMaybe<Scalars['String']['input']>;
+  companyEmail?: InputMaybe<Scalars['String']['input']>;
+  companyMotto?: InputMaybe<Scalars['String']['input']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
+  companyPhone?: InputMaybe<Scalars['String']['input']>;
+  companyWebsite?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForCreateInput>;
+  lifestylePhotoUrls?: InputMaybe<Scalars['JSON']['input']>;
+  logoPhotoUrl?: InputMaybe<Scalars['String']['input']>;
+  textColor?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BrandingOrderByInput = {
+  backgroundColor?: InputMaybe<OrderDirection>;
+  bannerLogoPhotoUrl?: InputMaybe<OrderDirection>;
+  colorPalette1?: InputMaybe<OrderDirection>;
+  colorPalette1Contrast?: InputMaybe<OrderDirection>;
+  colorPalette2?: InputMaybe<OrderDirection>;
+  colorPalette2Contrast?: InputMaybe<OrderDirection>;
+  companyAddress?: InputMaybe<OrderDirection>;
+  companyDescription?: InputMaybe<OrderDirection>;
+  companyEmail?: InputMaybe<OrderDirection>;
+  companyMotto?: InputMaybe<OrderDirection>;
+  companyName?: InputMaybe<OrderDirection>;
+  companyPhone?: InputMaybe<OrderDirection>;
+  companyWebsite?: InputMaybe<OrderDirection>;
+  id?: InputMaybe<OrderDirection>;
+  logoPhotoUrl?: InputMaybe<OrderDirection>;
+  textColor?: InputMaybe<OrderDirection>;
+};
+
+export type BrandingRelateToOneForCreateInput = {
+  connect?: InputMaybe<BrandingWhereUniqueInput>;
+  create?: InputMaybe<BrandingCreateInput>;
+};
+
+export type BrandingRelateToOneForUpdateInput = {
+  connect?: InputMaybe<BrandingWhereUniqueInput>;
+  create?: InputMaybe<BrandingCreateInput>;
+  disconnect?: InputMaybe<Scalars['Boolean']['input']>;
+};
+
+export type BrandingUpdateArgs = {
+  data: BrandingUpdateInput;
+  where: BrandingWhereUniqueInput;
+};
+
+export type BrandingUpdateInput = {
+  backgroundColor?: InputMaybe<Scalars['String']['input']>;
+  bannerLogoPhotoUrl?: InputMaybe<Scalars['String']['input']>;
+  colorPalette1?: InputMaybe<Scalars['String']['input']>;
+  colorPalette1Contrast?: InputMaybe<Scalars['String']['input']>;
+  colorPalette2?: InputMaybe<Scalars['String']['input']>;
+  colorPalette2Contrast?: InputMaybe<Scalars['String']['input']>;
+  companyAddress?: InputMaybe<Scalars['String']['input']>;
+  companyDescription?: InputMaybe<Scalars['String']['input']>;
+  companyEmail?: InputMaybe<Scalars['String']['input']>;
+  companyMotto?: InputMaybe<Scalars['String']['input']>;
+  companyName?: InputMaybe<Scalars['String']['input']>;
+  companyPhone?: InputMaybe<Scalars['String']['input']>;
+  companyWebsite?: InputMaybe<Scalars['String']['input']>;
+  group?: InputMaybe<GroupRelateToOneForUpdateInput>;
+  lifestylePhotoUrls?: InputMaybe<Scalars['JSON']['input']>;
+  logoPhotoUrl?: InputMaybe<Scalars['String']['input']>;
+  textColor?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type BrandingWhereInput = {
+  AND?: InputMaybe<Array<BrandingWhereInput>>;
+  NOT?: InputMaybe<Array<BrandingWhereInput>>;
+  OR?: InputMaybe<Array<BrandingWhereInput>>;
+  backgroundColor?: InputMaybe<StringFilter>;
+  bannerLogoPhotoUrl?: InputMaybe<StringFilter>;
+  colorPalette1?: InputMaybe<StringFilter>;
+  colorPalette1Contrast?: InputMaybe<StringFilter>;
+  colorPalette2?: InputMaybe<StringFilter>;
+  colorPalette2Contrast?: InputMaybe<StringFilter>;
+  companyAddress?: InputMaybe<StringFilter>;
+  companyDescription?: InputMaybe<StringFilter>;
+  companyEmail?: InputMaybe<StringFilter>;
+  companyMotto?: InputMaybe<StringFilter>;
+  companyName?: InputMaybe<StringFilter>;
+  companyPhone?: InputMaybe<StringFilter>;
+  companyWebsite?: InputMaybe<StringFilter>;
+  group?: InputMaybe<GroupWhereInput>;
+  id?: InputMaybe<IdFilter>;
+  logoPhotoUrl?: InputMaybe<StringFilter>;
+  textColor?: InputMaybe<StringFilter>;
+};
+
+export type BrandingWhereUniqueInput = {
+  id?: InputMaybe<Scalars['ID']['input']>;
+};
+
 export type ChatConversationSession = {
   __typename?: 'ChatConversationSession';
   botConfig?: Maybe<ConversationBotConfig>;
@@ -471,6 +595,16 @@ export type DateTimeNullableFilter = {
   notIn?: InputMaybe<Array<Scalars['DateTime']['input']>>;
 };
 
+export type FileUploadUrl = {
+  __typename?: 'FileUploadURL';
+  getURL: Scalars['String']['output'];
+  putURL: Scalars['String']['output'];
+};
+
+export type File_GenerateUploadUrlInput = {
+  fileID: Scalars['String']['input'];
+};
+
 export type GhlAccess = {
   __typename?: 'GHLAccess';
   companyId?: Maybe<Scalars['String']['output']>;
@@ -688,6 +822,7 @@ export type Ghl_SetCustomFieldsInputCustomFields = {
 
 export type Group = {
   __typename?: 'Group';
+  activeSurveySample?: Maybe<Scalars['String']['output']>;
   agent_firstName?: Maybe<Scalars['String']['output']>;
   agent_lastName?: Maybe<Scalars['String']['output']>;
   aiKey?: Maybe<AiKey>;
@@ -698,10 +833,12 @@ export type Group = {
   availability_start?: Maybe<Scalars['Int']['output']>;
   botAssistantName?: Maybe<Scalars['String']['output']>;
   botConfig?: Maybe<BotConfig>;
+  branding?: Maybe<Branding>;
   check_dndNotice?: Maybe<Scalars['Boolean']['output']>;
   contactConfigs?: Maybe<Scalars['JSON']['output']>;
   conversationBotConfig?: Maybe<ConversationBotConfig>;
   dndNoticeMessage?: Maybe<Scalars['String']['output']>;
+  enable_activeSurvey?: Maybe<Scalars['Boolean']['output']>;
   enable_botIsAssistant?: Maybe<Scalars['Boolean']['output']>;
   enable_checkDnd?: Maybe<Scalars['Boolean']['output']>;
   enable_checkProfanity?: Maybe<Scalars['Boolean']['output']>;
@@ -709,6 +846,7 @@ export type Group = {
   enable_globalContactUpdate?: Maybe<Scalars['Boolean']['output']>;
   enable_globalWelcome?: Maybe<Scalars['Boolean']['output']>;
   enable_noSSN?: Maybe<Scalars['Boolean']['output']>;
+  enable_profileBuilder?: Maybe<Scalars['Boolean']['output']>;
   enable_stopNotice?: Maybe<Scalars['Boolean']['output']>;
   ghlAccess?: Maybe<GhlAccess>;
   id: Scalars['ID']['output'];
@@ -854,6 +992,7 @@ export type GroupAiLogWhereUniqueInput = {
 };
 
 export type GroupCreateInput = {
+  activeSurveySample?: InputMaybe<Scalars['String']['input']>;
   agent_firstName?: InputMaybe<Scalars['String']['input']>;
   agent_lastName?: InputMaybe<Scalars['String']['input']>;
   aiKey?: InputMaybe<AiKeyRelateToOneForCreateInput>;
@@ -863,10 +1002,12 @@ export type GroupCreateInput = {
   availability_start?: InputMaybe<Scalars['Int']['input']>;
   botAssistantName?: InputMaybe<Scalars['String']['input']>;
   botConfig?: InputMaybe<BotConfigRelateToOneForCreateInput>;
+  branding?: InputMaybe<BrandingRelateToOneForCreateInput>;
   check_dndNotice?: InputMaybe<Scalars['Boolean']['input']>;
   contactConfigs?: InputMaybe<Scalars['JSON']['input']>;
   conversationBotConfig?: InputMaybe<ConversationBotConfigRelateToOneForCreateInput>;
   dndNoticeMessage?: InputMaybe<Scalars['String']['input']>;
+  enable_activeSurvey?: InputMaybe<Scalars['Boolean']['input']>;
   enable_botIsAssistant?: InputMaybe<Scalars['Boolean']['input']>;
   enable_checkDnd?: InputMaybe<Scalars['Boolean']['input']>;
   enable_checkProfanity?: InputMaybe<Scalars['Boolean']['input']>;
@@ -874,6 +1015,7 @@ export type GroupCreateInput = {
   enable_globalContactUpdate?: InputMaybe<Scalars['Boolean']['input']>;
   enable_globalWelcome?: InputMaybe<Scalars['Boolean']['input']>;
   enable_noSSN?: InputMaybe<Scalars['Boolean']['input']>;
+  enable_profileBuilder?: InputMaybe<Scalars['Boolean']['input']>;
   enable_stopNotice?: InputMaybe<Scalars['Boolean']['input']>;
   ghlAccess?: InputMaybe<GhlAccessRelateToOneForCreateInput>;
   members?: InputMaybe<GroupMemberRelateToManyForCreateInput>;
@@ -945,6 +1087,7 @@ export type GroupMemberWhereUniqueInput = {
 };
 
 export type GroupOrderByInput = {
+  activeSurveySample?: InputMaybe<OrderDirection>;
   agent_firstName?: InputMaybe<OrderDirection>;
   agent_lastName?: InputMaybe<OrderDirection>;
   availability_enabled?: InputMaybe<OrderDirection>;
@@ -953,6 +1096,7 @@ export type GroupOrderByInput = {
   botAssistantName?: InputMaybe<OrderDirection>;
   check_dndNotice?: InputMaybe<OrderDirection>;
   dndNoticeMessage?: InputMaybe<OrderDirection>;
+  enable_activeSurvey?: InputMaybe<OrderDirection>;
   enable_botIsAssistant?: InputMaybe<OrderDirection>;
   enable_checkDnd?: InputMaybe<OrderDirection>;
   enable_checkProfanity?: InputMaybe<OrderDirection>;
@@ -960,6 +1104,7 @@ export type GroupOrderByInput = {
   enable_globalContactUpdate?: InputMaybe<OrderDirection>;
   enable_globalWelcome?: InputMaybe<OrderDirection>;
   enable_noSSN?: InputMaybe<OrderDirection>;
+  enable_profileBuilder?: InputMaybe<OrderDirection>;
   enable_stopNotice?: InputMaybe<OrderDirection>;
   id?: InputMaybe<OrderDirection>;
   name?: InputMaybe<OrderDirection>;
@@ -982,6 +1127,7 @@ export type GroupUpdateArgs = {
 };
 
 export type GroupUpdateInput = {
+  activeSurveySample?: InputMaybe<Scalars['String']['input']>;
   agent_firstName?: InputMaybe<Scalars['String']['input']>;
   agent_lastName?: InputMaybe<Scalars['String']['input']>;
   aiKey?: InputMaybe<AiKeyRelateToOneForUpdateInput>;
@@ -991,10 +1137,12 @@ export type GroupUpdateInput = {
   availability_start?: InputMaybe<Scalars['Int']['input']>;
   botAssistantName?: InputMaybe<Scalars['String']['input']>;
   botConfig?: InputMaybe<BotConfigRelateToOneForUpdateInput>;
+  branding?: InputMaybe<BrandingRelateToOneForUpdateInput>;
   check_dndNotice?: InputMaybe<Scalars['Boolean']['input']>;
   contactConfigs?: InputMaybe<Scalars['JSON']['input']>;
   conversationBotConfig?: InputMaybe<ConversationBotConfigRelateToOneForUpdateInput>;
   dndNoticeMessage?: InputMaybe<Scalars['String']['input']>;
+  enable_activeSurvey?: InputMaybe<Scalars['Boolean']['input']>;
   enable_botIsAssistant?: InputMaybe<Scalars['Boolean']['input']>;
   enable_checkDnd?: InputMaybe<Scalars['Boolean']['input']>;
   enable_checkProfanity?: InputMaybe<Scalars['Boolean']['input']>;
@@ -1002,6 +1150,7 @@ export type GroupUpdateInput = {
   enable_globalContactUpdate?: InputMaybe<Scalars['Boolean']['input']>;
   enable_globalWelcome?: InputMaybe<Scalars['Boolean']['input']>;
   enable_noSSN?: InputMaybe<Scalars['Boolean']['input']>;
+  enable_profileBuilder?: InputMaybe<Scalars['Boolean']['input']>;
   enable_stopNotice?: InputMaybe<Scalars['Boolean']['input']>;
   ghlAccess?: InputMaybe<GhlAccessRelateToOneForUpdateInput>;
   members?: InputMaybe<GroupMemberRelateToManyForUpdateInput>;
@@ -1014,6 +1163,7 @@ export type GroupWhereInput = {
   AND?: InputMaybe<Array<GroupWhereInput>>;
   NOT?: InputMaybe<Array<GroupWhereInput>>;
   OR?: InputMaybe<Array<GroupWhereInput>>;
+  activeSurveySample?: InputMaybe<StringFilter>;
   agent_firstName?: InputMaybe<StringFilter>;
   agent_lastName?: InputMaybe<StringFilter>;
   aiKey?: InputMaybe<AiKeyWhereInput>;
@@ -1023,9 +1173,11 @@ export type GroupWhereInput = {
   availability_start?: InputMaybe<IntNullableFilter>;
   botAssistantName?: InputMaybe<StringFilter>;
   botConfig?: InputMaybe<BotConfigWhereInput>;
+  branding?: InputMaybe<BrandingWhereInput>;
   check_dndNotice?: InputMaybe<BooleanFilter>;
   conversationBotConfig?: InputMaybe<ConversationBotConfigWhereInput>;
   dndNoticeMessage?: InputMaybe<StringFilter>;
+  enable_activeSurvey?: InputMaybe<BooleanFilter>;
   enable_botIsAssistant?: InputMaybe<BooleanFilter>;
   enable_checkDnd?: InputMaybe<BooleanFilter>;
   enable_checkProfanity?: InputMaybe<BooleanFilter>;
@@ -1033,6 +1185,7 @@ export type GroupWhereInput = {
   enable_globalContactUpdate?: InputMaybe<BooleanFilter>;
   enable_globalWelcome?: InputMaybe<BooleanFilter>;
   enable_noSSN?: InputMaybe<BooleanFilter>;
+  enable_profileBuilder?: InputMaybe<BooleanFilter>;
   enable_stopNotice?: InputMaybe<BooleanFilter>;
   ghlAccess?: InputMaybe<GhlAccessWhereInput>;
   id?: InputMaybe<IdFilter>;
@@ -1221,6 +1374,8 @@ export type Mutation = {
   createAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   createBotConfig?: Maybe<BotConfig>;
   createBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  createBranding?: Maybe<Branding>;
+  createBrandings?: Maybe<Array<Maybe<Branding>>>;
   createChatConversationSession?: Maybe<ChatConversationSession>;
   createChatConversationSessions?: Maybe<Array<Maybe<ChatConversationSession>>>;
   createChatSession?: Maybe<ChatSession>;
@@ -1248,6 +1403,8 @@ export type Mutation = {
   deleteAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   deleteBotConfig?: Maybe<BotConfig>;
   deleteBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  deleteBranding?: Maybe<Branding>;
+  deleteBrandings?: Maybe<Array<Maybe<Branding>>>;
   deleteChatConversationSession?: Maybe<ChatConversationSession>;
   deleteChatConversationSessions?: Maybe<Array<Maybe<ChatConversationSession>>>;
   deleteChatSession?: Maybe<ChatSession>;
@@ -1271,6 +1428,7 @@ export type Mutation = {
   deleteUser?: Maybe<User>;
   deleteUsers?: Maybe<Array<Maybe<User>>>;
   endSession: Scalars['Boolean']['output'];
+  file_generateUploadURL?: Maybe<FileUploadUrl>;
   ghl_breakCustomFieldsCache?: Maybe<Scalars['Boolean']['output']>;
   ghl_sendMessage?: Maybe<GhlMessageReturn>;
   ghl_setCustomFields?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
@@ -1279,6 +1437,8 @@ export type Mutation = {
   updateAIKeys?: Maybe<Array<Maybe<AiKey>>>;
   updateBotConfig?: Maybe<BotConfig>;
   updateBotConfigs?: Maybe<Array<Maybe<BotConfig>>>;
+  updateBranding?: Maybe<Branding>;
+  updateBrandings?: Maybe<Array<Maybe<Branding>>>;
   updateChatConversationSession?: Maybe<ChatConversationSession>;
   updateChatConversationSessions?: Maybe<Array<Maybe<ChatConversationSession>>>;
   updateChatSession?: Maybe<ChatSession>;
@@ -1358,6 +1518,16 @@ export type MutationCreateBotConfigArgs = {
 
 export type MutationCreateBotConfigsArgs = {
   data: Array<BotConfigCreateInput>;
+};
+
+
+export type MutationCreateBrandingArgs = {
+  data: BrandingCreateInput;
+};
+
+
+export type MutationCreateBrandingsArgs = {
+  data: Array<BrandingCreateInput>;
 };
 
 
@@ -1496,6 +1666,16 @@ export type MutationDeleteBotConfigsArgs = {
 };
 
 
+export type MutationDeleteBrandingArgs = {
+  where: BrandingWhereUniqueInput;
+};
+
+
+export type MutationDeleteBrandingsArgs = {
+  where: Array<BrandingWhereUniqueInput>;
+};
+
+
 export type MutationDeleteChatConversationSessionArgs = {
   where: ChatConversationSessionWhereUniqueInput;
 };
@@ -1606,6 +1786,11 @@ export type MutationDeleteUsersArgs = {
 };
 
 
+export type MutationFile_GenerateUploadUrlArgs = {
+  input: File_GenerateUploadUrlInput;
+};
+
+
 export type MutationGhl_BreakCustomFieldsCacheArgs = {
   input: Ghl_BreakCustomFieldsCacheInput;
 };
@@ -1645,6 +1830,17 @@ export type MutationUpdateBotConfigArgs = {
 
 export type MutationUpdateBotConfigsArgs = {
   data: Array<BotConfigUpdateArgs>;
+};
+
+
+export type MutationUpdateBrandingArgs = {
+  data: BrandingUpdateInput;
+  where: BrandingWhereUniqueInput;
+};
+
+
+export type MutationUpdateBrandingsArgs = {
+  data: Array<BrandingUpdateArgs>;
 };
 
 
@@ -1806,6 +2002,9 @@ export type Query = {
   botConfig?: Maybe<BotConfig>;
   botConfigs?: Maybe<Array<BotConfig>>;
   botConfigsCount?: Maybe<Scalars['Int']['output']>;
+  branding?: Maybe<Branding>;
+  brandings?: Maybe<Array<Branding>>;
+  brandingsCount?: Maybe<Scalars['Int']['output']>;
   chatConversationSession?: Maybe<ChatConversationSession>;
   chatConversationSessions?: Maybe<Array<ChatConversationSession>>;
   chatConversationSessionsCount?: Maybe<Scalars['Int']['output']>;
@@ -1884,6 +2083,25 @@ export type QueryBotConfigsArgs = {
 
 export type QueryBotConfigsCountArgs = {
   where?: BotConfigWhereInput;
+};
+
+
+export type QueryBrandingArgs = {
+  where: BrandingWhereUniqueInput;
+};
+
+
+export type QueryBrandingsArgs = {
+  cursor?: InputMaybe<BrandingWhereUniqueInput>;
+  orderBy?: Array<BrandingOrderByInput>;
+  skip?: Scalars['Int']['input'];
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: BrandingWhereInput;
+};
+
+
+export type QueryBrandingsCountArgs = {
+  where?: BrandingWhereInput;
 };
 
 
@@ -2711,6 +2929,13 @@ export type Ghl_SendMessageMutationVariables = Exact<{
 
 export type Ghl_SendMessageMutation = { __typename?: 'Mutation', ghl_sendMessage?: { __typename?: 'GHLMessageReturn', message: string, contactID: string, thread: string } | null };
 
+export type File_GenerateUploadUrlMutationVariables = Exact<{
+  input: File_GenerateUploadUrlInput;
+}>;
+
+
+export type File_GenerateUploadUrlMutation = { __typename?: 'Mutation', file_generateUploadURL?: { __typename?: 'FileUploadURL', getURL: string, putURL: string } | null };
+
 export type GetPendingQueueQueryVariables = Exact<{
   input: Queue_GetPendingMessagesInput;
 }>;
@@ -2795,6 +3020,7 @@ export const UpdateAiKeyDocument = {"kind":"Document","definitions":[{"kind":"Op
 export const Ghl_MeDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"Ghl_me"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_meInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_me"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"phone"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"state"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}},{"kind":"Field","name":{"kind":"Name","value":"business"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"address"}},{"kind":"Field","name":{"kind":"Name","value":"city"}},{"kind":"Field","name":{"kind":"Name","value":"state"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"postalCode"}},{"kind":"Field","name":{"kind":"Name","value":"website"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"logoUrl"}}]}}]}}]}}]} as unknown as DocumentNode<Ghl_MeQuery, Ghl_MeQueryVariables>;
 export const Ghl_GetContactsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ghl_getContacts"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_getContactsInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_getContacts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"contacts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"locationId"}},{"kind":"Field","name":{"kind":"Name","value":"email"}},{"kind":"Field","name":{"kind":"Name","value":"timezone"}},{"kind":"Field","name":{"kind":"Name","value":"country"}},{"kind":"Field","name":{"kind":"Name","value":"source"}},{"kind":"Field","name":{"kind":"Name","value":"dateAdded"}},{"kind":"Field","name":{"kind":"Name","value":"businessId"}},{"kind":"Field","name":{"kind":"Name","value":"firstName"}},{"kind":"Field","name":{"kind":"Name","value":"lastName"}},{"kind":"Field","name":{"kind":"Name","value":"contactName"}}]}}]}}]}}]} as unknown as DocumentNode<Ghl_GetContactsQuery, Ghl_GetContactsQueryVariables>;
 export const Ghl_SendMessageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"Ghl_sendMessage"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Ghl_sendMessageInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"ghl_sendMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"contactID"}},{"kind":"Field","name":{"kind":"Name","value":"thread"}}]}}]}}]} as unknown as DocumentNode<Ghl_SendMessageMutation, Ghl_SendMessageMutationVariables>;
+export const File_GenerateUploadUrlDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"File_generateUploadURL"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"File_generateUploadURLInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"file_generateUploadURL"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getURL"}},{"kind":"Field","name":{"kind":"Name","value":"putURL"}}]}}]}}]} as unknown as DocumentNode<File_GenerateUploadUrlMutation, File_GenerateUploadUrlMutationVariables>;
 export const GetPendingQueueDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetPendingQueue"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Queue_getPendingMessagesInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queue_getPendingMessages"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queue"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"data"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"groupID"}},{"kind":"Field","name":{"kind":"Name","value":"groupName"}},{"kind":"Field","name":{"kind":"Name","value":"contactID"}},{"kind":"Field","name":{"kind":"Name","value":"contactName"}},{"kind":"Field","name":{"kind":"Name","value":"type"}},{"kind":"Field","name":{"kind":"Name","value":"message"}},{"kind":"Field","name":{"kind":"Name","value":"offTimeConfig"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"timezone"}}]}},{"kind":"Field","name":{"kind":"Name","value":"forceSend"}}]}},{"kind":"Field","name":{"kind":"Name","value":"delay"}},{"kind":"Field","name":{"kind":"Name","value":"delayString"}}]}}]}}]}}]} as unknown as DocumentNode<GetPendingQueueQuery, GetPendingQueueQueryVariables>;
 export const CancelPendingQueueDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CancelPendingQueue"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"input"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Queue_deletePendingMessageInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queue_deletePendingMessage"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"Variable","name":{"kind":"Name","value":"input"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"queue"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}}]}}]}}]}}]} as unknown as DocumentNode<CancelPendingQueueMutation, CancelPendingQueueMutationVariables>;
 export const ChatSessionDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"ChatSession"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"where"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ChatSessionWhereUniqueInput"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"chatSession"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"Variable","name":{"kind":"Name","value":"where"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sessionData"}}]}}]}}]} as unknown as DocumentNode<ChatSessionQuery, ChatSessionQueryVariables>;
